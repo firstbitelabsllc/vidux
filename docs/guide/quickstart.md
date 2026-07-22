@@ -9,6 +9,7 @@ git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
 mkdir -p "$HOME/.local/bin"
 ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
 export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
+mkdir -p "$HOME/.claude/skills"
 ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"   # optional: the /vidux skill
 vidux --version
 ```
