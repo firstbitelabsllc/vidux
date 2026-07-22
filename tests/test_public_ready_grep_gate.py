@@ -799,6 +799,32 @@ class PublicReadyMetadataGateTests(unittest.TestCase):
         self.assertEqual(payload["status"], "passed")
         self.assertEqual(payload["scanned_commits"], 1)
 
+    def test_codesmith_automation_identity_is_allowed(self):
+        # Autofix is enabled on this repo, so Codesmith commits with the
+        # maintainer as author and codesmith-bot as committer. That committer
+        # uses GitHub's privacy-preserving users.noreply.github.com form and is
+        # an intended participant, not a foreign leak, so the gate must pass it.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            (root / "README.md").write_text("Vidux.\n", encoding="utf-8")
+            env = {
+                "GIT_AUTHOR_NAME": "leojkwan",
+                "GIT_AUTHOR_EMAIL": "leojkwan@gmail.com",
+                "GIT_COMMITTER_NAME": "Codesmith",
+                "GIT_COMMITTER_EMAIL": "codesmith-bot@users.noreply.github.com",
+            }
+            subprocess.run(["git", "-C", str(root), "add", "-A"], check=True)
+            subprocess.run(
+                ["git", "-C", str(root), "commit", "-q", "-m", "fix: automated"],
+                check=True,
+                env={**os.environ, **env},
+            )
+            result = self._run_metadata(root)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "passed", payload)
+
     def test_foreign_author_identity_is_caught(self):
         # Reproduces the TESTPERSONAL exposure: a test@test.com author renders
         # a real, unrelated GitHub account as a public contributor.
