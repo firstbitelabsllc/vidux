@@ -91,8 +91,8 @@ class WorktreeGcTests(unittest.TestCase):
         git(self.repo, "worktree", "add", "--detach", str(path), head)
         return path
 
-    def write_fake_gh(self, path):
-        payload = [
+    def write_fake_gh(self, path, extra=()):
+        payload = list(extra) + [
             {
                 "number": 12,
                 "state": "OPEN",
@@ -139,6 +139,62 @@ class WorktreeGcTests(unittest.TestCase):
             env=self.env,
             check=check,
         )
+
+    def test_reused_branch_name_with_old_merged_pr_stays_unmerged(self):
+        # Branch names are reusable: an old MERGED PR whose head OID no longer
+        # matches the worktree's HEAD must not classify current, genuinely
+        # unmerged commits as merged_clean (the guarded-removal bucket).
+        self.add_unmerged_worktree("reused-merged")
+        stale_oid = git(self.repo, "rev-parse", "origin/main").stdout.strip()
+        old_merged_pr = {
+            "number": 20,
+            "state": "MERGED",
+            "title": "earlier life of this branch name",
+            "headRefName": "reused-merged",
+            "isDraft": False,
+            "url": "https://example.test/pull/20",
+            "headRefOid": stale_oid,
+            "mergedAt": "2026-04-01T00:00:00Z",
+            "closedAt": "2026-04-01T00:00:00Z",
+        }
+        self.write_fake_gh(self.root / "bin" / "gh", extra=[old_merged_pr])
+
+        result = self.run_gc()
+        payload = json.loads(result.stdout)
+        by_branch = {item["branch"]: item for item in payload["worktrees"]}
+
+        item = by_branch["reused-merged"]
+        self.assertEqual("unmerged_no_pr", item["bucket"])
+        self.assertFalse(item["removable"])
+        self.assertIsNone(item["pr_number"])
+
+    def test_merged_pr_still_at_tip_keeps_merged_clean(self):
+        # The legitimate case must keep working: a worktree still sitting
+        # exactly at its MERGED PR's head OID (squash-merge keeps that OID out
+        # of base) classifies merged_clean via the OID-confirmed name match.
+        path = self.add_unmerged_worktree("merged-at-tip")
+        tip_oid = git(path, "rev-parse", "HEAD").stdout.strip()
+        merged_pr = {
+            "number": 21,
+            "state": "MERGED",
+            "title": "squash-merged work",
+            "headRefName": "merged-at-tip",
+            "isDraft": False,
+            "url": "https://example.test/pull/21",
+            "headRefOid": tip_oid,
+            "mergedAt": "2026-07-01T00:00:00Z",
+            "closedAt": "2026-07-01T00:00:00Z",
+        }
+        self.write_fake_gh(self.root / "bin" / "gh", extra=[merged_pr])
+
+        result = self.run_gc()
+        payload = json.loads(result.stdout)
+        by_branch = {item["branch"]: item for item in payload["worktrees"]}
+
+        item = by_branch["merged-at-tip"]
+        self.assertEqual("merged_clean", item["bucket"])
+        self.assertTrue(item["removable"])
+        self.assertEqual(21, item["pr_number"])
 
     def test_classifies_worktree_lifecycle_buckets(self):
         result = self.run_gc()

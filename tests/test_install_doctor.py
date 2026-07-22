@@ -210,6 +210,41 @@ class InstallDoctorTests(unittest.TestCase):
             for forbidden in (" fetch", " pull", " remote ", " update-ref", " checkout", " reset"):
                 self.assertNotIn(forbidden, f" {calls}")
 
+    def test_same_repo_worktree_mirror_is_same_source_until_stale(self) -> None:
+        # The documented clean-mirror layout mounts skills from a detached
+        # linked worktree of the same repository. Same object store + same
+        # clean HEAD = byte-identical to the source, so the doctor must not
+        # report it as a foreign source. Once the source advances past the
+        # pinned mirror, the bytes genuinely differ and a warning is correct.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = self._make_install(base / "current")
+            env, _ = self._environment(base, root)
+            home = Path(env["HOME"])
+            self._mount_all(home, root)
+            mirror = base / "mirror"
+            self._git(root, "worktree", "add", "--detach", str(mirror), "origin/main")
+            mirror_mount = home / COMMON_MOUNTS[0]
+            mirror_mount.unlink()
+            mirror_mount.symlink_to(mirror)
+
+            result, payload = self._run(root, env)
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(payload["status"], "pass", payload)
+            mounts = {row["path"]: row for row in payload["install"]["skill_mounts"]}
+            self.assertEqual(mounts[str(mirror_mount)]["state"], "same_source")
+
+            # Advance the source checkout: the pinned mirror is now stale.
+            self._commit_local(root, "advance-past-mirror")
+
+            result, payload = self._run(root, env)
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(payload["status"], "warn", payload)
+            mounts = {row["path"]: row for row in payload["install"]["skill_mounts"]}
+            self.assertEqual(mounts[str(mirror_mount)]["state"], "same_repo_stale")
+
     def test_different_path_and_mount_source_warn(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

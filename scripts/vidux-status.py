@@ -312,7 +312,12 @@ def parse_plan(p: Path, dev_root: Path) -> PlanStatus:
                     progress_ts = ts
                     latest_progress = stripped
 
-    mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc)
+    try:
+        mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc)
+    except OSError:
+        # The plan can vanish between discovery and stat; treat it as freshly
+        # touched rather than aborting the whole status board.
+        mtime = datetime.now(tz=timezone.utc)
     stale_days = stale_days_for_mtime(mtime)
 
     try:
