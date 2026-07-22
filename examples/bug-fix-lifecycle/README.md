@@ -2,6 +2,10 @@
 
 A minimal worked example showing how vidux handles a bug report from start to finish. This is the simplest possible vidux cycle — one bug, one plan, one fix.
 
+> _Illustrative scenario. The `LoginButton.tsx` bug, file paths, and commit
+> SHAs below are hypothetical, chosen to show the shape of a cycle — they are
+> not real files in this repository._
+
 ## The Scenario
 
 A user reports: "Login button doesn't work on mobile Safari." The agent doesn't know the codebase yet.
