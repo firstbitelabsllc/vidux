@@ -31,8 +31,7 @@ not a fourth layer — see "Browser GUI" below.
 vidux/
 ├── SKILL.md              # Sole skill/plugin entrypoint: principles, cycle, PLAN.md template
 ├── DOCTRINE.md           # Extended doctrine (13 principles + gate patterns)
-├── LOOP.md               # Stateless cycle mechanics
-├── ENFORCEMENT.md        # Claude Code hook configuration
+├── docs/                 # VitePress site: guide, concepts, fleet, reference (loop, enforcement, ingredients, writing-style)
 ├── bin/
 │   ├── vidux             # CLI entrypoint — dispatches every subcommand below
 │   └── vidux-browse      # Launches the Browser GUI (browser/server.py)

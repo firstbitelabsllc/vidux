@@ -39,9 +39,12 @@ const sidebar = [
       { text: 'Prompt Template', link: '/reference/prompt-template' },
       { text: 'Commands', link: '/reference/commands' },
       { text: 'Scripts', link: '/reference/scripts' },
+      { text: 'The Loop', link: '/reference/loop' },
       { text: 'Browser UI', link: '/reference/browser' },
       { text: 'Hooks', link: '/reference/hooks' },
+      { text: 'Enforcement Hooks', link: '/reference/enforcement' },
       { text: 'Configuration', link: '/reference/config' },
+      { text: 'Ingredients', link: '/reference/ingredients' },
     ],
   },
   {

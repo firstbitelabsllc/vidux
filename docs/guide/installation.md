@@ -98,7 +98,7 @@ cp hooks/three-strike-gate.sh /path/to/your/project/.git/hooks/
 
 ## Optional: Claude Code Enforcement Hooks
 
-For stronger enforcement within Claude Code sessions, add the hooks from `ENFORCEMENT.md` to your `settings.local.json`. They:
+For stronger enforcement within Claude Code sessions, add the hooks from [`enforcement.md`](../reference/enforcement.md) to your `settings.local.json`. They:
 
 - Gate file edits: require a PLAN.md entry before writing code
 - Detect drift: flag file changes that don't match the active plan task

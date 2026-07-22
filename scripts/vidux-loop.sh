@@ -718,7 +718,7 @@ if grep -q '^## Progress' "$PLAN" 2>/dev/null; then
 fi
 
 # Open questions — per-task-specific: only gate on Qn refs mentioned in THIS task's description
-# LOOP.md:39 doctrine: "no items blocking the NEXT task specifically"
+# docs/reference/loop.md:39 doctrine: "no items blocking the NEXT task specifically"
 TASK_OPEN_QS=0; TASK_OPEN_REFS=""
 Q_REFS_IN_TASK="$(echo "$TASK_DESC" | grep -oE 'Q[0-9]+' | sort -u || true)"
 if [ -n "$Q_REFS_IN_TASK" ]; then

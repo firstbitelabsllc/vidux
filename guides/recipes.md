@@ -473,7 +473,7 @@ Cycle fails with external_blocker or context_overflow
 
 **Exit condition:** A lane whose assessor fails to return (timeout, error) is reported as `UNKNOWN`, not silently dropped — the synthesizer's dashboard must account for every dispatched lane, matching the "no silent caps" discipline elsewhere in vidux (don't let a quiet failure read as "covered and healthy").
 
-**Why:** The insights-report friction this closes: serial "confirm all green" polling is slow by construction, and a cron/coordinator lane re-deriving each surface one at a time burns cycles that a single concurrent pass would not. Precedent already exists (Principle 9, Recipe 6 Trunk Health, Evidence fan-out in LOOP.md Step 2) — this recipe just names the pattern once so a future lane reaches for it instead of writing another serial loop.
+**Why:** The insights-report friction this closes: serial "confirm all green" polling is slow by construction, and a cron/coordinator lane re-deriving each surface one at a time burns cycles that a single concurrent pass would not. Precedent already exists (Principle 9, Recipe 6 Trunk Health, Evidence fan-out in docs/reference/loop.md Step 2) — this recipe just names the pattern once so a future lane reaches for it instead of writing another serial loop.
 
 ---
 

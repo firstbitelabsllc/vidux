@@ -103,4 +103,4 @@ Hooks fit when you want a local nudge without running a scheduled lane:
 
 - Read [PLAN.md Field Reference](/reference/plan-fields) to understand what the pre-commit hook is looking for.
 - Read [Scripts](/reference/scripts) for the heavier command-line helpers that complement these hooks.
-- Read `ENFORCEMENT.md` when you need the prompt-hook examples for Claude Code session wiring.
+- Read [`enforcement.md`](./enforcement.md) when you need the prompt-hook examples for Claude Code session wiring.

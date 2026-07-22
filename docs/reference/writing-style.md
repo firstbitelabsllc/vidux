@@ -150,7 +150,7 @@ Read->Assess->Act->Checkpoint->Complete (LOOP)
 </bad>
 
 <good>
-READ -> ASSESS -> ACT -> VERIFY -> CHECKPOINT (canonical, defined in LOOP.md; every other file links it).
+READ -> ASSESS -> ACT -> VERIFY -> CHECKPOINT (canonical, defined in loop.md; every other file links it).
 </good>
 
 ---

@@ -33,14 +33,10 @@
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "DOCTRINE.md",
-    "ENFORCEMENT.md",
-    "INGREDIENTS.md",
-    "LOOP.md",
     "SECURITY.md",
     "SKILL.md",
     "SUPPORT.md",
     "VERSION",
-    "WRITING-STYLE.md",
     "vidux.config.example.json"
   ],
   "engines": {

@@ -10,7 +10,7 @@ body:
       label: Area
       description: Which part of Vidux does this affect?
       options:
-        - Core loop (SKILL.md / LOOP.md / DOCTRINE.md)
+        - Core loop (SKILL.md / docs/reference/loop.md / DOCTRINE.md)
         - Scripts (vidux-loop.sh, vidux-checkpoint.sh, etc.)
         - Commands (slash commands)
         - Fleet intelligence (observer, witness, doctor)

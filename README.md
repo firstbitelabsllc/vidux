@@ -10,16 +10,22 @@
 
 # Vidux
 
-Vidux is a thin plan, proof, and resume layer for coding work that must survive
-sessions, agents, tools, and interruptions.
+A coding agent loses everything when its session ends: the plan, the reasoning,
+the half-finished task. Vidux keeps that recovery packet in plain repository
+files, so the next run resumes exactly where the last one stopped, whether the
+next run is the same agent, a different tool, or you a week later.
 
-It keeps the recovery packet in ordinary repository files: one selected plan
-for priorities and decisions, evidence beside the work, and exact checkpoints
-for the next run. Your coding host still chooses models, creates workers, and
-executes tools.
+It is three things and nothing more:
 
-**Use Vidux when the work will outlive one focused session. Skip it when a tiny,
-obvious repair would only gain ceremony.**
+- a **`PLAN.md`** that holds priorities and decisions,
+- **evidence** stored next to the work, and
+- a **checkpoint** that names the exact next action.
+
+Your coding host still picks the models, spawns the workers, and runs the tools.
+Vidux never touches any of that.
+
+**Reach for it when the work will outlive one session. Skip it for a quick fix
+that a plan would only slow down.**
 
 <p align="center">
   <img src="assets/vidux-terminal-demo.svg" alt="The Vidux cycle: read, assess, act, verify, checkpoint" width="780" />
@@ -27,39 +33,31 @@ obvious repair would only gain ceremony.**
 
 ## Quick start
 
-Vidux's core runtime needs Bash, Git, and Python 3.9 or newer. No service,
-database, account, or API key is required.
+You need Bash, Git, and Python 3.9 or newer. No service, database, account, or
+API key.
 
 ```bash
 git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
 mkdir -p "$HOME/.local/bin"
 ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
 
 cd /path/to/your-project
-vidux init --here
-vidux browse
+vidux init --here     # scaffolds PLAN.md; never overwrites an existing one
+vidux browse          # opens the local cockpit at http://127.0.0.1:7191
 ```
 
-`vidux init --here` creates a repo-local `PLAN.md` only when one does not
-already exist. `vidux browse` opens the local cockpit at
-<http://127.0.0.1:7191>. The default scan root is `~/Development`; set
-`VIDUX_DEV_ROOT=/path/to/projects` when your repositories live elsewhere.
-
-To keep `~/.local/bin` on `PATH`, add this line to your shell profile:
-
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
+`vidux status` summarizes plans under the scan root (default `~/Development`;
+set `VIDUX_DEV_ROOT` when your repositories live elsewhere).
 
 ## The five-step cycle
 
-Every run follows the same small loop:
+Every run is the same small loop:
 
 ```mermaid
 flowchart LR
-  R["READ<br/>instructions, selected plan, git, proof"]
-  A["ASSESS<br/>resume or choose reachable work"]
+  R["READ<br/>plan, git, proof"]
+  A["ASSESS<br/>resume or pick reachable work"]
   X["ACT<br/>smallest reviewable slice"]
   V["VERIFY<br/>real build, test, or UI proof"]
   C["CHECKPOINT<br/>plan, evidence, exact resume"]
@@ -67,59 +65,25 @@ flowchart LR
   C -. next run .-> R
 ```
 
-The selected plan answers what matters next and why. A checkpoint records what
-changed, the weakest claim the evidence supports, and the exact next action.
-Every cycle rehydrates from that plan, current Git state, and the smallest
-relevant proof. Git transports the change; chat history is never the authority.
+The plan answers what matters next and why. A checkpoint records what changed,
+the weakest claim the evidence supports, and the exact next action. Git
+transports the change; chat history is never the authority.
 
-## Coordination Boundary
+## What the plan looks like
 
-Vidux is intentionally one layer in a larger toolchain:
+`vidux init --here` scaffolds one file with these sections:
 
-| Layer | Owns | Does not own |
-| --- | --- | --- |
-| **Vidux** | Repo-local plan, decisions, evidence links, checkpoint, resume, optional cockpit | Model choice, provider transport, worker execution, private host policy |
-| **Coding host or supervisor** | Runners, models, delegation, tool execution, worker foldback | A replacement project queue hidden outside the repo |
-| **Append-only ledger adapter** | Activity/publish receipts, file claims, worktree-lifecycle evidence | Plan priority, routing, final acceptance |
+- **Purpose** and **Evidence**: the goal, and the sources that justify it.
+- **Constraints** and **Operator Brief**: the rails, and the current state.
+- **Outcome Scorecard** and **Tasks**: how you know it is done, and the ordered
+  work. Tasks move `pending → in_progress → completed`, with `blocked` terminal
+  until replaced.
+- **Decision Log** and **Progress**: an append-only record of why and when.
 
-Vidux can record provider-neutral claims for concurrent work, but it never
-launches a provider or selects a model. An external append-only ledger can add
-durable publish receipts; it is a companion, not a second planning authority
-and not code shipped by this package.
-
-The host still owns scheduling, runners, roles, dispatch, and final acceptance.
-
-This separation is the point: use the best available coding host without
-making the project's recovery story depend on that host's private memory.
-
-## The plan contract
-
-One selected planning authority governs the project. Use the root `PLAN.md` or a supported repo-native named plan.
-Vidux never creates a shadow plan beside an active authority.
-
-`vidux init --here` scaffolds these sections:
-
-- Purpose and evidence;
-- constraints and an operator brief;
-- an outcome scorecard and ordered tasks;
-- a decision log; and
-- an append-only progress record.
-
-Resume `[in_progress]` work first. When evidence changes the direction, update
-the same plan's decision or progress record before changing code. Unclear root
-cause may use one linked `investigations/<slug>.md`; it is not another queue.
-
-The hard invariants are:
-
-- plan prose is not proof;
-- a merge is not deployment or runtime proof;
-- unknown or skipped gates stay visible;
-- a worker's completion is not lead acceptance;
-- unknown worktree changes are preserved, never overwritten; and
-- a task cannot silently disappear during a merge.
-
-Proof travels with the handoff: the selected plan + publish ledger rows, when a
-ledger adapter is configured, preserve what shipped and where to resume.
+The invariants it enforces: plan prose is not proof, a merge is not a deploy,
+skipped gates stay visible, a worker's "done" is not acceptance, and a task
+cannot silently vanish during a merge. An unclear root cause gets one linked
+`investigations/<slug>.md`, never another queue.
 
 ## Local cockpit
 
@@ -127,71 +91,71 @@ ledger adapter is configured, preserve what shipped and where to resume.
 vidux browse
 ```
 
-The cockpit scans plans, shows active/blocked work, renders evidence artifacts,
-and supports local comments, plan-scoped steering, and provider-neutral work
-claims. Markdown remains the source of truth; comments and claims are separate
-append-only local state.
-
-HTML artifacts are network-isolated and rendered inside a sandboxed iframe.
-Sensitive values are redacted, and affected plans stay visibly marked so a
-reviewer knows content was withheld. The safety boundary is strict:
-
-- loopback binding by default;
-- Host and Origin validation on write routes;
-- sandboxed, network-isolated HTML artifacts;
-- no artifact scripts, forms, nested frames, popups, or external loads;
-- sensitive-value redaction for allowed text/metadata;
-- symlink and hard-link rejection on writable files; and
-- LAN viewers cannot write plan state.
-
-Set `VIDUX_BROWSER_HOST=0.0.0.0` only on a trusted LAN. Read
-[`docs/reference/browser.md`](docs/reference/browser.md) before exposing the
-cockpit or writing artifacts.
-
-## CLI map
-
-```text
-vidux init --here       create a PLAN.md without overwriting one
-vidux status            summarize plans under the scan root
-vidux browse            start the local cockpit
-vidux doctor            verify the local installation
-```
-
-Run `vidux help <command>` for exact options. The cockpit's steering and
-claims panels store intent and short-lived work leases as append-only local
+A read-mostly browser view of the plans under your scan root: active and blocked
+work, rendered evidence, local comments, and plan-scoped steering. Markdown
+stays the source of truth; comments and claims are separate, append-only local
 state.
 
-`vidux doctor` reports install truth and readiness. One of its checks runs the
-contract self-test (`npm test`), which needs the dev dependencies (`npm ci`) —
-that is a maintainer check, not a requirement to use vidux. The core runtime is
-Bash, Git, and Python only (see Quick start): a fresh clone runs `init`,
-`status`, and `browse` with no `npm ci`. So a red contract-suite line on a
-source checkout that has not run `npm ci` means the dev test environment is
-unset, not that the install is broken.
+The safety boundary is strict: loopback binding by default, Host and Origin
+validation on write routes, HTML artifacts rendered in a sandboxed,
+network-isolated iframe (no scripts, forms, nested frames, popups, or external
+loads), sensitive-value redaction, and symlink rejection on writable files. LAN
+viewers cannot write plan state. Set `VIDUX_BROWSER_HOST=0.0.0.0` only on a
+trusted LAN, and read [`docs/reference/browser.md`](docs/reference/browser.md)
+first.
+
+## Where Vidux stops
+
+This boundary is the point: use the best coding host you can without tying your
+project's recovery story to that host's private memory.
+
+- Vidux does not schedule agents, route models, execute workers, or hold
+  provider credentials.
+- Vidux can record provider-neutral claims for concurrent work, but it never
+  launches a provider or selects a model. An external append-only ledger can add
+  durable publish receipts; it is a companion, not a second planning authority.
+- The cockpit is a local operational view, not a hosted collaboration service.
+- No benchmark harness, provider runner, or scoring implementation ships here;
+  evaluation belongs to the host.
+- Vidux optimizes for durable recovery, not raw speed. The value is that a plan,
+  its evidence, and the resume point survive a lost session.
+- macOS is the primary environment. Core scripts are portable, but OS scheduling
+  examples need platform-specific adaptation.
+
+## CLI
+
+```text
+vidux init --here    create a PLAN.md without overwriting one
+vidux status         summarize plans under the scan root
+vidux browse         start the local cockpit
+vidux doctor         verify the local installation
+```
+
+Run `vidux help <command>` for options, and `vidux doctor --json` for
+machine-readable install truth. One doctor check runs the contract self-test
+(`npm test`), which needs the dev dependencies (`npm ci`). A red contract line on
+a fresh clone that has not run `npm ci` means the dev test environment is unset,
+not that the install is broken: the runtime is Bash, Git, and Python only.
 
 ## Configuration
 
-The live config is `$XDG_CONFIG_HOME/vidux/vidux.config.json` or
-`~/.config/vidux/vidux.config.json`. The checked-in
-[`vidux.config.example.json`](vidux.config.example.json) documents the shape; it
-is not active configuration.
+The live config is `$XDG_CONFIG_HOME/vidux/vidux.config.json` (or
+`~/.config/vidux/vidux.config.json`). The checked-in
+[`vidux.config.example.json`](vidux.config.example.json) documents the shape.
 
 ```bash
 python3 scripts/vidux-config.py init
 python3 scripts/vidux-config.py check --json
-vidux status --root /path/to/projects
 ```
 
-The `plan_store` mode is `inline` for a repo-local plan, `local` for a configured
-persistent path, or `external` for a path outside the repository. Central plans
-must use an explicit persistent store; Vidux never writes them inside its own
-installation.
+`plan_store` is `inline` for a repo-local plan, `local` for a configured
+persistent path, or `external` for a path outside the repository. Vidux never
+writes a central plan inside its own installation.
 
 ## Agent skill and plugin
 
-The repository ships exactly one agent skill at root `SKILL.md`. Claude Code
-can load that same entry point either as a local skill or through the included
-plugin manifest:
+The repository ships exactly one agent skill at root [`SKILL.md`](SKILL.md).
+Claude Code can load it as a local skill or through the plugin manifest:
 
 ```bash
 ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"
@@ -199,49 +163,30 @@ ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"
 claude --plugin-dir /path/to/vidux
 ```
 
-Other coding hosts can read `SKILL.md` directly. Optional Git hooks live in
-`hooks/`; copy only the hooks you intend to enforce. Vidux does not install
-hooks or background jobs implicitly.
+Other coding hosts read `SKILL.md` directly. Optional Git hooks live in
+`hooks/`; copy only the ones you intend to enforce. Vidux installs no hooks or
+background jobs implicitly.
 
-## Installation and release truth
+## Install and release truth
 
-Vidux is installed from source (see Quick start); there is no npm package. The
+Vidux installs from source (see Quick start); there is no npm package. The
 `1.0.0` in `VERSION` marks the source contract and matches the `v1.0.0` git tag
-and its GitHub Release.
-
-Node 20 or newer is needed only for contributor tests and docs; the installed
-runtime is Bash plus the Python standard library.
-
-## Where Vidux stops
-
-- Vidux does not schedule agents, route models, execute workers, or proxy
-  provider credentials.
-- The cockpit is a local operational view, not a hosted collaboration service.
-- No benchmark harness, provider runner, evaluator, or scoring
-  implementation ships here; evaluation belongs to the host.
-- Vidux optimizes for durable recovery, not raw speed. Its value is that a
-  plan, its evidence, and the exact resume point survive a lost session — not a
-  throughput claim.
-- macOS is the primary development environment. Core runtime scripts are
-  portable; OS scheduling examples require platform-specific adaptation.
+and its GitHub Release. Node 20 or newer is needed only for contributor tests
+and docs.
 
 ## Contributing
 
 ```bash
 npm ci
-npm run verify
+npm run verify        # JS + Python contract tests + the public-ready content gate
 npm run docs:build
-# Browser changes:
-npm run test:e2e
+npm run test:e2e      # for browser changes
 ```
 
-`npm run verify` runs JavaScript and Python contract tests plus the public-ready
-content gate. Build/test/lint workflows are manual-only; secret scanning covers
-pull-request heads and pushes to `main`.
-
-Start with [Architecture](ARCHITECTURE.md), [the evidence format](guides/evidence-format.md),
-[investigation lifecycle](guides/investigation.md), and the
-[bug-fix example](examples/bug-fix-lifecycle/). See [CONTRIBUTING.md](CONTRIBUTING.md),
-[SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPPORT.md) before opening a change.
+Start with [Architecture](ARCHITECTURE.md), [the doctrine](DOCTRINE.md), [the
+evidence format](guides/evidence-format.md), and the
+[bug-fix example](examples/bug-fix-lifecycle/). See
+[CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and
+[SUPPORT.md](SUPPORT.md) before opening a change.
 
 Vidux is MIT licensed.
