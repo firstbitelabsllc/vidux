@@ -184,15 +184,27 @@ FORBIDDEN_PATTERNS = PRIVACY_PATTERNS + HYGIENE_PATTERNS
 # publishes every reachable commit's author/committer email, and a foreign
 # identity renders a real, unrelated GitHub account as a public contributor
 # (proven live: a `test@test.com` author renders as the "TESTPERSONAL" account
-# on the sibling claudux repo). Only these two identities are legitimate:
+# on the sibling claudux repo). Only these identities are legitimate:
 #   - leojkwan@gmail.com: the maintainer's permanent, by-design public commit
 #     identity on every legitimate commit (git log --format='%ae').
 #   - noreply@github.com: GitHub's web-UI / squash-merge committer identity.
+#   - codesmith-bot@users.noreply.github.com: the Codesmith automation's fixed
+#     committer identity when it pushes fixes to this repo's PRs (author stays
+#     leojkwan@gmail.com). Like noreply@github.com it is a GitHub `noreply`
+#     bot address, not a real unrelated human's account and not PII, so it is
+#     exactly the automation class this gate is meant to permit rather than the
+#     foreign-contributor exposure it exists to catch.
 # Any other author or committer email is a finding. This is deliberately an
 # allowlist, not a denylist, for the same reason SCAN_TARGETS is default-on: a
 # new stray identity is caught the moment it appears, not when someone
 # remembers to add it.
-ALLOWED_COMMIT_EMAILS = frozenset({"leojkwan@gmail.com", "noreply@github.com"})
+ALLOWED_COMMIT_EMAILS = frozenset(
+    {
+        "leojkwan@gmail.com",
+        "noreply@github.com",
+        "codesmith-bot@users.noreply.github.com",
+    }
+)
 
 # Historical-record targets: chronological, dated, append-only-by-design.
 # HYGIENE_PATTERNS are skipped here (retired terms in past tense are the

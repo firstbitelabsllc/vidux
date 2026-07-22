@@ -43,12 +43,20 @@ ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
 export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
 
 cd /path/to/your-project
-vidux init --here     # scaffolds PLAN.md; never overwrites an existing one
-vidux browse          # opens the local cockpit at http://127.0.0.1:7191
+vidux init --here          # scaffolds PLAN.md; never overwrites an existing one
+vidux browse --root .      # local cockpit at http://127.0.0.1:7191, scoped to this repo
 ```
 
-`vidux status` summarizes plans under the scan root (default `~/Development`;
-set `VIDUX_DEV_ROOT` when your repositories live elsewhere).
+`vidux browse` scans `~/Development` by default, so pass `--root .` (or set
+`VIDUX_DEV_ROOT`) when your project lives elsewhere — otherwise this project's
+plan is absent from the cockpit (you see only plans under the default root).
+`vidux status` reads the same scan root.
+
+To run the cycle itself, load the agent skill (see [Agent skill and
+plugin](#agent-skill-and-plugin)) and, in Claude Code, run `/vidux "what you're
+working on"`. `vidux init --here` already scaffolded the `PLAN.md`; the first
+cycle reads it, gathers evidence, and fills it in — no code until the plan is
+ready.
 
 ## The five-step cycle
 
@@ -133,9 +141,9 @@ vidux doctor         verify the local installation
 
 Run `vidux help <command>` for options, and `vidux doctor --json` for
 machine-readable install truth. One doctor check runs the contract self-test
-(`npm test`), which needs the dev dependencies (`npm ci`). A red contract line on
-a fresh clone that has not run `npm ci` means the dev test environment is unset,
-not that the install is broken: the runtime is Bash, Git, and Python only.
+(`npm test`), which needs the dev dependencies (`npm ci`). On a fresh clone that
+has not run `npm ci`, that check reports `[WARN]` and skips the suite — the
+doctor still exits `0`, because the runtime is Bash, Git, and Python only.
 
 ## Configuration
 
@@ -158,9 +166,10 @@ The repository ships exactly one agent skill at root [`SKILL.md`](SKILL.md).
 Claude Code can load it as a local skill or through the plugin manifest:
 
 ```bash
-ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"
+mkdir -p "$HOME/.claude/skills"
+ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"
 # alternative, not in addition:
-claude --plugin-dir /path/to/vidux
+claude --plugin-dir "$HOME/Development/vidux"
 ```
 
 Other coding hosts read `SKILL.md` directly. Optional Git hooks live in
@@ -169,9 +178,11 @@ background jobs implicitly.
 
 ## Install and release truth
 
-Vidux installs from source (see Quick start); there is no npm package. The
-`1.0.0` in `VERSION` marks the source contract and matches the `v1.0.0` git tag
-and its GitHub Release. Node 20 or newer is needed only for contributor tests
+Vidux installs from source (see Quick start); there is no npm package on the
+registry, though [Installation](docs/guide/installation.md) covers an optional
+locally-built `npm pack` tarball for a global CLI. The `1.0.0` in `VERSION`
+marks the source contract and matches the `v1.0.0` git tag and its GitHub
+Release. Node 20 or newer is needed only for that tarball, contributor tests,
 and docs.
 
 ## Contributing
