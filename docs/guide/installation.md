@@ -50,6 +50,7 @@ generated state are excluded.
 ## Install the Claude Code skill
 
 ```bash
+mkdir -p ~/.claude/skills
 ln -sfn /path/to/vidux ~/.claude/skills/vidux
 ```
 
@@ -133,9 +134,9 @@ store outside the package root; see [Configuration](/reference/config).
 `vidux doctor` reports optional GitHub/source-checkout capabilities as warnings
 in a packaged install; warnings do not hide hard Python, config, token-permission,
 or stale-runtime failures. One check runs the contract self-test (`npm test`): on
-a fresh clone that has not run `npm ci`, that line is red because the dev test
-environment is unset, not because the install is broken — the runtime is Bash,
-Git, and Python only.
+a fresh clone that has not run `npm ci`, that check reports `[WARN]` and skips the
+suite, and the doctor still exits `0` — the dev test environment is simply unset,
+not the install broken. The runtime is Bash, Git, and Python only.
 
 For the optional Claude Code skill, open a session and run:
 

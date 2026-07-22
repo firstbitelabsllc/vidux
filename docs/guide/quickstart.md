@@ -24,6 +24,7 @@ checkout on `PATH`.
 In the project you want Vidux to track, initialize the cockpit once:
 
 ```bash
+cd /path/to/your-project   # the repo you want Vidux to track
 vidux init --here
 vidux browse --root .   # scoped to this repo; browse scans ~/Development by default
 ```
@@ -34,7 +35,7 @@ Then open Claude Code in that project and run:
 /vidux "your project description"
 ```
 
-**On the first cycle**, Vidux gathers evidence and writes a `PLAN.md`. No code until the plan is ready — "plan first, code second" is the core discipline.
+**On the first cycle**, Vidux reads the `PLAN.md` that `vidux init --here` scaffolded, gathers evidence, and fills it in. No code until the plan is ready — "plan first, code second" is the core discipline.
 
 ## 3. Understand the Startup Contract
 
