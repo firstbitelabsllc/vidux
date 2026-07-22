@@ -1,0 +1,42 @@
+{
+  "hooks": [
+    {
+      "name": "vidux-pre-commit",
+      "event": "pre-commit",
+      "description": "Validates that code changes have a corresponding PLAN.md task entry. Prevents unplanned code from being committed.",
+      "enabled": true,
+      "script": "hooks/pre-commit-plan-check.sh"
+    },
+    {
+      "name": "vidux-checkpoint",
+      "event": "post-commit",
+      "description": "Reminds when PLAN.md has no same-day Progress entry; publish ledger/checkpoint propagation remains explicit.",
+      "enabled": false,
+      "script": "hooks/post-commit-checkpoint.sh"
+    },
+    {
+      "name": "vidux-three-strike",
+      "event": "post-build-failure",
+      "description": "Tracks consecutive failures on the same surface. After 3 failures, escalates to move up one abstraction layer.",
+      "enabled": false,
+      "script": "hooks/three-strike-gate.sh"
+    },
+    {
+      "name": "vidux-before-task",
+      "event": "beforeTask",
+      "description": "Pre-flight health check via vidux-doctor.sh. Runs before each scheduled task. Warns on merge conflicts, stale worktrees, high pressure, low disk. Non-blocking by default.",
+      "enabled": true,
+      "script": "scripts/vidux-doctor.sh",
+      "args": "--json",
+      "_note": "Wire in Claude Code settings.json: hooks.beforeTask or Codex lifecycle hooks"
+    },
+    {
+      "name": "vidux-after-task",
+      "event": "afterTask",
+      "description": "Post-flight scorecard via vidux-checkpoint.sh. Records what changed, updates Progress section, emits ledger event. Runs after each scheduled task completes.",
+      "enabled": true,
+      "script": "scripts/vidux-checkpoint.sh",
+      "_note": "Wire in Claude Code settings.json: hooks.afterTask. Requires PLAN_PATH env var."
+    }
+  ]
+}

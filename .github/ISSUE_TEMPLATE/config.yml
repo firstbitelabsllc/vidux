@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "Private security advisory"
+    url: "https://github.com/firstbitelabsllc/vidux/security/advisories/new"
+    about: "For private or security-related questions. Bugs and features should still use the templates above."

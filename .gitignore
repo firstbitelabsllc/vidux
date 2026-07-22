@@ -1,0 +1,52 @@
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+node_modules/
+docs/.vitepress/dist/
+.claudux/
+.claudux-state.json
+
+# Local config, secrets, and state — never commit
+vidux.config.json
+.env
+.env.*
+*.key
+*.pem
+*.token
+secrets/
+.netrc
+*.netrc
+.plan-taskcount
+.external-state.json
+
+# Claude Code local state
+.claude/*
+!.claude/settings.json
+
+# Browser runtime artifacts (user-generated, not source)
+browser/artifacts/*
+!browser/artifacts/.gitkeep
+
+# Playwright run artifacts; visual baselines are Linux/CI only
+test-results/
+playwright-report/
+blob-report/
+.playwright-cli/
+browser/tests/e2e/**/*-darwin.png
+
+# Operator-local files that may sit beside a working checkout — never tracked
+projects/*
+evaluations/
+_sunset/
+scripts/vidux-firstbite-*
+scripts/vidux-local-operator-*
+scripts/install-voxtral-launchagent.sh
+scripts/launchd/
+scripts/launchd-helpers/
+scripts/crashcourse-inbox-gen.py
+tests/test_firstbite_*
+tests/test_local_operator_*
+.github/skills/
+.github/hooks/

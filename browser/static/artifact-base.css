@@ -1,0 +1,83 @@
+/*
+  Shared vidux-browse artifact theme.
+
+  Artifact HTML files load this after their local <style> block so these
+  tokens can replace copied per-artifact dark-mode overrides. The relative
+  link path used by browser/artifacts works in both vidux-browse and file://
+  offline previews.
+*/
+
+:root {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1916;
+    --paper: #1d1916;
+    --paper-2: #262019;
+    --soft: #2b241b;
+    --ink: #efe7da;
+    --ink-2: #b3a690;
+    --ink-soft: #d9cdbc;
+    --muted: #b3a690;
+    --muted-2: #8d806e;
+    --rule: #3a3027;
+    --line: #4a3a2c;
+    --border: #3a3027;
+    --border-strong: #5a4a3b;
+    --accent-soft: #263748;
+    --good-soft: #183427;
+    --warn-soft: #3b2f17;
+    --bad-soft: #3a1d1d;
+    --select: #332a20;
+    --shadow: 0 8px 24px rgba(0, 0, 0, .45);
+  }
+
+  html,
+  body {
+    background: var(--bg, var(--paper, #1d1916));
+    color: var(--ink, #efe7da);
+  }
+
+  .hero {
+    background: linear-gradient(180deg, #262019 0%, #1d1916 100%) !important;
+    border-color: var(--border, var(--rule, #3a3027)) !important;
+  }
+
+  .card,
+  .mini,
+  .links a,
+  .stat,
+  .price-card,
+  .comparison-card,
+  .callout {
+    background: var(--paper-2, #262019);
+    border-color: var(--border-strong, var(--rule, #3a3027));
+  }
+
+  p,
+  li,
+  td {
+    color: var(--ink-soft, var(--ink, #efe7da));
+  }
+
+  h1,
+  h2,
+  h3,
+  strong,
+  th {
+    color: var(--ink, #efe7da);
+  }
+
+  .sub,
+  .meta,
+  .note,
+  .foot,
+  figcaption,
+  .byline,
+  .deck,
+  .label {
+    color: var(--ink-2, #b3a690);
+  }
+}

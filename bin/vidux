@@ -1,0 +1,220 @@
+#!/usr/bin/env bash
+# vidux — top-level CLI dispatcher.
+#
+# Routes subcommands to existing helpers in scripts/ and bin/.
+#
+set -euo pipefail
+
+VIDUX_SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "${VIDUX_SOURCE}" ]]; do
+  VIDUX_SOURCE_DIR="$(cd -P "$(dirname "${VIDUX_SOURCE}")" && pwd)"
+  VIDUX_SOURCE="$(readlink "${VIDUX_SOURCE}")"
+  [[ "${VIDUX_SOURCE}" != /* ]] && VIDUX_SOURCE="${VIDUX_SOURCE_DIR}/${VIDUX_SOURCE}"
+done
+VIDUX_BIN_DIR="$(cd -P "$(dirname "${VIDUX_SOURCE}")" && pwd)"
+VIDUX_ROOT="${VIDUX_ROOT:-$(cd "${VIDUX_BIN_DIR}/.." && pwd)}"
+
+print_top_help() {
+  cat <<EOF
+vidux — plan-first control plane for AI agents
+
+usage: vidux <command> [args...]
+
+commands:
+  init <slug>|--here Bootstrap a PLAN.md from template
+  browse [args]     Launch the plan browser at :7191
+  status [args]     Print plan status across operational PLAN.md files
+  doctor            Install/readiness doctor for local CLI setup
+  help [<cmd>]      Show this help, or help for a specific subcommand
+
+options:
+  --version, -v     Print vidux version
+  --help, -h        Show this help
+
+See README.md and docs/ for the current CLI roadmap and implemented helpers.
+EOF
+}
+
+print_subcommand_help() {
+  local cmd="${1:-}"
+  case "${cmd}" in
+    browse)
+      cat <<EOF
+vidux browse — launch the plan browser at :7191.
+
+usage: vidux browse [--no-open] [--foreground|-f] [--port N] [--host HOST] \\
+  [--root PATH] [--open-host HOST] [--comments-path PATH] \\
+  [--steering-path PATH] [--claims-path PATH] [--help|-h]
+
+Proxies to bin/vidux-browse. The launcher refuses to reuse an existing port
+listener unless /api/health matches the requested repo root, scan root,
+steering/coordination store identities, port, and browser/server.py file
+mtime fingerprint.
+
+flags:
+  --no-open             Start/reuse the server without opening a browser.
+  --foreground, -f      Run in the foreground and stream server logs.
+  --port N             Bind/reuse a specific port (default: 7191).
+  --host HOST          Server bind host (default: 127.0.0.1).
+  --root PATH          Scan root for PLAN.md files (default: ~/Development).
+  --open-host HOST     Browser URL host (default: 127.0.0.1).
+  --comments-path PATH Comments JSONL path.
+  --steering-path PATH Local steering mailbox JSONL path.
+  --claims-path PATH   Local work-claims JSONL path.
+EOF
+      ;;
+    status)
+      cat <<EOF
+vidux status — print plan status across operational PLAN.md files.
+
+usage: vidux status [--root <path>] [--focus <repo>...] [--all] [--json]
+
+Runs scripts/vidux-status.py. Default output hides empty and shipped plans;
+--all includes tracked rows, including shipped rows, and --json prints the
+same counts without the rendered board.
+EOF
+      ;;
+    init)
+      cat <<EOF
+vidux init — bootstrap a new plan.
+
+usage: vidux init <slug> --plan-store <path>
+       vidux init --here
+
+With --here, creates PLAN.md in the current project. With <slug>, creates
+<plan-store>/<slug>/PLAN.md in an explicit persistent store outside the Vidux
+install. Supply --plan-store, VIDUX_PLAN_STORE, or a live config plan_store.
+Existing plans are never overwritten. Slugs use lowercase letters, digits,
+and hyphens.
+
+The template includes plan authority, a starter Operator Brief, an honest
+unproven scorecard, and the canonical task/decision/progress sections.
+
+exit codes:
+  0   plan created
+  1   target PLAN.md already exists
+  2   invalid usage (no slug, bad slug, unknown flag)
+EOF
+      ;;
+    doctor)
+      cat <<EOF
+vidux doctor — install/readiness doctor for local CLI setup.
+
+usage: vidux doctor [--json] [--help|-h]
+
+Runs 7 checks (python3 >= 3.9, optional gh auth, token permissions,
+development/install truth, stale browser pidfile residue, local config, and
+source tests). Install truth reports source kind/root/version/SHA/branch,
+cached origin/HEAD freshness (falling back to origin/main), PATH target parity,
+and optional Claude/Codex/Agents/AI skill-mount parity. It is read-only and
+never fetches or repairs. Optional integrations warn without breaking packaged
+installs. A source checkout can be slow when it runs the full npm test gate; set
+VIDUX_DOCTOR_SKIP_NPM_TEST=1 for fast local loops that already run tests.
+
+Use scripts/vidux-doctor.sh --json for hook-safe runtime checks across plans,
+worktrees, automations, browsers, and Codex state. That runtime doctor is the
+right beforeTask/pre-hook probe; vidux doctor is the terminal setup/readiness
+probe.
+
+Each text check prints [PASS], [WARN], or [FAIL] with reason. --json emits the
+same result as one structured object. Exit 0 when no hard check fails, 1 for a
+hard failure, and 2 for invalid usage. Text mode prints an N/TOTAL summary plus
+optional warning count.
+EOF
+      ;;
+    help|"")
+      print_top_help
+      ;;
+    *)
+      echo "vidux: unknown command for help: ${cmd}" >&2
+      print_top_help >&2
+      return 2
+      ;;
+  esac
+}
+
+print_version() {
+  # VERSION file may contain trailing notes; the first non-empty,
+  # non-comment line is the version string.
+  awk 'NF && $1 !~ /^#/ { print; exit }' "${VIDUX_ROOT}/VERSION"
+}
+
+# Every subcommand
+# below exec's straight into python3/bash/awk against ${VIDUX_ROOT}/scripts
+# with no preflight, so a missing python3 or a broken/misdirected VIDUX_ROOT
+# (e.g. an env var pointing at an unrelated or incomplete checkout) leaked a
+# raw interpreter error ("bash: exec: python3: not found",
+# "python3: can't open file ...", "awk: can't open file ...") instead of a
+# vidux-authored message. require_vidux_checkout runs once before dispatch
+# (help/-h stay exempt -- pure static text, no filesystem access) so every
+# subcommand gets the same clear message for the same root cause.
+require_vidux_checkout() {
+  if [[ ! -f "${VIDUX_ROOT}/VERSION" || ! -d "${VIDUX_ROOT}/scripts" ]]; then
+    echo "vidux: VIDUX_ROOT does not look like a vidux checkout: ${VIDUX_ROOT}" >&2
+    echo "  Expected a VERSION file and a scripts/ directory under it." >&2
+    echo "  If VIDUX_ROOT is set in your environment, unset it or point it at a real vidux checkout." >&2
+    exit 127
+  fi
+}
+
+require_python3() {
+  local cmd="$1"
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo "vidux ${cmd}: python3 not found on PATH." >&2
+    echo "  This subcommand requires Python 3.9+. Install it, then re-run." >&2
+    echo "  'vidux doctor' runs a full readiness check once python3 is installed." >&2
+    exit 127
+  fi
+}
+
+main() {
+  if [[ $# -eq 0 ]]; then
+    print_top_help
+    exit 0
+  fi
+
+  local cmd="$1"
+  shift || true
+
+  if [[ "${cmd}" != "--help" && "${cmd}" != "-h" && "${cmd}" != "help" ]]; then
+    require_vidux_checkout
+  fi
+
+  case "${cmd}" in
+    --version|-v)
+      print_version
+      ;;
+    --help|-h|help)
+      if [[ $# -gt 0 ]]; then
+        print_subcommand_help "$1"
+      else
+        print_top_help
+      fi
+      ;;
+    browse)
+      export VIDUX_ROOT
+      exec "${VIDUX_ROOT}/bin/vidux-browse" "$@"
+      ;;
+    status)
+      require_python3 "status"
+      exec python3 "${VIDUX_ROOT}/scripts/vidux-status.py" "$@"
+      ;;
+    init)
+      export VIDUX_ROOT
+      exec bash "${VIDUX_ROOT}/scripts/vidux-init.sh" "$@"
+      ;;
+    doctor)
+      export VIDUX_ROOT
+      export VIDUX_DOCTOR_EXPECTED_CLI="${VIDUX_ROOT}/bin/vidux"
+      exec bash "${VIDUX_ROOT}/scripts/vidux-doctor-cli.sh" "$@"
+      ;;
+    *)
+      echo "vidux: unknown command: ${cmd}" >&2
+      echo >&2
+      print_top_help >&2
+      exit 2
+      ;;
+  esac
+}
+
+main "$@"

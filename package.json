@@ -1,0 +1,95 @@
+{
+  "name": "vidux",
+  "version": "1.0.0",
+  "description": "Plan-first control plane for long-running AI coding loops.",
+  "private": false,
+  "bin": {
+    "vidux": "bin/vidux"
+  },
+  "files": [
+    ".claude-plugin/",
+    ".claude/settings.json",
+    "assets/*.svg",
+    "bin/*",
+    "browser/safe_files.py",
+    "browser/server.py",
+    "browser/coordination_claims.py",
+    "browser/steering_mailbox.py",
+    "browser/static/**/*",
+    "docs/**/*.md",
+    "docs/.vitepress/config.ts",
+    "examples/**/*.json",
+    "examples/**/*.md",
+    "examples/**/*.toml",
+    "guides/**/*.md",
+    "hooks/*.json",
+    "hooks/*.sh",
+    "references/*.md",
+    "scripts/*.py",
+    "scripts/*.sh",
+    "scripts/lib/*.sh",
+    "ARCHITECTURE.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "DOCTRINE.md",
+    "ENFORCEMENT.md",
+    "INGREDIENTS.md",
+    "LOOP.md",
+    "SECURITY.md",
+    "SKILL.md",
+    "SUPPORT.md",
+    "VERSION",
+    "WRITING-STYLE.md",
+    "vidux.config.example.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstbitelabsllc/vidux.git"
+  },
+  "homepage": "https://github.com/firstbitelabsllc/vidux",
+  "bugs": {
+    "url": "https://github.com/firstbitelabsllc/vidux/issues"
+  },
+  "author": "First Bite Labs",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "test": "npm run test:js && npm run test:py",
+    "test:all": "npm run test:js && npm run test:py && npm run test:e2e",
+    "test:js": "vitest run",
+    "test:js:watch": "vitest",
+    "test:py": "python3 -m unittest discover -s tests -p 'test_*.py'",
+    "public-ready:grep": "python3 scripts/vidux-public-ready-grep-gate.py --tracked-only --metadata",
+    "verify": "npm test && npm run public-ready:grep",
+    "prepublishOnly": "npm run public-ready:grep",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:visual:update": "playwright test browser/tests/e2e/visual.spec.ts --update-snapshots=all",
+    "test:pixel": "playwright test browser/tests/e2e/mode-pixel.spec.ts --project=desktop-chromium",
+    "release:verify": "python3 scripts/vidux-release-package.py",
+    "release:verify:dev": "python3 scripts/vidux-release-package.py --allow-dirty",
+    "playwright:install": "playwright install --with-deps chromium",
+    "test:thin": "bash scripts/vidux-thin-loop-verify.sh"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "happy-dom": "^20.10.6",
+    "vitepress": "1.6.4",
+    "vitest": "^4.1.10",
+    "vue": "3.5.13"
+  },
+  "overrides": {
+    "vitepress": {
+      "vite": "6.4.3"
+    }
+  }
+}

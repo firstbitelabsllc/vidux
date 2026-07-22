@@ -1,0 +1,32 @@
+version = 2
+
+[schedule]
+rrule = "FREQ=HOURLY;INTERVAL=2;BYMINUTE=15"
+
+[task]
+model = "o3"
+effort = "high"
+prompt = """
+Use [$vidux](/path/to/vidux/SKILL.md) as coordinator for myapp fleet.
+
+Mission: Ensure the myapp automation fleet is making fire, not rubbing sticks.
+
+Fleet manifest:
+- myapp-writer (writer, every 30m at :00/:30)
+- myapp-ux-radar (radar, every 30m at :05/:35)
+- myapp-perf-radar (radar, every 30m at :10/:40)
+
+Coordination rules:
+- Check each automation's memory.md for the last 3 entries.
+- Bimodal quality check: runs should be < 2 min (quick check) or > 15 min (deep work). Flag 3-8 min runs as "stuck in the middle."
+- If a writer has been "nothing to do" for 3+ cycles, suggest removing it or redirecting its focus.
+- If a radar found issues but no writer picked them up, flag the handoff gap.
+- Can adjust automation prompts to redirect focus. Cannot modify project code directly.
+"""
+execution_environment = "local"
+
+[metadata]
+project = "myapp"
+role = "coordinator"
+created_by = "vidux-loop"
+created_at = "2026-04-06T00:00:00Z"

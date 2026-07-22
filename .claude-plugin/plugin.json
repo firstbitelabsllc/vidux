@@ -1,0 +1,9 @@
+{
+  "name": "vidux",
+  "version": "1.0.0",
+  "description": "Plan-first control plane for long-running AI coding loops.",
+  "author": {
+    "name": "First Bite Labs"
+  },
+  "homepage": "https://github.com/firstbitelabsllc/vidux"
+}

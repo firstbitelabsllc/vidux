@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" fill="none">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-dim: #dbeafe;
+      --node-bg: #ffffff;
+      --node-border: #e2e8f0;
+      --arrow: #cbd5e1;
+      --line-accent: #3b82f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --bg-subtle: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --accent: #60a5fa;
+        --accent-dim: #1e3a5f;
+        --node-bg: #1e293b;
+        --node-border: #334155;
+        --arrow: #475569;
+        --line-accent: #60a5fa;
+      }
+    }
+    .bg { fill: var(--bg); }
+    .bg-subtle { fill: var(--bg-subtle); }
+    .text-primary { fill: var(--text-primary); }
+    .text-secondary { fill: var(--text-secondary); }
+    .text-muted { fill: var(--text-muted); }
+    .accent { fill: var(--accent); }
+    .accent-dim { fill: var(--accent-dim); }
+    .node-bg { fill: var(--node-bg); }
+    .node-border { stroke: var(--node-border); fill: none; }
+    .arrow { stroke: var(--arrow); fill: none; }
+    .line-accent { stroke: var(--line-accent); fill: none; }
+    .accent-stroke { stroke: var(--accent); fill: none; }
+
+    /* Animations */
+    @keyframes flow {
+      0% { stroke-dashoffset: 24; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .flow-line {
+      stroke-dasharray: 6 6;
+      animation: flow 1.5s linear infinite;
+    }
+    @keyframes pulse-node {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .pulse { animation: pulse-node 3s ease-in-out infinite; }
+  </style>
+
+  <!-- Background -->
+  <rect width="960" height="320" rx="12" class="bg"/>
+
+  <!-- Subtle grid dots -->
+  <g class="text-muted" opacity="0.25">
+    <circle cx="40" cy="40" r="1"/><circle cx="80" cy="40" r="1"/><circle cx="120" cy="40" r="1"/><circle cx="160" cy="40" r="1"/><circle cx="200" cy="40" r="1"/>
+    <circle cx="40" cy="80" r="1"/><circle cx="80" cy="80" r="1"/><circle cx="120" cy="80" r="1"/><circle cx="160" cy="80" r="1"/><circle cx="200" cy="80" r="1"/>
+    <circle cx="760" cy="240" r="1"/><circle cx="800" cy="240" r="1"/><circle cx="840" cy="240" r="1"/><circle cx="880" cy="240" r="1"/><circle cx="920" cy="240" r="1"/>
+    <circle cx="760" cy="280" r="1"/><circle cx="800" cy="280" r="1"/><circle cx="840" cy="280" r="1"/><circle cx="880" cy="280" r="1"/><circle cx="920" cy="280" r="1"/>
+  </g>
+
+  <!-- Title -->
+  <text x="480" y="90" text-anchor="middle" class="text-primary" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" letter-spacing="-2">vidux</text>
+
+  <!-- Tagline -->
+  <text x="480" y="125" text-anchor="middle" class="text-secondary" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="400">Plan first, code second.</text>
+
+  <!-- Flow diagram: Evidence → Plan → Execute → Verify → Checkpoint -->
+  <g transform="translate(80, 170)">
+    <!-- Node 1: Evidence -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" text-transform="uppercase" letter-spacing="1">GATHER</text>
+      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">evidence</text>
+    </g>
+
+    <!-- Arrow 1→2 -->
+    <line x1="138" y1="28" x2="178" y2="28" class="arrow flow-line" stroke-width="1.5"/>
+    <polygon points="175,23 185,28 175,33" class="arrow" style="fill: var(--arrow);"/>
+
+    <!-- Node 2: Plan -->
+    <g transform="translate(190, 0)">
+      <rect x="0" y="0" width="130" height="56" rx="10" class="accent-dim"/>
+      <rect x="0" y="0" width="130" height="56" rx="10" class="accent-stroke" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">WRITE</text>
+      <text x="65" y="43" text-anchor="middle" class="accent" font-family="ui-monospace, monospace" font-size="13" font-weight="700">PLAN.md</text>
+    </g>
+
+    <!-- Arrow 2→3 -->
+    <line x1="328" y1="28" x2="368" y2="28" class="line-accent flow-line" stroke-width="1.5"/>
+    <polygon points="365,23 375,28 365,33" class="accent" style="fill: var(--accent);"/>
+
+    <!-- Node 3: Execute -->
+    <g transform="translate(380, 0)">
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">EXECUTE</text>
+      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">one task</text>
+    </g>
+
+    <!-- Arrow 3→4 -->
+    <line x1="518" y1="28" x2="558" y2="28" class="arrow flow-line" stroke-width="1.5"/>
+    <polygon points="555,23 565,28 555,33" class="arrow" style="fill: var(--arrow);"/>
+
+    <!-- Node 4: Verify -->
+    <g transform="translate(570, 0)">
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">VERIFY</text>
+      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">checkpoint</text>
+    </g>
+
+    <!-- Return arrow (bottom) -->
+    <path d="M 700 40 Q 720 40 720 60 L 720 80 Q 720 95 700 95 L 100 95 Q 80 95 80 80 L 80 62" class="line-accent flow-line pulse" stroke-width="1.2" opacity="0.5"/>
+    <polygon points="75,65 80,55 85,65" class="accent" style="fill: var(--accent);" opacity="0.5"/>
+    <text x="400" y="100" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-style="italic">results feed back into evidence</text>
+  </g>
+
+  <!-- Bottom tagline -->
+  <text x="480" y="305" text-anchor="middle" class="text-muted" font-family="system-ui, -apple-system, sans-serif" font-size="12">Plan, proof, and resume that persist across sessions, agents, and days</text>
+</svg>

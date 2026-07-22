@@ -1,0 +1,38 @@
+title = "vidux gitleaks config"
+
+# Without this, gitleaks treats the 3
+# custom rules below as the ENTIRE ruleset -- silently REPLACING its own
+# ~150+ built-in detectors (AWS/GCP/Slack/private-key/generic-password/etc.)
+# rather than extending them. secret-scan.yml is the one workflow that runs
+# automatically on every push/PR; verified empirically (synthetic secrets
+# file) that without this line, gitleaks misses a Slack bot token and an RSA
+# private key its own defaults would catch.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "linear-api-key"
+description = "Linear personal API key"
+regex = '''lin_api_[A-Za-z0-9]{40}'''
+keywords = ["lin_api_"]
+
+[[rules]]
+id = "github-pat"
+description = "GitHub Personal Access Token"
+regex = '''(?:ghp_|gho_|ghu_|ghs_|github_pat_)[A-Za-z0-9_]{20,}'''
+
+[[rules]]
+id = "openai-key"
+description = "OpenAI API key"
+regex = '''sk-[A-Za-z0-9]{40,}'''
+
+[allowlist]
+description = "Allowlist for known false positives (docs, function names)"
+paths = [
+    "^\\.git/",       # CI checkout stores its masked GitHub token in .git/config
+    "guides/recipes.md",  # contains scrubbed placeholder examples
+]
+regexes = [
+    "fetch_issues_with_pr_markdown_no_attachment",  # function name false positive
+    "sk-ant-oat01-xxxxx",                            # documentation placeholder
+]

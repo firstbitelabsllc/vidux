@@ -1,0 +1,77 @@
+name: Bug Report
+description: Report a problem in the public Vidux core.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What broke
+      description: A clear description of what went wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Include the command, file shape, or loop state that triggered the issue.
+      placeholder: |
+        1. Run `/vidux "..."` in Claude Code
+        2. vidux-loop.sh outputs ...
+        3. Expected X but got Y
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Low — cosmetic or minor inconvenience
+        - Medium — workaround exists but workflow is degraded
+        - High — blocks a core workflow, no workaround
+    validations:
+      required: true
+  - type: input
+    id: vidux-version
+    attributes:
+      label: Vidux version
+      description: Run `cat VERSION` in your vidux directory.
+      placeholder: e.g. 2.3.0
+    validations:
+      required: false
+  - type: dropdown
+    id: host-tool
+    attributes:
+      label: Host tool
+      description: Which AI coding tool were you using?
+      options:
+        - Claude Code
+        - Cursor
+        - Codex CLI
+        - Other
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: OS and shell
+      description: e.g. macOS 15.3 / zsh, Ubuntu 24.04 / bash
+      placeholder: macOS 15.3 / zsh
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or output
+      description: Paste any error messages, JSON output, or script traces.
+      render: shell
+    validations:
+      required: false

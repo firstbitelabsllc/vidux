@@ -1,0 +1,5 @@
+# PLAN.md is the single source of truth. A merge conflict resolved wrong must
+# never silently drop tasks — union-merge keeps both sides on conflict;
+# duplicates are visible and fixable, deleted tasks are not. Paired with
+# scripts/vidux-plan-guard.sh (task-count drift detection).
+PLAN.md merge=union

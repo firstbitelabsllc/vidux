@@ -1,0 +1,208 @@
+#!/usr/bin/env bash
+# vidux-browse — start the local plan browser and open it.
+#
+# Usage:
+#   vidux-browse           # start server, open browser
+#   vidux-browse --no-open # start server, don't open
+#   vidux-browse --foreground / -f  # don't background; stream logs
+set -euo pipefail
+
+# Self-locate like bin/vidux does, rather than assuming the checkout lives at
+# $HOME/Development/vidux -- a stranger's fresh clone (or a worktree, or a
+# differently-named clone) invoking this script directly (as README.md's own
+# "Vidux Browse" section documents) would otherwise crash with a raw
+# FileNotFoundError trying to reach browser/server.py under the wrong path.
+VIDUX_BROWSE_SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "${VIDUX_BROWSE_SOURCE}" ]]; do
+  VIDUX_BROWSE_SOURCE_DIR="$(cd -P "$(dirname "${VIDUX_BROWSE_SOURCE}")" && pwd)"
+  VIDUX_BROWSE_SOURCE="$(readlink "${VIDUX_BROWSE_SOURCE}")"
+  [[ "${VIDUX_BROWSE_SOURCE}" != /* ]] && VIDUX_BROWSE_SOURCE="${VIDUX_BROWSE_SOURCE_DIR}/${VIDUX_BROWSE_SOURCE}"
+done
+VIDUX_BROWSE_BIN_DIR="$(cd -P "$(dirname "${VIDUX_BROWSE_SOURCE}")" && pwd)"
+
+ROOT="${VIDUX_ROOT:-$(cd "${VIDUX_BROWSE_BIN_DIR}/.." && pwd)}"
+PORT="${VIDUX_BROWSER_PORT:-7191}"
+HOST="${VIDUX_BROWSER_HOST:-127.0.0.1}"
+OPEN_HOST="${VIDUX_BROWSER_OPEN_HOST:-127.0.0.1}"
+LOG="${TMPDIR:-/tmp}/vidux-browser.log"
+PIDFILE="${TMPDIR:-/tmp}/vidux-browser.pid"
+DEV_ROOT="${VIDUX_DEV_ROOT:-$HOME/Development}"
+COMMENTS_PATH="${VIDUX_BROWSER_COMMENTS_FILE:-}"
+STEERING_PATH="${VIDUX_BROWSER_STEERING_FILE:-$HOME/.vidux-browser/steering.jsonl}"
+CLAIMS_PATH="${VIDUX_CLAIMS_FILE:-$HOME/.agent-ledger/claims.jsonl}"
+
+OPEN_BROWSER=1
+FOREGROUND=0
+
+usage() {
+  cat <<EOF
+usage: vidux-browse [--no-open] [--foreground|-f] [--port N] [--host HOST] [--root PATH] [--open-host HOST] [--comments-path PATH] [--steering-path PATH] [--claims-path PATH]
+  default: starts server in background, opens http://${OPEN_HOST}:${PORT}
+EOF
+}
+
+require_value() {
+  local flag="$1"
+  if [[ $# -lt 2 || -z "${2:-}" || "${2:-}" == --* ]]; then
+    echo "vidux-browse: ${flag} requires a value" >&2
+    usage >&2
+    exit 2
+  fi
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --no-open) OPEN_BROWSER=0; shift ;;
+    -f|--foreground) FOREGROUND=1; shift ;;
+    --port)
+      require_value "$1" "${2:-}"; PORT="$2"; shift 2 ;;
+    --port=*)
+      PORT="${1#*=}"; shift ;;
+    --host)
+      require_value "$1" "${2:-}"; HOST="$2"; shift 2 ;;
+    --host=*)
+      HOST="${1#*=}"; shift ;;
+    --root|--dev-root)
+      require_value "$1" "${2:-}"; DEV_ROOT="$2"; shift 2 ;;
+    --root=*|--dev-root=*)
+      DEV_ROOT="${1#*=}"; shift ;;
+    --open-host)
+      require_value "$1" "${2:-}"; OPEN_HOST="$2"; shift 2 ;;
+    --open-host=*)
+      OPEN_HOST="${1#*=}"; shift ;;
+    --comments-path)
+      require_value "$1" "${2:-}"; COMMENTS_PATH="$2"; shift 2 ;;
+    --comments-path=*)
+      COMMENTS_PATH="${1#*=}"; shift ;;
+    --steering-path)
+      require_value "$1" "${2:-}"; STEERING_PATH="$2"; shift 2 ;;
+    --steering-path=*)
+      STEERING_PATH="${1#*=}"; shift ;;
+    --claims-path)
+      require_value "$1" "${2:-}"; CLAIMS_PATH="$2"; shift 2 ;;
+    --claims-path=*)
+      CLAIMS_PATH="${1#*=}"; shift ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "vidux-browse: unknown flag: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+if [[ ! "${PORT}" =~ ^[0-9]+$ ]]; then
+  echo "vidux-browse: --port must be an integer" >&2
+  exit 2
+fi
+if [[ -z "${HOST}" || -z "${OPEN_HOST}" ]]; then
+  echo "vidux-browse: --host and --open-host must be non-empty" >&2
+  exit 2
+fi
+
+URL="http://${OPEN_HOST}:${PORT}"
+EXPECTED_DEV_ROOT="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv[1]).expanduser().resolve())' "${DEV_ROOT}")"
+EXPECTED_REPO_ROOT="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv[1]).expanduser().resolve())' "${ROOT}")"
+EXPECTED_SERVER_MTIME_NS="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv[1]).stat().st_mtime_ns)' "${EXPECTED_REPO_ROOT}/browser/server.py")"
+EXPECTED_STEERING_MODULE_MTIME_NS="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv[1]).stat().st_mtime_ns)' "${EXPECTED_REPO_ROOT}/browser/steering_mailbox.py")"
+EXPECTED_STEERING_STORE_ID="$(python3 -c 'from pathlib import Path; import hashlib, sys; value = str(Path(sys.argv[1]).expanduser().resolve()); print(hashlib.sha256(value.encode()).hexdigest()[:16])' "${STEERING_PATH}")"
+EXPECTED_COORDINATION_MODULE_MTIME_NS="$(python3 -c 'from pathlib import Path; import sys; print(Path(sys.argv[1]).stat().st_mtime_ns)' "${EXPECTED_REPO_ROOT}/browser/coordination_claims.py")"
+EXPECTED_COORDINATION_STORE_ID="$(python3 -c 'from pathlib import Path; import hashlib, sys; value = str(Path(sys.argv[1]).expanduser().resolve()); print(hashlib.sha256(value.encode()).hexdigest()[:16])' "${CLAIMS_PATH}")"
+SERVER_ARGS=(--host "${HOST}" --port "${PORT}" --root "${EXPECTED_DEV_ROOT}" --steering-path "${STEERING_PATH}" --claims-path "${CLAIMS_PATH}")
+if [[ -n "${COMMENTS_PATH}" ]]; then
+  SERVER_ARGS+=(--comments-path "${COMMENTS_PATH}")
+fi
+
+health_matches_current_browser() {
+  local health
+  health="$(curl -fsS "${URL}/api/health" 2>/dev/null || true)"
+  [[ -n "${health}" ]] || return 1
+  HEALTH_JSON="${health}" \
+    EXPECTED_DEV_ROOT="${EXPECTED_DEV_ROOT}" \
+    EXPECTED_REPO_ROOT="${EXPECTED_REPO_ROOT}" \
+    EXPECTED_PORT="${PORT}" \
+    EXPECTED_SERVER_MTIME_NS="${EXPECTED_SERVER_MTIME_NS}" \
+    EXPECTED_STEERING_MODULE_MTIME_NS="${EXPECTED_STEERING_MODULE_MTIME_NS}" \
+    EXPECTED_STEERING_STORE_ID="${EXPECTED_STEERING_STORE_ID}" \
+    EXPECTED_COORDINATION_MODULE_MTIME_NS="${EXPECTED_COORDINATION_MODULE_MTIME_NS}" \
+    EXPECTED_COORDINATION_STORE_ID="${EXPECTED_COORDINATION_STORE_ID}" \
+    python3 - <<'PY'
+import json
+import os
+import sys
+
+try:
+    payload = json.loads(os.environ["HEALTH_JSON"])
+except (KeyError, json.JSONDecodeError):
+    sys.exit(1)
+
+if payload.get("ok") is not True:
+    sys.exit(1)
+if str(payload.get("dev_root", "")) != os.environ["EXPECTED_DEV_ROOT"]:
+    sys.exit(1)
+if str(payload.get("repo_root", "")) != os.environ["EXPECTED_REPO_ROOT"]:
+    sys.exit(1)
+if str(payload.get("steering_store_id", "")) != os.environ["EXPECTED_STEERING_STORE_ID"]:
+    sys.exit(1)
+if str(payload.get("coordination_store_id", "")) != os.environ["EXPECTED_COORDINATION_STORE_ID"]:
+    sys.exit(1)
+try:
+    server_mtime_ns = int(payload.get("server_mtime_ns"))
+    expected_server_mtime_ns = int(os.environ["EXPECTED_SERVER_MTIME_NS"])
+    steering_module_mtime_ns = int(payload.get("steering_module_mtime_ns"))
+    expected_steering_module_mtime_ns = int(os.environ["EXPECTED_STEERING_MODULE_MTIME_NS"])
+    coordination_module_mtime_ns = int(payload.get("coordination_module_mtime_ns"))
+    expected_coordination_module_mtime_ns = int(os.environ["EXPECTED_COORDINATION_MODULE_MTIME_NS"])
+except (TypeError, ValueError):
+    sys.exit(1)
+if server_mtime_ns != expected_server_mtime_ns:
+    sys.exit(1)
+if steering_module_mtime_ns != expected_steering_module_mtime_ns:
+    sys.exit(1)
+if coordination_module_mtime_ns != expected_coordination_module_mtime_ns:
+    sys.exit(1)
+try:
+    port = int(payload.get("port"))
+    expected_port = int(os.environ["EXPECTED_PORT"])
+except (TypeError, ValueError):
+    sys.exit(1)
+sys.exit(0 if port == expected_port else 1)
+PY
+}
+
+# Reuse the port only when it is this checkout's current Vidux browser.
+if lsof -nP -iTCP:"${PORT}" -sTCP:LISTEN >/dev/null 2>&1; then
+  if health_matches_current_browser; then
+    echo "vidux browser already on ${URL}"
+    if [[ "${OPEN_BROWSER}" == 1 ]]; then open "${URL}"; fi
+    exit 0
+  fi
+  echo "port ${PORT} is already in use, but ${URL}/api/health does not match this Vidux checkout/root" >&2
+  echo "expected repo_root=${EXPECTED_REPO_ROOT} dev_root=${EXPECTED_DEV_ROOT} server_mtime_ns=${EXPECTED_SERVER_MTIME_NS} steering_module_mtime_ns=${EXPECTED_STEERING_MODULE_MTIME_NS} steering_store_id=${EXPECTED_STEERING_STORE_ID} coordination_module_mtime_ns=${EXPECTED_COORDINATION_MODULE_MTIME_NS} coordination_store_id=${EXPECTED_COORDINATION_STORE_ID}" >&2
+  echo "hint: pass --port N (or set VIDUX_BROWSER_PORT) to run on a free port" >&2
+  exit 1
+fi
+
+if [[ "${FOREGROUND}" == 1 ]]; then
+  exec env VIDUX_BROWSER_HOST="${HOST}" VIDUX_BROWSER_PORT="${PORT}" VIDUX_ROOT="${EXPECTED_REPO_ROOT}" python3 "${ROOT}/browser/server.py" "${SERVER_ARGS[@]}"
+fi
+
+# Background mode.
+nohup env VIDUX_BROWSER_HOST="${HOST}" VIDUX_BROWSER_PORT="${PORT}" VIDUX_ROOT="${EXPECTED_REPO_ROOT}" python3 "${ROOT}/browser/server.py" "${SERVER_ARGS[@]}" >"${LOG}" 2>&1 &
+echo $! > "${PIDFILE}"
+
+# Wait up to 3s for the server to bind.
+for _ in 1 2 3 4 5 6; do
+  if health_matches_current_browser; then
+    echo "vidux browser → ${URL}  (pid $(cat "${PIDFILE}"), log ${LOG})"
+    if [[ "${OPEN_BROWSER}" == 1 ]]; then open "${URL}"; fi
+    exit 0
+  fi
+  sleep 0.5
+done
+
+echo "server did not respond on ${URL} within 3s — check ${LOG}" >&2
+exit 1

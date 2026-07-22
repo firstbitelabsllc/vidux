@@ -1,0 +1,25 @@
+name: Feedback
+description: Share adoption feedback, critique, or product direction notes.
+title: "[Feedback] "
+labels:
+  - feedback
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What were you trying to do with Vidux?
+    validations:
+      required: true
+  - type: textarea
+    id: signal
+    attributes:
+      label: What helped or broke
+      description: Call out the highest-signal part of the experience.
+    validations:
+      required: true
+  - type: textarea
+    id: ask
+    attributes:
+      label: Suggested next move
+      description: What should change next?

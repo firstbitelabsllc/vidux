@@ -1,0 +1,37 @@
+{
+  "_description": "Example vidux.config.json. Copy plan_store into your real config. vidux is markdown-plan-first: PLAN.md in git is the only queue authority — there is no external-board sync.",
+  "version": "1.0",
+  "plan_store": {
+    "mode": "local",
+    "path": "~/.local/share/vidux/plans"
+  },
+  "external_plan_roots": [],
+  "defaults": {
+    "archive_threshold": 30,
+    "context_warning_lines": 200,
+    "max_worktrees": 5,
+    "stale_in_progress_days": 3,
+    "max_browser_processes": 7,
+    "max_codex_active_threads": 400,
+    "max_codex_active_automation_threads": 250,
+    "max_codex_avg_title_chars": 2000,
+    "min_system_memory_free_pct": 15
+  },
+  "backpressure": {
+    "bimodal_warning_threshold": 85,
+    "bimodal_critical_threshold": 70,
+    "max_concurrent_dispatches": 4,
+    "pressure_ceiling": 8,
+    "circuit_breaker_failures": 3,
+    "circuit_breaker_window_cycles": 5,
+    "circuit_breaker_cooldown_cycles": 3
+  },
+  "pruning": {
+    "stale_blocked_days": 90,
+    "decision_log_rotation_days": 180,
+    "worktree_stale_hours": 24,
+    "worktree_orphaned_hours": 48,
+    "max_concurrent_worktrees": 3,
+    "plan_size_warn_kb": 100
+  }
+}

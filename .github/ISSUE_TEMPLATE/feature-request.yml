@@ -1,0 +1,49 @@
+name: Feature Request
+description: Suggest a new capability or improvement for Vidux.
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of Vidux does this affect?
+      options:
+        - Core loop (SKILL.md / LOOP.md / DOCTRINE.md)
+        - Scripts (vidux-loop.sh, vidux-checkpoint.sh, etc.)
+        - Commands (slash commands)
+        - Fleet intelligence (observer, witness, doctor)
+        - Documentation (guides, README, examples)
+        - CI / testing
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or gap
+      description: What workflow is missing, slow, or painful today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How should Vidux solve this? Concrete examples help.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try or think about?
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, links to other tools that do this well, etc.
+    validations:
+      required: false
