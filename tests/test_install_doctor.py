@@ -275,6 +275,28 @@ class InstallDoctorTests(unittest.TestCase):
             mounts = {row["path"]: row for row in payload["install"]["skill_mounts"]}
             self.assertEqual(mounts[str(mirror_mount)]["state"], "same_repo_stale")
 
+    def test_subdirectory_of_mirror_is_not_same_source(self) -> None:
+        # A mount pointing inside the repository serves only a subtree; it
+        # must not ride the same-repo identity to same_source.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = self._make_install(base / "current")
+            env, _ = self._environment(base, root)
+            home = Path(env["HOME"])
+            self._mount_all(home, root)
+            mirror = base / "mirror"
+            self._git(root, "worktree", "add", "--detach", str(mirror), "origin/main")
+            sub_mount = home / COMMON_MOUNTS[0]
+            sub_mount.unlink()
+            sub_mount.symlink_to(mirror / "scripts")
+
+            result, payload = self._run(root, env)
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(payload["status"], "warn", payload)
+            mounts = {row["path"]: row for row in payload["install"]["skill_mounts"]}
+            self.assertEqual(mounts[str(sub_mount)]["state"], "different_source")
+
     def test_different_path_and_mount_source_warn(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

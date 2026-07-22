@@ -196,6 +196,46 @@ class WorktreeGcTests(unittest.TestCase):
         self.assertTrue(item["removable"])
         self.assertEqual(21, item["pr_number"])
 
+    def test_stale_name_pr_yields_to_oid_matching_closed_pr(self):
+        # select_best_pr prefers MERGED over CLOSED for one branch name, so a
+        # stale MERGED PR from the name's earlier life can shadow a CLOSED PR
+        # that exactly matches this worktree's HEAD. The OID match must win.
+        path = self.add_unmerged_worktree("reused-two")
+        tip_oid = git(path, "rev-parse", "HEAD").stdout.strip()
+        stale_oid = git(self.repo, "rev-parse", "origin/main").stdout.strip()
+        stale_merged = {
+            "number": 22,
+            "state": "MERGED",
+            "title": "earlier life of this branch name",
+            "headRefName": "reused-two",
+            "isDraft": False,
+            "url": "https://example.test/pull/22",
+            "headRefOid": stale_oid,
+            "mergedAt": "2026-04-01T00:00:00Z",
+            "closedAt": "2026-04-01T00:00:00Z",
+        }
+        closed_at_tip = {
+            "number": 23,
+            "state": "CLOSED",
+            "title": "current work, closed without merge",
+            "headRefName": "reused-two",
+            "isDraft": False,
+            "url": "https://example.test/pull/23",
+            "headRefOid": tip_oid,
+            "mergedAt": None,
+            "closedAt": "2026-07-20T00:00:00Z",
+        }
+        self.write_fake_gh(self.root / "bin" / "gh", extra=[stale_merged, closed_at_tip])
+
+        result = self.run_gc()
+        payload = json.loads(result.stdout)
+        by_branch = {item["branch"]: item for item in payload["worktrees"]}
+
+        item = by_branch["reused-two"]
+        self.assertEqual("closed_unmerged", item["bucket"])
+        self.assertFalse(item["removable"])
+        self.assertEqual(23, item["pr_number"])
+
     def test_classifies_worktree_lifecycle_buckets(self):
         result = self.run_gc()
         payload = json.loads(result.stdout)

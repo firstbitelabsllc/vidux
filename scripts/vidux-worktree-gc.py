@@ -503,6 +503,15 @@ def classify_worktree(
             or (branch_pr.head_ref_oid and head and branch_pr.head_ref_oid == head)
         ):
             pr = branch_pr
+        elif head:
+            # The branch-name slot can be claimed by a stale PR from an
+            # earlier life of the name while a different non-OPEN PR matches
+            # this worktree's exact HEAD; the OID equality is the proof of
+            # attribution. OPEN PRs stay name-only so a coincident tip cannot
+            # capture unrelated branches.
+            head_pr = prs_by_head.get(head)
+            if head_pr and head_pr.state != "OPEN":
+                pr = head_pr
     elif head:
         pr = prs_by_head.get(head)
 
