@@ -192,25 +192,16 @@ FORBIDDEN_PATTERNS = PRIVACY_PATTERNS + HYGIENE_PATTERNS
 # allowlist, not a denylist, for the same reason SCAN_TARGETS is default-on: a
 # new stray identity is caught the moment it appears, not when someone
 # remembers to add it.
+#   - codesmith-bot@users.noreply.github.com: the Codesmith reviewer identity
+#     of the blacksmith.sh GitHub App installed on this repo (its "Codesmith"
+#     check runs on every PR). With autofix enabled it lands commits as the
+#     committer, and applied review suggestions carry it as a Co-authored-by
+#     trailer (first on the PR #1 merge, a1e46e63). Intended participant, not
+#     a foreign identity.
 ALLOWED_COMMIT_EMAILS = frozenset(
     {
         "leojkwan@gmail.com",
         "noreply@github.com",
-    }
-)
-
-# A Co-authored-by trailer renders its account in the repo's contributor
-# sidebar exactly like an author does, so trailer emails are held to the same
-# allowlist. Grandfathered trailers: identities already in immutable public
-# history whose removal requires a history rewrite (a maintainer-gated act).
-# Each entry documents a known exposure — it does not endorse the identity.
-#   - codesmith-bot@users.noreply.github.com: stamped by a tool onto the merge
-#     of PR #1 (a1e46e63). `codesmith-bot` is a registered third-party GitHub
-#     account (zero repos, zero activity, no local credential or config
-#     references it) — not a verified automation of this repo. New commits
-#     carrying this trailer still fail the gate.
-KNOWN_HISTORICAL_TRAILER_EMAILS = frozenset(
-    {
         "codesmith-bot@users.noreply.github.com",
     }
 )
@@ -497,8 +488,7 @@ def run_metadata_gate(repo_root: Path, *, rev: str = "HEAD") -> dict[str, Any]:
        ALLOWED_COMMIT_EMAILS: any identity not on the allowlist is a finding.
     2. A foreign ``Co-authored-by`` trailer email, which renders in the
        contributor sidebar exactly like an author. Enforced against the same
-       allowlist, minus KNOWN_HISTORICAL_TRAILER_EMAILS (documented exposures
-       already locked into reachable history).
+       allowlist.
     3. A privacy string in a commit message or trailer (e.g. a
        ``Co-authored-by: ... <name@snapchat.com>`` trailer). PRIVACY_PATTERNS
        apply to every reachable commit's message body.
@@ -554,10 +544,7 @@ def run_metadata_gate(repo_root: Path, *, rev: str = "HEAD") -> dict[str, Any]:
             trailer = CO_AUTHOR_TRAILER_RE.match(line)
             if trailer:
                 trailer_email = trailer.group("email").strip()
-                if (
-                    trailer_email not in ALLOWED_COMMIT_EMAILS
-                    and trailer_email not in KNOWN_HISTORICAL_TRAILER_EMAILS
-                ):
+                if trailer_email not in ALLOWED_COMMIT_EMAILS:
                     key = ("co-author trailer", trailer.group("name"), trailer_email)
                     bad_identities[key] = bad_identities.get(key, 0) + 1
             for label, pattern in PRIVACY_PATTERNS:

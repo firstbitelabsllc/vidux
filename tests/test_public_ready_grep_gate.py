@@ -845,10 +845,10 @@ class PublicReadyMetadataGateTests(unittest.TestCase):
         )
 
     def test_foreign_coauthor_trailer_identity_is_caught(self):
-        # Reproduces the codesmith-bot exposure class: a Co-authored-by
-        # trailer whose email matches no privacy vocabulary still renders a
-        # third-party GitHub account in the contributor sidebar. The identity
-        # allowlist must apply to trailers, not just author/committer fields.
+        # A Co-authored-by trailer whose email matches no privacy vocabulary
+        # still renders a third-party GitHub account in the contributor
+        # sidebar. The identity allowlist must apply to trailers, not just
+        # author/committer fields.
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             subprocess.run(["git", "init", "-q", str(root)], check=True)
@@ -873,11 +873,12 @@ class PublicReadyMetadataGateTests(unittest.TestCase):
             payload["matches"],
         )
 
-    def test_grandfathered_trailer_passes(self):
-        # The one trailer already locked into reachable public history
-        # (a1e46e63) is documented in KNOWN_HISTORICAL_TRAILER_EMAILS so the
-        # gate stays green on main without endorsing the identity. New commits
-        # reusing it in author/committer fields still fail (previous tests).
+    def test_codesmith_trailer_passes(self):
+        # codesmith-bot is the Codesmith reviewer identity of the blacksmith.sh
+        # GitHub App installed on this repo: applied review suggestions carry it
+        # as a Co-authored-by trailer (first on the PR #1 merge, a1e46e63), and
+        # with autofix enabled it also lands commits as the committer. It is on
+        # ALLOWED_COMMIT_EMAILS as an intended participant.
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             subprocess.run(["git", "init", "-q", str(root)], check=True)
