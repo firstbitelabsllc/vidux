@@ -432,6 +432,10 @@ def main() -> int:
     ap.add_argument("--focus", nargs="*", default=None, help="Repo names to put in 'tied' bucket")
     ap.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="Search root (default ~/Development)")
     args = ap.parse_args()
+    # Resolve before any use: a relative root (`--root .`) otherwise has an
+    # empty `.name`, which degrades every root-level plan's short name to the
+    # literal "PLAN.md" and breaks the tied-bucket match against the cwd repo.
+    args.root = args.root.resolve()
 
     if not args.root.is_dir():
         print(f"error: search root does not exist: {args.root}", flush=True)
