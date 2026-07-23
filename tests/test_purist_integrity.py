@@ -94,7 +94,7 @@ class PuristIntegrityTests(unittest.TestCase):
     def test_readme_keeps_the_public_first_read_thin_and_boundary_clear(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         normalized = " ".join(readme.split())
-        self.assertLessEqual(len(readme.splitlines()), 280)
+        self.assertLessEqual(len(readme.splitlines()), 100)
         self.assertIn("## Quick start", readme)
         self.assertIn("## Where Vidux stops", readme)
         self.assertIn("Vidux can record provider-neutral claims", normalized)

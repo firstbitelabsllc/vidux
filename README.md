@@ -10,30 +10,19 @@
 
 # Vidux
 
-A coding agent loses everything when its session ends: the plan, the reasoning,
-the half-finished task. Vidux keeps that recovery packet in plain repository
-files, so the next run resumes exactly where the last one stopped, whether the
-next run is the same agent, a different tool, or you a week later.
+A coding agent loses everything when its session ends. Vidux keeps the
+recovery packet in plain repository files — a `PLAN.md` holding priorities and
+decisions, evidence stored next to the work, and a checkpoint naming the exact
+next action — so the next run resumes where the last one stopped, whether
+that's the same agent, a different tool, or you a week later.
 
-It is three things and nothing more:
-
-- a **`PLAN.md`** that holds priorities and decisions,
-- **evidence** stored next to the work, and
-- a **checkpoint** that names the exact next action.
-
-Your coding host still picks the models, spawns the workers, and runs the tools.
-Vidux never touches any of that.
-
-**Reach for it when the work will outlive one session. Skip it for a quick fix
-that a plan would only slow down.**
+Reach for it when the work will outlive one session. Skip it for a quick fix.
 
 ## Quick start
 
-Vidux is an agent skill first. You don't type vidux commands — you tell your
-agent what you're working on, and the skill runs the plumbing.
+Vidux is an agent skill first — you don't type vidux commands.
 
 ```bash
-# once: get the source and mount the skill
 git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
 mkdir -p "$HOME/.claude/skills"
 ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"
@@ -43,162 +32,54 @@ Then, in any project, two sentences do everything:
 
 - **`/vidux "what you're working on"`** — the first cycle scaffolds `PLAN.md`,
   gathers evidence, and fills it in. No code until the plan is ready.
-- **"open the vidux dashboard"** — the agent starts the local cockpit at
+- **"open the vidux dashboard"** — starts the local cockpit at
   `http://127.0.0.1:7191`, scoped to your repo.
 
-That symlink is how Claude Code finds the skill; `claude --plugin-dir
-"$HOME/Development/vidux"` is the alternative, not an addition. Other coding
-hosts read [`SKILL.md`](SKILL.md) directly. Requirements: Bash, Git, and
-Python 3.9 or newer. No service, database, account, or API key.
-
-## The five-step cycle
-
-Every run is the same small loop:
-
-```mermaid
-flowchart LR
-  R["READ<br/>plan, git, proof"]
-  A["ASSESS<br/>resume or pick reachable work"]
-  X["ACT<br/>smallest reviewable slice"]
-  V["VERIFY<br/>real build, test, or UI proof"]
-  C["CHECKPOINT<br/>plan, evidence, exact resume"]
-  R --> A --> X --> V --> C
-  C -. next run .-> R
-```
-
-The plan answers what matters next and why. A checkpoint records what changed,
-the weakest claim the evidence supports, and the exact next action. Git
-transports the change; chat history is never the authority.
-
-## What the plan looks like
-
-The first cycle scaffolds one file with these sections:
-
-- **Purpose** and **Evidence**: the goal, and the sources that justify it.
-- **Constraints** and **Operator Brief**: the rails, and the current state.
-- **Outcome Scorecard** and **Tasks**: how you know it is done, and the ordered
-  work. Tasks move `pending → in_progress → completed`, with `blocked` terminal
-  until replaced.
-- **Decision Log** and **Progress**: an append-only record of why and when.
-
-The invariants it enforces: plan prose is not proof, a merge is not a deploy,
-skipped gates stay visible, a worker's "done" is not acceptance, and a task
-cannot silently vanish during a merge. An unclear root cause gets one linked
-`investigations/<slug>.md`, never another queue.
-
-## The dashboard
-
-Say "open the vidux dashboard" (or run `vidux browse` yourself) and you get a
-read-mostly browser view of the plans under your scan root: active and blocked
-work, rendered evidence, local comments, and plan-scoped steering. Markdown
-stays the source of truth; comments and claims are separate, append-only local
-state.
+Requirements: Bash, Git, Python 3.9 or newer. No service, database, account,
+or API key. Details: [Installation](docs/guide/installation.md) ·
+[Quickstart](docs/guide/quickstart.md).
 
 <p align="center">
   <img src="assets/vidux-dashboard.png" alt="The vidux dashboard showing a demo plan: goal, next step, a scorecard measure marked in progress with proof still missing, and cross-project resume queues" width="900" />
 </p>
 
 The board refuses to trust prose: a measure without an attached artifact shows
-`PROOF MISSING` until one exists.
+`PROOF MISSING` until one exists. It binds to loopback only by default — read
+[the browser reference](docs/reference/browser.md) before binding wider.
 
-The safety boundary is strict: loopback binding by default, Host and Origin
-validation on write routes, HTML artifacts rendered in a sandboxed iframe
-behind a sanitizer and an injected CSP (no scripts, forms, nested frames,
-popups, or external loads), sensitive-value redaction, and symlink rejection on
-writable files. LAN viewers cannot write plan state. Any non-loopback bind
-exposes the cockpit to that network — set `VIDUX_BROWSER_HOST=0.0.0.0` only on
-a trusted LAN, and read
-[`docs/reference/browser.md`](docs/reference/browser.md) first.
+## How it works
 
-## Where Vidux stops
+Every run is the same loop — READ → ASSESS → ACT → VERIFY → CHECKPOINT — and
+git transports the change; chat history is never the authority. The depth
+lives in the docs: [the cycle](docs/concepts/cycle.md) ·
+[plan structure](docs/concepts/plan-structure.md) ·
+[principles](docs/concepts/principles.md) ·
+[CLI](docs/reference/commands.md) · [config](docs/reference/config.md) ·
+[hooks](docs/reference/hooks.md).
 
-This boundary is the point: use the best coding host you can without tying your
-project's recovery story to that host's private memory.
-
-- Vidux does not schedule agents, route models, execute workers, or hold
-  provider credentials.
-- Vidux can record provider-neutral claims for concurrent work, but it never
-  launches a provider or selects a model. An external append-only ledger can add
-  durable publish receipts; it is a companion, not a second planning authority.
-- The dashboard is a local operational view, not a hosted collaboration service.
-- No benchmark harness, provider runner, or scoring implementation ships here;
-  evaluation belongs to the host.
-- Vidux optimizes for durable recovery, not raw speed. The value is that a plan,
-  its evidence, and the resume point survive a lost session.
-- macOS is the primary environment. Core scripts are portable, but OS scheduling
-  examples need platform-specific adaptation.
-
-## The CLI (plumbing)
-
-The skill shells out to a small CLI. You can drive it directly — useful for
-scripts, hooks, and hosts without a skill runtime:
+The skill shells out to a small CLI (`init`, `status`, `browse`, `doctor`) you
+can drive directly — put it on your PATH with
+`ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"`.
 
 <p align="center">
   <img src="assets/vidux-terminal-demo.svg" alt="A real vidux CLI session: init scaffolds PLAN.md, status lists the plan, browse starts the local cockpit" width="780" />
 </p>
 
-```text
-vidux init --here    create a PLAN.md without overwriting one
-vidux status         summarize plans under the scan root
-vidux browse         start the local cockpit
-vidux doctor         verify the local installation
-```
+## Where Vidux stops
 
-To put it on your PATH:
+Vidux does not schedule agents, route models, execute workers, or hold
+provider credentials — your coding host does all of that. Vidux can record
+provider-neutral claims for concurrent work, but it never launches a provider
+or selects a model. The dashboard is a local view, not a hosted service. No
+benchmark harness ships here. The value is durable recovery, not raw speed.
 
-```bash
-ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
-```
+## Release truth and contributing
 
-`vidux browse` and `vidux status` scan `~/Development` by default, so pass
-`--root .` (or set `VIDUX_DEV_ROOT`) when your project lives elsewhere —
-otherwise this project's plan is absent from the view. Run `vidux help
-<command>` for options, and `vidux doctor --json` for machine-readable install
-truth. One doctor check runs the contract self-test (`npm test`), which needs
-the dev dependencies (`npm ci`); on a fresh clone that check reports `[WARN]`
-and skips the suite — the doctor still exits `0`, because the runtime is Bash,
-Git, and Python only.
+Vidux installs from source; there is no npm package on the registry, though
+[Installation](docs/guide/installation.md) covers an optional locally-built
+tarball. The `1.0.0` in `VERSION` marks the source contract and matches the
+`v1.0.0` git tag and its GitHub Release.
 
-## Configuration
-
-The live config is `$XDG_CONFIG_HOME/vidux/vidux.config.json` (or
-`~/.config/vidux/vidux.config.json`). The checked-in
-[`vidux.config.example.json`](vidux.config.example.json) documents the shape.
-
-```bash
-python3 scripts/vidux-config.py init
-python3 scripts/vidux-config.py check --json
-```
-
-`plan_store` is `inline` for a repo-local plan, `local` for a configured
-persistent path, or `external` for a path outside the repository. Vidux never
-writes a central plan inside its own installation.
-
-Optional Git hooks live in `hooks/`; copy only the ones you intend to enforce.
-Vidux installs no hooks or background jobs implicitly.
-
-## Install and release truth
-
-Vidux installs from source (see Quick start); there is no npm package on the
-registry, though [Installation](docs/guide/installation.md) covers an optional
-locally-built `npm pack` tarball for a global CLI. The `1.0.0` in `VERSION`
-marks the source contract and matches the `v1.0.0` git tag and its GitHub
-Release. Node 20 or newer is needed only for that tarball, contributor tests,
-and docs.
-
-## Contributing
-
-```bash
-npm ci
-npm run verify        # JS + Python contract tests + the public-ready content gate
-npm run docs:build
-npm run test:e2e      # for browser changes
-```
-
-Start with [Architecture](ARCHITECTURE.md), [the doctrine](DOCTRINE.md), [the
-evidence format](guides/evidence-format.md), and the
-[bug-fix example](examples/bug-fix-lifecycle/). See
-[CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and
-[SUPPORT.md](SUPPORT.md) before opening a change.
-
-Vidux is MIT licensed.
+`npm ci && npm run verify` runs the JS and Python contract tests plus the
+public-ready content gate. Start with [ARCHITECTURE.md](ARCHITECTURE.md) and
+[CONTRIBUTING.md](CONTRIBUTING.md). MIT licensed.
