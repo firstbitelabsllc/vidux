@@ -28,7 +28,7 @@ Vidux never touches any of that.
 that a plan would only slow down.**
 
 <p align="center">
-  <img src="assets/vidux-terminal-demo.svg" alt="The Vidux cycle: read, assess, act, verify, checkpoint" width="780" />
+  <img src="assets/vidux-terminal-demo.svg" alt="A real vidux session: init scaffolds PLAN.md, status lists the plan, browse starts the local cockpit" width="780" />
 </p>
 
 ## Quick start
