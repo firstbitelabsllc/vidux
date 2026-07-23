@@ -50,8 +50,9 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   receipts: everything kill-from-shortlist; revolver kill-from-OSS; clausona
   peer-only; litty/fcp keep-private. Private: ai-leo
   `evidence/wave5-keep-kill-2026-07-23.md`. 2026-07-23.
-- [pending] Proactive research wave 6 — next reachable win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T19:22:48-04:00] Proactive research wave 6 — sandboxed-HOME
+  stranger install of vidux post-doctrine-cut (README verbatim); fix defects
+  if any. No publicize. Fold receipt here.
 
 ## Claim discipline
 
