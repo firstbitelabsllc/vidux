@@ -43,9 +43,12 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 3 (cursor-grok-4.5) — skillbox scrub gate
   PR #2 MERGED; promote blocked on KEEP-PRIVATE / `*-leo`. No publicize.
   2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T18:52:45-04:00] Proactive research wave 4 — surgical
-  vidux docs/root-readme-cut (doctrine to docs/doctrine/; install-first root);
-  cherry-pick only, re-run CI + public-ready gate. No publicize. Fold PR here.
+- [completed] Proactive research wave 4 (cursor-grok-4.5) — vidux doctrine cut PR
+  https://github.com/firstbitelabsllc/vidux/pull/3 (`docs/root-readme-cut-wave4`);
+  install-first README; doctrine under docs/doctrine/. Awaiting CI merge.
+  2026-07-23.
+- [pending] Proactive research wave 5 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
