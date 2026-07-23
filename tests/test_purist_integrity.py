@@ -82,14 +82,14 @@ class PuristIntegrityTests(unittest.TestCase):
 
                 self.assertEqual(payload["status"], "failed", payload)
 
-    def test_readme_pins_actual_benchmark_stub_and_local_release_truth(self) -> None:
+    def test_readme_pins_local_release_and_host_truth(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         normalized = " ".join(readme.split())
-        self.assertIn("No benchmark harness", normalized)
-        self.assertIn("source contract", normalized)
         self.assertIn("there is no npm package", normalized)
-        self.assertIn("v1.0.0", normalized)
-        self.assertIn("GitHub Release", normalized)
+        self.assertIn("Claude Code is the tested host", normalized)
+        self.assertIn("other hosts are untested", normalized)
+        self.assertIn("PROOF MISSING", normalized)
+        self.assertIn("loopback", normalized)
 
     def test_readme_keeps_the_public_first_read_thin_and_boundary_clear(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
@@ -99,7 +99,7 @@ class PuristIntegrityTests(unittest.TestCase):
         self.assertIn("## Where Vidux stops", readme)
         self.assertIn("Vidux can record provider-neutral claims", normalized)
         self.assertIn("it never launches a provider or selects a model", normalized)
-        self.assertIn("$HOME/.local/bin", readme)
+        self.assertIn("default `~/Development`", normalized)
         self.assertNotIn("/usr/local/bin", readme)
 
 
