@@ -47,8 +47,9 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   https://github.com/firstbitelabsllc/vidux/pull/3 (`docs/root-readme-cut-wave4`);
   install-first README; doctrine under docs/doctrine/. Awaiting CI merge.
   2026-07-23.
-- [pending] Proactive research wave 5 — next reachable win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T19:11:08-04:00] Proactive research wave 5 — private
+  keep/kill receipts (everything kill confirm, revolver kill-from-OSS,
+  clausona peer); no publicize. Fold private evidence path here.
 
 ## Claim discipline
 
