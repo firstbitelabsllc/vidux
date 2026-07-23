@@ -81,6 +81,7 @@ class StatusFocusTests(unittest.TestCase):
         """Stranger machine: ~/Development absent → warn + still show cwd PLAN."""
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp) / "home"
+            home.mkdir()
             repo = self._make_repo(home, "solo")
             env = {k: v for k, v in os.environ.items() if k != "VIDUX_DEV_ROOT"}
             env["HOME"] = str(home)
