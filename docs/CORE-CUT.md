@@ -12,7 +12,7 @@ Vidux **is** the public core. There is **no** second “public cut” product, n
 | Concept | Where it lives |
 |---|---|
 | **Vidux (this repo)** | Plan/proof/resume control plane: CLI, browser, SKILL, doctrine essays, guides |
-| **Private overlay** | **Pilot-Leo** and `*-leo` skills beside Pilot — **private `ai-leo`**, not a folder under Vidux |
+| **Personal overlays** | Operator-private skill overlays live beside Pilot in a separate private repo — not under Vidux |
 | **Missions / PLANs** | e.g. recognition-mission, bakeoffs — **private `ai-leo/vidux/`**, not shipped with Vidux |
 | **Legacy** | `vidux-legacy-private` — out of scope |
 
@@ -65,7 +65,7 @@ Essays **stay in-tree**; they leave the **root agent path** so install + SKILL s
 | Item | Action |
 |---|---|
 | “Public cut” / “thin cut of private monorepo” | **Kill wording** in dossier/market (private ai-leo) |
-| Pilot-Leo / `*-leo` inside Vidux | **Never land here** — private only |
+| Operator-private skill overlays inside Vidux | **Never land here** — keep them out of this repo |
 | ai-leo recognition/bakeoff PLANs | **Never land here** |
 | Second product name for the same core | **Do not invent** |
 | Root doctrine files in `package.json` `files` | **Removed** (covered by `docs/**/*.md`) |
@@ -126,7 +126,7 @@ Expected: all path tests pass; public-ready/grep and unit tests green on a clean
 **Title:** `docs: root install cut — doctrine essays under docs/doctrine`
 
 **Body:**  
-Vidux remains one product (the core). Root is install + SKILL + community. Long doctrine essays move to `docs/doctrine/`. `package.json` `files` no longer lists root doctrine names. No Pilot-Leo, no private missions. See `docs/CORE-CUT.md`.
+Vidux remains one product (the core). Root is install + SKILL + community. Long doctrine essays move to `docs/doctrine/`. `package.json` `files` no longer lists root doctrine names. No operator-private overlays or private missions. See `docs/CORE-CUT.md`.
 
 ---
 
