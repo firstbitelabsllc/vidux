@@ -37,16 +37,15 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   clausona + media MCP clones = third-party peers not portfolio; litty/fcp
   keep-private. Goal text realigned to quality-bar + create/visibility gate.
   Private receipt: ai-leo `evidence/wave2-council-2026-07-23.md`. 2026-07-23.
-- [completed] Claudux #121 direction 3 (cursor-grok-4.5) — PR
-  https://github.com/firstbitelabsllc/claudux/pull/125 (`866f853`);
-  post-generation source-boundary guard fail-closed; tests 26/26 + 93/93.
-  Dirs 1–2 still design-parked. 2026-07-23.
+- [completed] Claudux #121 direction 3 (cursor-grok-4.5) — PR #125 MERGED;
+  post-generation source-boundary guard fail-closed. Dirs 1–2 still
+  design-parked. 2026-07-23.
 - [completed] Proactive research wave 3 (cursor-grok-4.5) — skillbox scrub gate
-  PR https://github.com/leojkwan/skillbox/pull/2 (`feat/skillbox-scrub`);
-  promote blocked on KEEP-PRIVATE / `*-leo`; hermetic tests green. No publicize.
+  PR #2 MERGED; promote blocked on KEEP-PRIVATE / `*-leo`. No publicize.
   2026-07-23.
-- [pending] Proactive research wave 4 — next reachable OSS win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T18:52:45-04:00] Proactive research wave 4 — surgical
+  vidux  (doctrine → docs/doctrine/; install-first root);
+  cherry-pick only, re-run CI + public-ready gate. No publicize. Fold PR here.
 
 ## Claim discipline
 
