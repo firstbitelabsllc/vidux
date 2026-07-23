@@ -63,8 +63,8 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 7 (cursor-grok-4.5) — vidux#5 MERGED:
   status missing-dev-root warn/error → stderr so `--json` stdout stays parseable.
   2026-07-23.
-- [pending] Proactive research wave 8 — next reachable win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T19:37:59-04:00] Proactive research wave 8 — skillbox README
+  documents `scrub` / promote guard (private repo; no publicize).
 
 ## Claim discipline
 
