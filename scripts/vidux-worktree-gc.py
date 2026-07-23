@@ -374,7 +374,7 @@ def next_owner_action_for_bucket(bucket: str) -> str:
     return actions.get(bucket, "owner review required before cleanup")
 
 
-def review_command_for_worktree(path: Path, bucket: str, base: str, pr: Optional[PullRequestInfo]) -> str:
+def review_command_for_worktree(path: Path, repo: Path, bucket: str, base: str, pr: Optional[PullRequestInfo]) -> str:
     """Return a read-only command that helps the owner decide a non-removable row."""
     if pr and bucket in {"open_pr", "closed_unmerged"}:
         return shlex.join(
@@ -394,7 +394,7 @@ def review_command_for_worktree(path: Path, bucket: str, base: str, pr: Optional
     if bucket == "unknown":
         return shlex.join(["git", "-C", str(path), "status", "--short"])
     if bucket == SAFE_BUCKET:
-        return shlex.join(["python3", "scripts/vidux-worktree-gc.py", "--base", base, "--apply", "--yes"])
+        return shlex.join(["python3", "scripts/vidux-worktree-gc.py", "--base", base, "--apply", "--yes", str(repo)])
     return "no read-only review command available"
 
 
@@ -488,8 +488,31 @@ def classify_worktree(
     subject = last_commit_subject(repo, head, warnings)
     commit_date = last_commit_date(repo, head, warnings)
     age_days = commit_age_days(commit_date, warnings, head)
-    pr = prs_by_branch.get(branch or "")
-    if not pr and not branch and head:
+    # Branch names are reusable, so a MERGED or CLOSED PR found by branch name
+    # only classifies this worktree when the PR's head OID still equals the
+    # worktree's HEAD — otherwise a reused name (or local commits made after
+    # the merge) would mark genuinely-unmerged work `merged_clean`, the
+    # guarded-removal bucket, and --apply would delete it. An OPEN PR is safe
+    # to attribute by name alone: its bucket is never removable, and its head
+    # advances with the branch.
+    pr = None
+    if branch:
+        branch_pr = prs_by_branch.get(branch)
+        if branch_pr and (
+            branch_pr.state == "OPEN"
+            or (branch_pr.head_ref_oid and head and branch_pr.head_ref_oid == head)
+        ):
+            pr = branch_pr
+        elif head:
+            # The branch-name slot can be claimed by a stale PR from an
+            # earlier life of the name while a different non-OPEN PR matches
+            # this worktree's exact HEAD; the OID equality is the proof of
+            # attribution. OPEN PRs stay name-only so a coincident tip cannot
+            # capture unrelated branches.
+            head_pr = prs_by_head.get(head)
+            if head_pr and head_pr.state != "OPEN":
+                pr = head_pr
+    elif head:
         pr = prs_by_head.get(head)
 
     bucket = "unknown"
@@ -551,7 +574,7 @@ def classify_worktree(
         pr_url=pr.url if pr else None,
         reason=reason,
         next_owner_action=next_owner_action_for_bucket(bucket),
-        review_command=review_command_for_worktree(path, bucket, base, pr),
+        review_command=review_command_for_worktree(path, repo, bucket, base, pr),
     )
 
 
@@ -780,7 +803,7 @@ def format_owner_review_markdown(repo: Path, base: str, worktrees: List[Worktree
         lines.extend(
             [
                 "",
-                f"```bash\npython3 scripts/vidux-worktree-gc.py --base {base} --apply --yes {repo}\n```",
+                f"```bash\n{shlex.join(['python3', 'scripts/vidux-worktree-gc.py', '--base', base, '--apply', '--yes', str(repo)])}\n```",
             ]
         )
     return "\n".join(lines)
@@ -829,7 +852,7 @@ def format_text(repo: Path, base: str, worktrees: List[WorktreeInfo], warnings: 
     if summary.get("removable", 0):
         lines.append("")
         lines.append("to remove safe local worktrees:")
-        lines.append(f"  python3 scripts/vidux-worktree-gc.py --base {base} --apply --yes")
+        lines.append("  " + shlex.join(["python3", "scripts/vidux-worktree-gc.py", "--base", base, "--apply", "--yes", str(repo)]))
     return "\n".join(lines)
 
 
@@ -915,7 +938,11 @@ def main(argv: List[str]) -> int:
         print("--apply requires --yes", file=sys.stderr)
         return 1
 
-    repo = repo_root(Path(args.repo))
+    try:
+        repo = repo_root(Path(args.repo))
+    except CommandError as exc:
+        print(f"vidux-worktree-gc: {args.repo}: not a git repository ({exc.stderr or 'git rev-parse failed'})", file=sys.stderr)
+        return 1
     warnings: List[str] = []
     raw_worktrees = load_worktrees(repo)
     if not raw_worktrees:

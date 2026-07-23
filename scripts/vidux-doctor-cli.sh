@@ -322,6 +322,8 @@ check_development_dir() {
   local name="development root exists + install truth"
   local resolved_root git_dir_marker git_available remote_head counts
   local mount_path mount_target mount_state path_command path_target expected_target
+  local mount_common mount_head mount_dirty mount_top mount_status mount_sparse
+  local source_git_common="" source_head="" source_dirty="" source_sparse="" source_status=""
   local same_mounts=0 missing_mounts=0 different_mounts=0
   local summary joined issue
   local issues=()
@@ -446,8 +448,28 @@ check_development_dir() {
   fi
 
   # Optional skill mounts. Absence is healthy: a CLI-only/package install need
-  # not register every agent surface. A present mount must resolve to this same
-  # source root, or equal version strings can conceal stale bytes.
+  # not register every agent surface. A present mount must serve this same
+  # source's bytes, or equal version strings can conceal stale bytes. Path
+  # equality is only a proxy for that: a linked worktree of this repository
+  # (the documented clean-mirror layout) serves identical bytes whenever it
+  # sits on the same object store at the same clean HEAD, so compare content
+  # identity before declaring a foreign source.
+  if [[ "$INSTALL_KIND" = "source_checkout" || "$INSTALL_KIND" = "git_worktree" ]] && [[ "$git_available" -eq 1 ]]; then
+    source_git_common="$(git -C "$VIDUX_ROOT" rev-parse --git-common-dir 2>/dev/null || true)"
+    if [[ -n "$source_git_common" && "$source_git_common" != /* ]]; then
+      source_git_common="$VIDUX_ROOT/$source_git_common"
+    fi
+    source_git_common="$(_resolve_path_bounded "$source_git_common" 2>/dev/null || true)"
+    source_head="$(git -C "$VIDUX_ROOT" rev-parse HEAD 2>/dev/null || true)"
+    # Byte-identity needs both sides clean and non-sparse; a status failure is
+    # unknown, never clean.
+    if source_status="$(git -C "$VIDUX_ROOT" status --porcelain 2>/dev/null)"; then
+      source_dirty="$(printf '%s' "$source_status" | head -n 1)"
+    else
+      source_dirty="__status_unavailable__"
+    fi
+    source_sparse="$(git -C "$VIDUX_ROOT" config --get core.sparseCheckout 2>/dev/null || true)"
+  fi
   local common_mounts=(
     "$HOME/.claude/skills/vidux"
     "$HOME/.codex/skills/vidux"
@@ -462,13 +484,64 @@ check_development_dir() {
       missing_mounts=$((missing_mounts + 1))
     else
       mount_target="$(_resolve_path_bounded "$mount_path" 2>/dev/null || true)"
+      mount_common=""
+      mount_head=""
+      mount_dirty=""
       if [[ -n "$mount_target" && "$mount_target" = "$INSTALL_SOURCE_ROOT" ]]; then
         mount_state="same_source"
         same_mounts=$((same_mounts + 1))
       else
-        mount_state="different_source"
-        different_mounts=$((different_mounts + 1))
-        issues[${#issues[@]}]="skill mount $mount_path resolves to ${mount_target:-unresolved}, not $INSTALL_SOURCE_ROOT"
+        if [[ -n "$mount_target" && -n "$source_git_common" && -d "$mount_target" ]]; then
+          mount_common="$(git -C "$mount_target" rev-parse --git-common-dir 2>/dev/null || true)"
+          if [[ -n "$mount_common" && "$mount_common" != /* ]]; then
+            mount_common="$mount_target/$mount_common"
+          fi
+          mount_common="$(_resolve_path_bounded "$mount_common" 2>/dev/null || true)"
+        fi
+        if [[ -n "$mount_common" && "$mount_common" = "$source_git_common" ]]; then
+          mount_top="$(git -C "$mount_target" rev-parse --show-toplevel 2>/dev/null || true)"
+          mount_top="$(_resolve_path_bounded "$mount_top" 2>/dev/null || true)"
+          mount_head="$(git -C "$mount_target" rev-parse HEAD 2>/dev/null || true)"
+          if mount_status="$(git -C "$mount_target" status --porcelain 2>/dev/null)"; then
+            mount_dirty="$(printf '%s' "$mount_status" | head -n 1)"
+          else
+            mount_dirty="__status_unavailable__"
+          fi
+          mount_sparse="$(git -C "$mount_target" config --get core.sparseCheckout 2>/dev/null || true)"
+          if [[ -z "$mount_top" || "$mount_top" != "$mount_target" ]]; then
+            # A path inside the repository is not the repository: a subtree
+            # mount serves only part of the source and stays a foreign source.
+            mount_state="different_source"
+            different_mounts=$((different_mounts + 1))
+            issues[${#issues[@]}]="skill mount $mount_path resolves inside a worktree of this repository (${mount_target}), not a worktree root"
+          elif [[ -n "$mount_head" && "$mount_head" = "$source_head" \
+              && -z "$mount_dirty" && -z "$source_dirty" \
+              && "$mount_sparse" != "true" && "$source_sparse" != "true" ]]; then
+            # A linked worktree of this repository at the same HEAD, with both
+            # trees clean and non-sparse, is byte-identical to the source:
+            # same source, different path.
+            mount_state="same_source"
+            same_mounts=$((same_mounts + 1))
+          else
+            mount_state="same_repo_stale"
+            different_mounts=$((different_mounts + 1))
+            if [[ -n "$mount_head" && "$mount_head" != "$source_head" ]]; then
+              issues[${#issues[@]}]="skill mount $mount_path is a worktree of this repository pinned at ${mount_head:0:12}, while the source checkout is at ${source_head:0:12}"
+            elif [[ "$mount_dirty" = "__status_unavailable__" || "$source_dirty" = "__status_unavailable__" ]]; then
+              issues[${#issues[@]}]="skill mount $mount_path is a worktree of this repository but git status is unreadable, so byte identity cannot be confirmed"
+            elif [[ "$mount_sparse" = "true" || "$source_sparse" = "true" ]]; then
+              issues[${#issues[@]}]="skill mount $mount_path involves a sparse checkout, so its tree may not match the full source tree"
+            elif [[ -n "$source_dirty" ]]; then
+              issues[${#issues[@]}]="skill mount $mount_path serves this repository's clean HEAD, but the source checkout has local modifications the mount does not see"
+            else
+              issues[${#issues[@]}]="skill mount $mount_path is a worktree of this repository with local modifications, so its bytes may differ from the source checkout"
+            fi
+          fi
+        else
+          mount_state="different_source"
+          different_mounts=$((different_mounts + 1))
+          issues[${#issues[@]}]="skill mount $mount_path resolves to ${mount_target:-unresolved}, not $INSTALL_SOURCE_ROOT"
+        fi
       fi
     fi
     MOUNT_PATHS[${#MOUNT_PATHS[@]}]="$mount_path"

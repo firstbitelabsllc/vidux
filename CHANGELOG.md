@@ -5,6 +5,32 @@ All notable changes to vidux are documented here. The format is based on
 adheres to [Semantic Versioning](https://semver.org/) — minor bumps may
 tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
+## [Unreleased]
+
+### Fixed
+
+- **`vidux-worktree-gc`: reused branch names can no longer mark unmerged work
+  removable.** PR attribution matched by branch name alone, so a branch whose
+  earlier PR had merged classified a worktree full of new, genuinely unmerged
+  commits as `merged_clean` — the guarded-removal bucket — and `--apply --yes`
+  would have deleted them. MERGED/CLOSED PRs now attribute by name only when
+  the PR's head OID still equals the worktree's HEAD; OPEN PRs (never
+  removable) still attribute by name, and detached worktrees keep the head-OID
+  map.
+- **`vidux doctor`: a clean same-repo worktree mirror is no longer reported as
+  a foreign source.** The mount check compared paths, but the concern it
+  guards is stale bytes: a linked worktree of the same repository at the same
+  clean HEAD is byte-identical, so it now counts `same_source`. The same
+  worktree pinned at a different HEAD, or dirty, warns as `same_repo_stale`
+  with the two commits named.
+- **`vidux-worktree-gc`: concise error instead of a Python traceback** when
+  pointed at a path that is not a git repository.
+- **`vidux-worktree-gc`: printed apply commands now include the repository
+  path, shell-quoted**, so copying them from another directory targets the
+  audited repo rather than the current one.
+- **`vidux status`: a plan deleted mid-scan no longer aborts the whole
+  board** (the unguarded `stat()` after a guarded read).
+
 ## [1.0.0] — 2026-07-21
 
 First public release. Vidux is a thin, local-first plan/proof/resume layer for
