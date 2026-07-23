@@ -197,4 +197,4 @@ What changed, what passed, what remains, exact resume. Do not blend source/merge
 
 ## Reference Files
 
-JIT only: `README.md`, `DOCTRINE.md`, `docs/reference/plan-fields.md`, `docs/reference/browser.md`, `guides/thin-token.md`, `guides/investigation.md`, `guides/fleet-ops.md`, `guides/automation.md`, `guides/recipes/`. Budget ≤12 KB / ≤200 lines / ≤3000 est. tokens.
+JIT only: `README.md`, `docs/doctrine/DOCTRINE.md`, `docs/doctrine/LOOP.md`, `docs/doctrine/ENFORCEMENT.md`, `docs/reference/plan-fields.md`, `docs/reference/browser.md`, `guides/thin-token.md`, `guides/investigation.md`, `guides/fleet-ops.md`, `guides/automation.md`, `guides/recipes/`. Budget ≤12 KB / ≤200 lines / ≤3000 est. tokens.

@@ -221,7 +221,7 @@ Recommend actions; let the fleet watcher or a human execute.
 
 ### Parallel variant (fan-out per repo)
 
-The CHECK loop above is written serially ("for each repo... 1, 2, 3, 4, 5") — on a fleet of N repos that's N sequential round-trips of read-only checks that don't depend on each other. Apply Principle 9 (DOCTRINE.md — read-only fan-out is safe because there are no merge conflicts, and vidux has run 9 concurrent research agents without incident): dispatch one agent per repo to run checks 1-5 and return its CLASSIFY verdict, then fan in through one synthesizer that assembles the dashboard and files the CRITICAL/WARNING actions. Same checks, same classification thresholds, same never-force-push guardrails — only the scheduling changes, from N sequential passes to one wall-clock pass. See Recipe 12 for the general pattern this is an instance of.
+The CHECK loop above is written serially ("for each repo... 1, 2, 3, 4, 5") — on a fleet of N repos that's N sequential round-trips of read-only checks that don't depend on each other. Apply Principle 9 (docs/doctrine/DOCTRINE.md — read-only fan-out is safe because there are no merge conflicts, and vidux has run 9 concurrent research agents without incident): dispatch one agent per repo to run checks 1-5 and return its CLASSIFY verdict, then fan in through one synthesizer that assembles the dashboard and files the CRITICAL/WARNING actions. Same checks, same classification thresholds, same never-force-push guardrails — only the scheduling changes, from N sequential passes to one wall-clock pass. See Recipe 12 for the general pattern this is an instance of.
 
 ---
 
@@ -454,7 +454,7 @@ Cycle fails with external_blocker or context_overflow
 
 **When to use:** Any "confirm everything is still green" pass that reads N independent, read-only surfaces before deciding whether to act — CI status across repos, PR-queue dedup, test-depth/coverage drift, plan/state reconciliation across lanes. Recipe 6 (Trunk Health) is a worked instance of this.
 
-**Pattern:** Applies DOCTRINE.md Principle 9 (Subagent coordinator pattern) to the specific shape of "poll several independent things, then decide." Serial polling of N surfaces costs N round-trips even though the surfaces don't depend on each other; a single fan-out dispatch costs one wall-clock pass.
+**Pattern:** Applies docs/doctrine/DOCTRINE.md Principle 9 (Subagent coordinator pattern) to the specific shape of "poll several independent things, then decide." Serial polling of N surfaces costs N round-trips even though the surfaces don't depend on each other; a single fan-out dispatch costs one wall-clock pass.
 
 ```
 1. Enumerate the independent read-only lanes to check (repos, PR queues, plan
@@ -473,7 +473,7 @@ Cycle fails with external_blocker or context_overflow
 
 **Exit condition:** A lane whose assessor fails to return (timeout, error) is reported as `UNKNOWN`, not silently dropped — the synthesizer's dashboard must account for every dispatched lane, matching the "no silent caps" discipline elsewhere in vidux (don't let a quiet failure read as "covered and healthy").
 
-**Why:** The insights-report friction this closes: serial "confirm all green" polling is slow by construction, and a cron/coordinator lane re-deriving each surface one at a time burns cycles that a single concurrent pass would not. Precedent already exists (Principle 9, Recipe 6 Trunk Health, Evidence fan-out in docs/reference/loop.md Step 2) — this recipe just names the pattern once so a future lane reaches for it instead of writing another serial loop.
+**Why:** The insights-report friction this closes: serial "confirm all green" polling is slow by construction, and a cron/coordinator lane re-deriving each surface one at a time burns cycles that a single concurrent pass would not. Precedent already exists (Principle 9, Recipe 6 Trunk Health, Evidence fan-out in docs/doctrine/LOOP.md Step 2) — this recipe just names the pattern once so a future lane reaches for it instead of writing another serial loop.
 
 ---
 

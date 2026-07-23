@@ -1,11 +1,8 @@
 # Installation
 
 Vidux has two compatible install surfaces: a source checkout for contributors
-and skill development, or an optional locally-built tarball (`npm pack`) for a
-global CLI and local browser. There is no npm package on the registry. Both
-surfaces expose the same plan-first runtime. The primary interface is the
-`/vidux` agent skill mounted from a source checkout; the CLI is the plumbing
-the skill shells out to.
+and skill development, or a bounded npm tarball for the global CLI and local
+browser. Both expose the same plan-first runtime.
 
 ## Prerequisites
 
@@ -18,15 +15,13 @@ the skill shells out to.
 ## Install from a source checkout
 
 ```bash
-git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
-mkdir -p "$HOME/.local/bin"
-ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
-export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
+git clone https://github.com/firstbitelabsllc/vidux.git
+ln -sf /path/to/vidux/bin/vidux /usr/local/bin/vidux
 vidux --version
 ```
 
-Any directory on `PATH` works; `~/.local/bin` avoids needing `sudo`. The CLI
-self-locates through the symlink, so the checkout can live anywhere.
+If `/usr/local/bin` is not writable, add `/path/to/vidux/bin` to `PATH`
+instead. The CLI self-locates through either form.
 
 ## Install a verified tarball
 
@@ -52,7 +47,6 @@ generated state are excluded.
 ## Install the Claude Code skill
 
 ```bash
-mkdir -p ~/.claude/skills
 ln -sfn /path/to/vidux ~/.claude/skills/vidux
 ```
 
@@ -104,7 +98,7 @@ cp hooks/three-strike-gate.sh /path/to/your/project/.git/hooks/
 
 ## Optional: Claude Code Enforcement Hooks
 
-For stronger enforcement within Claude Code sessions, add the hooks from [`enforcement.md`](../reference/enforcement.md) to your `settings.local.json`. They:
+For stronger enforcement within Claude Code sessions, add the hooks from [`docs/doctrine/ENFORCEMENT.md`](../doctrine/ENFORCEMENT.md) to your `settings.local.json`. They:
 
 - Gate file edits: require a PLAN.md entry before writing code
 - Detect drift: flag file changes that don't match the active plan task
@@ -135,12 +129,9 @@ store outside the package root; see [Configuration](/reference/config).
 
 `vidux doctor` reports optional GitHub/source-checkout capabilities as warnings
 in a packaged install; warnings do not hide hard Python, config, token-permission,
-or stale-runtime failures. One check runs the contract self-test (`npm test`): on
-a fresh clone that has not run `npm ci`, that check reports `[WARN]` and skips the
-suite, and the doctor still exits `0` — the dev test environment is simply unset,
-not the install broken. The runtime is Bash, Git, and Python only.
+or stale-runtime failures.
 
-For the Claude Code skill, open a session and run:
+For the optional Claude Code skill, open a session and run:
 
 ```
 /vidux "test project"

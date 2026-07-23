@@ -56,7 +56,7 @@ Gate must complete in under 60 seconds. The full cycle (scan + fix) has no time 
 
 **Gate pattern (radars):** Use the SCAN gate (see `guides/fleet-ops.md`). Radars check git history and codebase state, not plan state. A radar on a writer's quick check gate is permanently dead.
 
-**Key principle (DOCTRINE.md):** "Every agent finds work AND does work." Even radars are doers — they produce evidence, not empty reports. A radar that scans and finds nothing ships a checkpoint proving what was scanned.
+**Key principle (docs/doctrine/DOCTRINE.md):** "Every agent finds work AND does work." Even radars are doers — they produce evidence, not empty reports. A radar that scans and finds nothing ships a checkpoint proving what was scanned.
 
 ---
 
