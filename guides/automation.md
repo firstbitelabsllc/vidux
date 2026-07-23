@@ -172,20 +172,19 @@ Whichever runtime fires, the state contract is the same: routines drive runs; `P
 
 ### 4. Write the prompt
 
-Every prompt.md has these sections (in order):
+Every prompt.md follows the eight-block structure in
+[`harness.md`](harness.md#8-block-prompt-structure) — MISSION, SKILLS, GATE,
+AUTHORITY, CROSS-LANE, ROLE BOUNDARY, EXECUTION, CHECKPOINT, in that order.
+That guide owns the block definitions and the reasons the order matters.
 
-```
-MISSION      — 1 paragraph. What this lane does, for which repo/project.
-SKILLS       — "Load: /vidux, <lane-specific-skills>"
-GATE         — Under-45s check at fire start. When to exit early vs proceed.
-AUTHORITY    — Which files/systems this lane may touch. Paths explicit.
-ROLE         — Writer | Radar | Burst. Sets tier permissions.
-HARD RULES   — Never use --no-verify. Never force push. Never edit legal code.
-              Never touch files outside AUTHORITY.
-CHECKPOINT   — Format for the lane-local memory.md note, plus publish packet when work ships.
-```
+Two notes specific to lane prompts:
 
-The MISSION section matters most: it's what differentiates this lane from all others. Be specific about the *output* (a merged PR, a checkpointed decision, an appended evidence line) not just the *input* (check this, scan that).
+- The hard rules live in EXECUTION: never use `--no-verify`, never force push,
+  never touch files outside AUTHORITY.
+- ROLE BOUNDARY names the lane's role (Writer | Radar | Burst) and what belongs
+  to siblings.
+
+The MISSION block matters most: it's what differentiates this lane from all others. Be specific about the *output* (a merged PR, a checkpointed decision, an appended evidence line) not just the *input* (check this, scan that).
 
 ### 5. Register + schedule
 

@@ -17,7 +17,7 @@ READ -> ASSESS -> ACT -> VERIFY -> CHECKPOINT -> READ. Never skip a step. To cha
 
 ## 3. 50/30/20 split
 
-50% plan refinement, 30% code (one derived task per cycle), 20% last mile (build, CI, review). Coding more than planning? Stop. Front-load thinking. Evidence: Vidux built itself at 56/25/19; the inverted ratio shipped dirty.
+50% plan refinement, 30% code (plan-derived slices; drain connected reachable work, don't stop at the first checkbox), 20% last mile (build, CI, review). Coding more than planning? Stop. Front-load thinking. Evidence: Vidux built itself at 56/25/19; the inverted ratio shipped dirty.
 
 ## 4. Evidence over instinct
 
