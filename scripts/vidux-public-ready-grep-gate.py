@@ -188,12 +188,6 @@ FORBIDDEN_PATTERNS = PRIVACY_PATTERNS + HYGIENE_PATTERNS
 #   - leojkwan@gmail.com: the maintainer's permanent, by-design public commit
 #     identity on every legitimate commit (git log --format='%ae').
 #   - noreply@github.com: GitHub's web-UI / squash-merge committer identity.
-#   - codesmith-bot@users.noreply.github.com: the Codesmith automation's fixed
-#     committer identity when it pushes fixes to this repo's PRs (author stays
-#     leojkwan@gmail.com). Like noreply@github.com it is a GitHub `noreply`
-#     bot address, not a real unrelated human's account and not PII, so it is
-#     exactly the automation class this gate is meant to permit rather than the
-#     foreign-contributor exposure it exists to catch.
 # Any other author or committer email is a finding. This is deliberately an
 # allowlist, not a denylist, for the same reason SCAN_TARGETS is default-on: a
 # new stray identity is caught the moment it appears, not when someone
@@ -202,8 +196,27 @@ ALLOWED_COMMIT_EMAILS = frozenset(
     {
         "leojkwan@gmail.com",
         "noreply@github.com",
+    }
+)
+
+# A Co-authored-by trailer renders its account in the repo's contributor
+# sidebar exactly like an author does, so trailer emails are held to the same
+# allowlist. Grandfathered trailers: identities already in immutable public
+# history whose removal requires a history rewrite (a maintainer-gated act).
+# Each entry documents a known exposure — it does not endorse the identity.
+#   - codesmith-bot@users.noreply.github.com: stamped by a tool onto the merge
+#     of PR #1 (a1e46e63). `codesmith-bot` is a registered third-party GitHub
+#     account (zero repos, zero activity, no local credential or config
+#     references it) — not a verified automation of this repo. New commits
+#     carrying this trailer still fail the gate.
+KNOWN_HISTORICAL_TRAILER_EMAILS = frozenset(
+    {
         "codesmith-bot@users.noreply.github.com",
     }
+)
+
+CO_AUTHOR_TRAILER_RE = re.compile(
+    r"^\s*Co-authored-by:\s*(?P<name>.*?)\s*<(?P<email>[^>]+)>", re.IGNORECASE
 )
 
 # Historical-record targets: chronological, dated, append-only-by-design.
@@ -482,7 +495,11 @@ def run_metadata_gate(repo_root: Path, *, rev: str = "HEAD") -> dict[str, Any]:
     1. A foreign author/committer email (e.g. ``test@test.com``) renders a
        real, unrelated GitHub account as a public contributor. Enforced by
        ALLOWED_COMMIT_EMAILS: any identity not on the allowlist is a finding.
-    2. A privacy string in a commit message or trailer (e.g. a
+    2. A foreign ``Co-authored-by`` trailer email, which renders in the
+       contributor sidebar exactly like an author. Enforced against the same
+       allowlist, minus KNOWN_HISTORICAL_TRAILER_EMAILS (documented exposures
+       already locked into reachable history).
+    3. A privacy string in a commit message or trailer (e.g. a
        ``Co-authored-by: ... <name@snapchat.com>`` trailer). PRIVACY_PATTERNS
        apply to every reachable commit's message body.
 
@@ -534,6 +551,15 @@ def run_metadata_gate(repo_root: Path, *, rev: str = "HEAD") -> dict[str, Any]:
                 bad_identities[key] = bad_identities.get(key, 0) + 1
         body = body_b.decode("utf-8", "surrogateescape")
         for line in body.splitlines():
+            trailer = CO_AUTHOR_TRAILER_RE.match(line)
+            if trailer:
+                trailer_email = trailer.group("email").strip()
+                if (
+                    trailer_email not in ALLOWED_COMMIT_EMAILS
+                    and trailer_email not in KNOWN_HISTORICAL_TRAILER_EMAILS
+                ):
+                    key = ("co-author trailer", trailer.group("name"), trailer_email)
+                    bad_identities[key] = bad_identities.get(key, 0) + 1
             for label, pattern in PRIVACY_PATTERNS:
                 if pattern.search(line):
                     key = (label, line.strip())

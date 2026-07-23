@@ -844,6 +844,57 @@ class PublicReadyMetadataGateTests(unittest.TestCase):
             payload["matches"],
         )
 
+    def test_foreign_coauthor_trailer_identity_is_caught(self):
+        # Reproduces the codesmith-bot exposure class: a Co-authored-by
+        # trailer whose email matches no privacy vocabulary still renders a
+        # third-party GitHub account in the contributor sidebar. The identity
+        # allowlist must apply to trailers, not just author/committer fields.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            (root / "README.md").write_text("Vidux.\n", encoding="utf-8")
+            self._commit(
+                root,
+                "feat: thing\n\n"
+                "Co-authored-by: Stranger <stranger-bot@users.noreply.github.com>",
+                name="Leo Kwan",
+                email="leojkwan@gmail.com",
+            )
+            result = self._run_metadata(root)
+        self.assertEqual(result.returncode, 1)
+        payload = json.loads(result.stdout)
+        patterns = {m["pattern"] for m in payload["matches"]}
+        self.assertIn("disallowed co-author trailer identity", patterns)
+        self.assertTrue(
+            any(
+                "stranger-bot@users.noreply.github.com" in m["text"]
+                for m in payload["matches"]
+            ),
+            payload["matches"],
+        )
+
+    def test_grandfathered_trailer_passes(self):
+        # The one trailer already locked into reachable public history
+        # (a1e46e63) is documented in KNOWN_HISTORICAL_TRAILER_EMAILS so the
+        # gate stays green on main without endorsing the identity. New commits
+        # reusing it in author/committer fields still fail (previous tests).
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            (root / "README.md").write_text("Vidux.\n", encoding="utf-8")
+            self._commit(
+                root,
+                "docs: fix onboarding\n\n"
+                "Co-authored-by: codesmith-bot "
+                "<codesmith-bot@users.noreply.github.com>",
+                name="Leo Kwan",
+                email="leojkwan@gmail.com",
+            )
+            result = self._run_metadata(root)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "passed")
+
 
 if __name__ == "__main__":
     unittest.main()
