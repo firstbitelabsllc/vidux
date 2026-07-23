@@ -23,7 +23,7 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] claudux wave — PRs #119/#120/#123/#124 merged: real-run terminal
   demo + shorter README, install-ref pinning, project.type validation,
   `--disallowedTools Bash` hardening, dead-ticker heartbeat fix (#122).
-  Open: issue #121 remaining directions (design-gated). 2026-07-23.
+  Issue #121 CLOSED (dir3 merged; dirs 1–2 parked). 2026-07-23.
 - [completed] skillbox — stranger-tested, silent-skip defect fixed (PR #1
   merged), release-ready agent-side; public flip human-gated. 2026-07-23.
 - [parked: human gate] voice harness — staged complete agent-side; publish
