@@ -4,38 +4,49 @@ Your first Vidux cycle, install to checkpoint.
 
 ## 1. Install Vidux
 
+Vidux is an agent skill first: you tell your agent what you're working on, and
+the skill runs the plumbing. Mount it once:
+
 ```bash
 git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
+mkdir -p "$HOME/.claude/skills"
+ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"
+```
+
+Other coding hosts read [`SKILL.md`](https://github.com/firstbitelabsllc/vidux/blob/main/SKILL.md)
+directly. If you also want the CLI on your PATH — for scripts, hooks, or hosts
+without a skill runtime — add:
+
+```bash
 mkdir -p "$HOME/.local/bin"
 ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
 export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
-mkdir -p "$HOME/.claude/skills"
-ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"   # optional: the /vidux skill
 vidux --version
 ```
 
-The CLI symlink powers `vidux init --here` and the local browser; the Claude
-skill symlink is optional. See [Installation](/guide/installation) for an
-optional locally-built tarball (`npm pack`) that does not require keeping the
-checkout on `PATH`.
+See [Installation](/guide/installation) for an optional locally-built tarball
+(`npm pack`) that does not require keeping the checkout on `PATH`.
 
 ## 2. Start a Session
 
-In the project you want Vidux to track, initialize the cockpit once:
+Open Claude Code in the project you want Vidux to track and run:
+
+```
+/vidux "your project description"
+```
+
+**On the first cycle**, Vidux scaffolds `PLAN.md`, gathers evidence, and fills
+it in. No code until the plan is ready — "plan first, code second" is the core
+discipline. To watch the work, say **"open the vidux dashboard"** — the agent
+starts the local cockpit scoped to your repo.
+
+The same plumbing is available directly when you'd rather drive it yourself:
 
 ```bash
 cd /path/to/your-project   # the repo you want Vidux to track
 vidux init --here
 vidux browse --root .   # scoped to this repo; browse scans ~/Development by default
 ```
-
-Then open Claude Code in that project and run:
-
-```
-/vidux "your project description"
-```
-
-**On the first cycle**, Vidux reads the `PLAN.md` that `vidux init --here` scaffolded, gathers evidence, and fills it in. No code until the plan is ready — "plan first, code second" is the core discipline.
 
 ## 3. Understand the Startup Contract
 

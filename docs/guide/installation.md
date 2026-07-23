@@ -3,7 +3,9 @@
 Vidux has two compatible install surfaces: a source checkout for contributors
 and skill development, or an optional locally-built tarball (`npm pack`) for a
 global CLI and local browser. There is no npm package on the registry. Both
-surfaces expose the same plan-first runtime.
+surfaces expose the same plan-first runtime. The primary interface is the
+`/vidux` agent skill mounted from a source checkout; the CLI is the plumbing
+the skill shells out to.
 
 ## Prerequisites
 
@@ -138,7 +140,7 @@ a fresh clone that has not run `npm ci`, that check reports `[WARN]` and skips t
 suite, and the doctor still exits `0` — the dev test environment is simply unset,
 not the install broken. The runtime is Bash, Git, and Python only.
 
-For the optional Claude Code skill, open a session and run:
+For the Claude Code skill, open a session and run:
 
 ```
 /vidux "test project"
