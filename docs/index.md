@@ -20,7 +20,7 @@ features:
 
   - icon: 🔄
     title: Stateless Agents
-    details: Each run starts fresh, reads the plan, does one task, checkpoints, and exits. No memory tricks. Sessions die; durable recovery lives in repo files plus append-only ledger rows.
+    details: Each run starts fresh, reads the plan, drains connected reachable work, checkpoints, and exits. No memory tricks. Sessions die; durable recovery lives in repo files plus append-only ledger rows.
 
   - icon: 🌐
     title: Works Everywhere

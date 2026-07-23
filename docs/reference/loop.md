@@ -23,7 +23,7 @@ sequenceDiagram
     Agent->>Git: git log + diff
     Agent->>Agent: ASSESS (score 0-10)
     alt score >= 7
-        Agent->>Agent: ACT — execute one task
+        Agent->>Agent: ACT — drain connected reachable work
         Agent->>Build: verify gate
         Build-->>Agent: pass / fail
     else score < 7
@@ -177,7 +177,7 @@ A task is not complete while its only resume point is unrecorded local worktree 
 NEVER:
 - Save state in memory
 - Carry context to the "next step"
-- Start a second task
+- Start the next connected reachable task before this one's checkpoint and worktree lifecycle are closed
 - Leave uncommitted work
 - Leave an unclassified worktree behind
 
@@ -275,11 +275,13 @@ ACT:
   Execute Task 4:
   - Evidence: "boundary exposes 23 public methods (grep count)"
   - Write APIClientFeature.swift (229 lines)
+
+VERIFY:
   - Build: GREEN
-  - Check off Task 4
+  - Proof: build output attached to Task 4
 
 CHECKPOINT:
-  Plan: Task 4 complete with proof. Next: Task 5 (entry-point wiring).
+  Plan: Task 4 complete with proof, checked off. Next: Task 5 (entry-point wiring).
   Ledger: publish row carries proof, handoff_status, summary, plan task id, files claimed, resume.
   Git: commit/push branch only after the plan/ledger packet exists.
 

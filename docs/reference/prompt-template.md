@@ -118,7 +118,7 @@ Priority order (first match wins):
 ```
 
 **Rules:**
-- Exactly ONE action per cycle. Multi-tasking breaks checkpointing.
+- Drain connected reachable work — never stop at the first checkbox. Take actions sequentially, not concurrently: multi-tasking unrelated surfaces in parallel still breaks checkpointing.
 - `[in_progress]` always resumes first — never leave mid-task work orphaned.
 - `[IDLE]` is a valid outcome. Not all cycles ship.
 

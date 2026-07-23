@@ -52,7 +52,7 @@ Binary pre-flight aborts. Trigger → exit cheaply with `[QC] <reason>`. Don't "
 Typical gates: dirty tree not mine → `[QC] concurrent-cycle`; same task `[in_progress]` 3+ cycles → set `[blocked]` + exit; main CI red → fix-first mode; post-push defer (see below).
 
 ### 5. Assess
-One deterministic priority order. "First match wins" so two agents running the same lane pick the same task. Exactly ONE action per cycle.
+One deterministic priority order. "First match wins" so two agents running the same lane pick the same task. Drain connected reachable work — never stop at the first checkbox.
 
 > Priority: CI red > failing PR fix > eligible PR merge > resume `[in_progress]` > first `[pending]` with evidence > promote INBOX > rotate filler audit > `[IDLE]`.
 
@@ -92,7 +92,7 @@ One-line lane-local `memory.md` append, always tagged. Future agents scan the la
 ## Anti-patterns
 
 - **Hard-coded transient state.** A prompt that says "fix the auth flow" will stop making sense once auth is fixed. Put task-level specifics in PLAN.md; the prompt stays evergreen.
-- **Multi-tasking per cycle.** Multiple actions break checkpointing — the tag no longer describes what happened. One action, one line.
+- **Multi-tasking in parallel.** Working unrelated surfaces at once breaks checkpointing — the tag no longer describes what happened. Sequential actions, one action, one line — draining the queue is fine, doing two things at once is not.
 - **No retirement condition.** Lane runs forever, ships polish PRs no one reads. Every mission names an exit ("retires when Phase 9 launches" / "retires after the backfill completes").
 - **Skipping the Authority block.** Lane drifts into sibling work, creates merge conflicts, edits Leo's historical prose. Authority is load-bearing.
 - **Cross-tool delegation language.** Deprecated in vidux 2.10.0. A lane runs on Claude OR on Codex, never both. For Codex-native lanes, see `guides/recipes/codex-runtime.md`. For same-tool parallelism, see `guides/recipes/subagent-delegation.md`.
