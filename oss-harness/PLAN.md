@@ -71,9 +71,11 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   (Leo-owned, AMPLIFY-tier; feature PRs #119–125 merged but no full
   stranger-run since). Sandboxed HOME, README verbatim. Land any real defect
   (bar-not-gates: Leo owns claudux). Fold receipt here.
-- [claimed: cursor-grok-4.5 2026-07-23T19:52:36-04:00] Proactive research wave 10 — hermetic
-  tests for status missing-dev-root fallback + stderr/--json (locks #4/#5).
-  No publicize. Fold PR here.
+- [completed] Proactive research wave 10 (cursor-grok-4.5) — hermetic tests
+  for status missing-dev-root fallback + stderr/--json; PR #6 MERGED.
+  2026-07-23.
+- [pending] Proactive research wave 11 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
