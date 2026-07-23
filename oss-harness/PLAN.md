@@ -66,7 +66,12 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 8 (cursor-grok-4.5) — skillbox scrub
   documented in README; PR https://github.com/leojkwan/skillbox/pull/3.
   No publicize. 2026-07-23.
-- [pending] Proactive research wave 9 — next reachable win (claim first);
+- [claimed: claude-code 2026-07-23T19:45:00-04:00] Proactive research wave 9 —
+  claudux fresh end-to-end stranger-test at current origin/main HEAD
+  (Leo-owned, AMPLIFY-tier; feature PRs #119–125 merged but no full
+  stranger-run since). Sandboxed HOME, README verbatim. Land any real defect
+  (bar-not-gates: Leo owns claudux). Fold receipt here.
+- [pending] Proactive research wave 10 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
