@@ -31,9 +31,10 @@ HOME, README verbatim) green, CI/suite green, zero private content.
   local-stt cluster (dossier shortlist #1, already public): stranger-test
   (sandboxed HOME, README verbatim), fix defects via PRs, same excellence bar
   as the claudux wave. Fold receipts back here.
-- [pending] Proactive research — further OSS candidates and dev/build/test
-  waves per the private dossier; claim a row here before starting, fold
-  receipts back.
+- [claimed: cursor-grok-4.5 2026-07-23T18:32:47-04:] Proactive research wave 2 —
+  dossier re-rank + next-candidate probes (everything purpose kill/confirm,
+  clausona ownership+stranger bar, media MCP shortlist); council adversarial
+  pass; no publicize. Fold receipts back here.
 
 ## Claim discipline
 
