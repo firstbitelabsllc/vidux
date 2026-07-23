@@ -27,9 +27,13 @@ before calling any repo release-ready.
   merged), release-ready agent-side; public flip human-gated. 2026-07-23.
 - [parked: human gate] voice harness — staged complete agent-side; publish
   (public name, repo create, v0.1.0 tag) per-instance gated.
-- [pending] Proactive research — next OSS candidates and dev/build/test waves
-  per the private dossier; claim a row here before starting, fold receipts
-  back.
+- [claimed: claude-code 2026-07-23T18:35:00-04:00] Proactive research wave 1 —
+  local-stt cluster (dossier shortlist #1, already public): stranger-test
+  (sandboxed HOME, README verbatim), fix defects via PRs, same excellence bar
+  as the claudux wave. Fold receipts back here.
+- [pending] Proactive research — further OSS candidates and dev/build/test
+  waves per the private dossier; claim a row here before starting, fold
+  receipts back.
 
 ## Claim discipline
 
