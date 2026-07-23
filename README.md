@@ -31,6 +31,10 @@ vidux browse         # local cockpit (loopback by default)
 `~/.config/vidux/vidux.config.json` — see
 [`vidux.config.example.json`](vidux.config.example.json).
 
+The cockpit binds to loopback by default and scans your dev root (default
+`~/Development`, configurable) for plans; a measure with no attached artifact
+shows `PROOF MISSING` until one exists.
+
 ## Agent skill
 
 Root [`SKILL.md`](SKILL.md) is the agent entry. Claude Code:
@@ -39,6 +43,16 @@ Root [`SKILL.md`](SKILL.md) is the agent entry. Claude Code:
 ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"
 # or: claude --plugin-dir /path/to/vidux
 ```
+
+Claude Code is the tested host. Any agent that can read [`SKILL.md`](SKILL.md)
+and plain files can follow the same contract; other hosts are untested.
+
+## Where Vidux stops
+
+Vidux does not schedule agents, route models, execute workers, or hold
+provider credentials; your coding host does all of that. Vidux can record
+provider-neutral claims for concurrent work, but it never launches a provider
+or selects a model. The dashboard is a local view, not a hosted service.
 
 ## Docs
 
@@ -60,8 +74,10 @@ Repo `PLAN.md` (if present) is **this repo’s** internal queue — not required
 
 ## Release truth
 
-Version `1.0.0` is the local source contract. No npm publish and no GitHub
-Release yet — use the symlink above until one exists.
+Version `1.0.0` is the local source contract. Vidux installs from source;
+there is no npm package on the registry and no GitHub Release yet, so use the
+symlink above until one exists. The Node toolchain is only used by contributor
+tests.
 
 ## Contributing
 
