@@ -11,9 +11,10 @@ private content into this public file.
 
 `GOAL.md` next door is the paste-ready pointer. Standing rails: M1
 delegate-first, M2 never-stop/all-boats-rise, own-row claims, ref-fresh reads,
-pathspec commits. Bar, not gates (Leo 2026-07-23): repo creation and
-visibility flips ship directly once the bar is met — stranger-test (sandboxed
-HOME, README verbatim) green, CI/suite green, zero private content.
+pathspec commits. Quality bar for already-public amplify: stranger-test
+(sandboxed HOME, README verbatim) green, CI/suite green, zero private content.
+New `gh repo create` / publicize / visibility flips stay per-instance
+Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 
 ## Rows
 
@@ -31,10 +32,14 @@ HOME, README verbatim) green, CI/suite green, zero private content.
   local-stt cluster (dossier shortlist #1, already public): stranger-test
   (sandboxed HOME, README verbatim), fix defects via PRs, same excellence bar
   as the claudux wave. Fold receipts back here.
-- [claimed: cursor-grok-4.5 2026-07-23T18:32:47-04:00] Proactive research wave 2 —
-  dossier re-rank + next-candidate probes (everything purpose kill/confirm,
-  clausona ownership+stranger bar, media MCP shortlist); council adversarial
-  pass; no publicize. Fold receipts back here.
+- [completed] Proactive research wave 2 (cursor-grok-4.5) — council + probes:
+  `everything` kill-from-shortlist (private grab-bag / CNA README);
+  clausona + media MCP clones = third-party peers not portfolio; litty/fcp
+  keep-private. Goal text realigned to quality-bar + create/visibility gate.
+  Private receipt: ai-leo `evidence/wave2-council-2026-07-23.md`. 2026-07-23.
+- [claimed: cursor-grok-4.5 2026-07-23T18:37:55-04:00] Claudux #121 direction 3 — post-run
+  non-docs source diff warn/fail (extend guard snapshot); design-gated dirs
+  1–2 parked. Fold PR receipt here.
 
 ## Claim discipline
 
