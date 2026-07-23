@@ -41,8 +41,9 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   https://github.com/firstbitelabsllc/claudux/pull/125 (`866f853`);
   post-generation source-boundary guard fail-closed; tests 26/26 + 93/93.
   Dirs 1–2 still design-parked. 2026-07-23.
-- [pending] Proactive research wave 3 — next OSS candidates (skillbox scrub
-  private gate; voice-debug remains human-gated publish); claim before starting.
+- [claimed: cursor-grok-4.5 2026-07-23T18:42:41-04:00] Proactive research wave 3 — private
+  skillbox `scrub`/promote boundary gate (hermetic tests; no publicize).
+  Voice-debug publish stays human-gated. Fold receipts here.
 
 ## Claim discipline
 
