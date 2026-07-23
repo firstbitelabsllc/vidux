@@ -11,9 +11,9 @@ private content into this public file.
 
 `GOAL.md` next door is the paste-ready pointer. Standing rails: M1
 delegate-first, M2 never-stop/all-boats-rise, own-row claims, ref-fresh reads,
-pathspec commits. Hard gate: `gh repo create` / publicize / visibility flips
-are per-instance human-gated. Stranger-test (sandboxed HOME, README verbatim)
-before calling any repo release-ready.
+pathspec commits. Bar, not gates (Leo 2026-07-23): repo creation and
+visibility flips ship directly once the bar is met — stranger-test (sandboxed
+HOME, README verbatim) green, CI/suite green, zero private content.
 
 ## Rows
 
