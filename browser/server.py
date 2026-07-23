@@ -832,6 +832,19 @@ def claude_project_slug(repo_path: Path) -> str:
     return str(repo_path.expanduser().resolve(strict=False)).replace("/", "-")
 
 
+def repo_root_dir(repo: str) -> Path:
+    """Map a plan's repo name back to its directory.
+
+    In a root-scoped browse (`vidux browse --root <repo>`) the scanned root IS
+    the repo, so a root-level plan's repo name is DEV_ROOT's own name and has
+    no child directory to join.
+    """
+    candidate = DEV_ROOT / repo
+    if repo == DEV_ROOT.name and not candidate.is_dir():
+        return DEV_ROOT
+    return candidate
+
+
 def compact_session_text(value: str, limit: int = SESSION_EXCERPT_LIMIT) -> str:
     safe_value, _ = redact_sensitive_text(value or "")
     text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]+", " ", safe_value)
@@ -923,7 +936,7 @@ def parse_claude_session_file(path: Path, limit: int = SESSION_TURN_LIMIT) -> di
 
 
 def missing_session_payload(repo: str, status: str = "missing") -> dict:
-    project_dir = CLAUDE_PROJECTS_DIR / claude_project_slug(DEV_ROOT / repo)
+    project_dir = CLAUDE_PROJECTS_DIR / claude_project_slug(repo_root_dir(repo))
     return {
         "available": False,
         "status": status,
@@ -944,7 +957,7 @@ def missing_session_payload(repo: str, status: str = "missing") -> dict:
 
 
 def latest_claude_session_for_repo(repo: str) -> dict:
-    project_dir = CLAUDE_PROJECTS_DIR / claude_project_slug(DEV_ROOT / repo)
+    project_dir = CLAUDE_PROJECTS_DIR / claude_project_slug(repo_root_dir(repo))
     if not project_dir.is_dir():
         return missing_session_payload(repo)
     try:
@@ -1015,7 +1028,14 @@ def plan_ledger_match_paths(plan_path: Path) -> tuple[str, set[Path]]:
         rel = resolved.relative_to(DEV_ROOT)
     except (OSError, ValueError):
         return "", paths
-    repo = rel.parts[0] if rel.parts else ""
+    if len(rel.parts) == 1:
+        # Root-scoped browse: the plan sits directly under DEV_ROOT, so the
+        # scanned root's own name is the repo (matches plan_meta).
+        repo = DEV_ROOT.name
+    elif rel.parts:
+        repo = rel.parts[0]
+    else:
+        repo = ""
     try:
         paths.add((DEV_ROOT / rel).resolve(strict=False))
     except (OSError, ValueError):
@@ -1834,13 +1854,16 @@ def plan_preference(plan: dict) -> int:
 def plan_meta(path: Path) -> dict:
     rel = path.relative_to(DEV_ROOT)
     parts = rel.parts
-    repo = parts[0]
+    # A plan directly under DEV_ROOT (root-scoped browse) has no repo directory
+    # component — the scanned root itself is the repo. Without this the literal
+    # filename ("PLAN.md") becomes the repo group header in the sidebar.
+    repo = DEV_ROOT.name if len(parts) == 1 else parts[0]
     # Canonical PLAN.md files inherit their directory slug. Named repo-native
     # authorities can share one directory, so their filename supplies the slug.
     parent_dir = path.parent
     if path.name != "PLAN.md":
         slug = path.name[: -len(".plan.md")]
-    elif parent_dir == DEV_ROOT / repo:
+    elif parent_dir == repo_root_dir(repo):
         slug = "_root_"
     else:
         slug = parent_dir.name

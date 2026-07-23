@@ -110,6 +110,47 @@ class BrowserSensitiveContentTests(unittest.TestCase):
         self.assertNotIn(secret, json.dumps(metadata))
         self.assertIn("[REDACTED:secret]", json.dumps(metadata))
 
+    def test_root_level_plan_reports_scanned_root_as_repo(self):
+        # Regression: in a root-scoped browse (`vidux browse --root <repo>`) a
+        # PLAN.md directly under DEV_ROOT used to surface repo="PLAN.md", which
+        # became the sidebar group header.
+        with tempfile.TemporaryDirectory() as tmpdir:
+            original_root = browser_server.DEV_ROOT
+            root = Path(tmpdir).resolve() / "myproject"
+            root.mkdir()
+            browser_server.DEV_ROOT = root
+            try:
+                plan = root / "PLAN.md"
+                plan.write_text(
+                    "# My Project\n\n## Purpose\nTest.\n\n## Tasks\n"
+                    "- [pending] Task 1: do the thing [Evidence: seeded]\n",
+                    encoding="utf-8",
+                )
+                metadata = browser_server.plan_meta(plan)
+                ledger_repo, _ = browser_server.plan_ledger_match_paths(plan)
+            finally:
+                browser_server.DEV_ROOT = original_root
+
+        self.assertEqual(metadata["repo"], "myproject")
+        self.assertEqual(metadata["slug"], "_root_")
+        self.assertEqual(ledger_repo, "myproject")
+
+    def test_repo_subdir_plan_keeps_directory_repo_name(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            original_root = browser_server.DEV_ROOT
+            root = Path(tmpdir).resolve()
+            browser_server.DEV_ROOT = root
+            try:
+                plan = root / "somerepo" / "PLAN.md"
+                plan.parent.mkdir(parents=True)
+                plan.write_text("# Repo\n\n## Tasks\n", encoding="utf-8")
+                metadata = browser_server.plan_meta(plan)
+            finally:
+                browser_server.DEV_ROOT = original_root
+
+        self.assertEqual(metadata["repo"], "somerepo")
+        self.assertEqual(metadata["slug"], "_root_")
+
 
 class BrowserLocalPlanNoteTests(unittest.TestCase):
     def setUp(self):
