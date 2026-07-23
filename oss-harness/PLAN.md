@@ -1,0 +1,40 @@
+# OSS Track — Shared Goal Queue
+
+Shared multi-agent home for the open-source portfolio goal (moved here from
+the private authority 2026-07-23 so any agent seat — Claude Code, Cursor,
+Codex — can work the same goal). Full campaign history and private-repo
+verdicts stay in the private authority at
+`~/Development/ai-leo/vidux/oss-harness/PLAN.md`: read it locally; never copy
+private content into this public file.
+
+## Goal
+
+`GOAL.md` next door is the paste-ready pointer. Standing rails: M1
+delegate-first, M2 never-stop/all-boats-rise, own-row claims, ref-fresh reads,
+pathspec commits. Hard gate: `gh repo create` / publicize / visibility flips
+are per-instance human-gated. Stranger-test (sandboxed HOME, README verbatim)
+before calling any repo release-ready.
+
+## Rows
+
+- [completed] vidux README overhaul — 30-persona panel, verdict trims landed
+  (`7a3204bd`), CI + secret-scan green. 2026-07-23.
+- [completed] claudux wave — PRs #119/#120/#123/#124 merged: real-run terminal
+  demo + shorter README, install-ref pinning, project.type validation,
+  `--disallowedTools Bash` hardening, dead-ticker heartbeat fix (#122).
+  Open: issue #121 remaining directions (design-gated). 2026-07-23.
+- [completed] skillbox — stranger-tested, silent-skip defect fixed (PR #1
+  merged), release-ready agent-side; public flip human-gated. 2026-07-23.
+- [parked: human gate] voice harness — staged complete agent-side; publish
+  (public name, repo create, v0.1.0 tag) per-instance gated.
+- [pending] Proactive research — next OSS candidates and dev/build/test waves
+  per the private dossier; claim a row here before starting, fold receipts
+  back.
+
+## Claim discipline
+
+One agent per row. Claim by editing the row to
+`[claimed: <agent-seat> <iso8601>]` in a pushed commit BEFORE doing the work;
+never rewrite another lane's claimed row; re-read this file from `origin/main`
+before every write. Receipts (PR numbers, refs, test counts) go in the row when
+it completes.
