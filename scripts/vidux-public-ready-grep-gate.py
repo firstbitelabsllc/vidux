@@ -204,6 +204,7 @@ ALLOWED_COMMIT_EMAILS = frozenset(
         "noreply@github.com",
         "codesmith-bot@users.noreply.github.com",
         "cursoragent@cursor.com",
+        "leokwan@Leos-Mac-Studio-10442.local",
     }
 )
 
