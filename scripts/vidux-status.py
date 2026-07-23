@@ -22,6 +22,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from collections import deque
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
@@ -451,14 +452,18 @@ def main() -> int:
             and not os.environ.get("VIDUX_DEV_ROOT")
         )
         if default_missing:
+            # Warn on stderr, not stdout: `vidux status --json` emits its
+            # payload on stdout, and a warning line there breaks callers that
+            # pipe stdout into json.loads even though we exit 0.
             print(
                 f"warn: search root missing ({args.root}); "
                 "showing cwd plan only (set VIDUX_DEV_ROOT or create ~/Development)",
+                file=sys.stderr,
                 flush=True,
             )
             args.root = Path.cwd().resolve()
         else:
-            print(f"error: search root does not exist: {args.root}", flush=True)
+            print(f"error: search root does not exist: {args.root}", file=sys.stderr, flush=True)
             return 1
 
     plans = [parse_plan(p, args.root) for p in find_plans(args.root)]
