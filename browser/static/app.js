@@ -999,6 +999,10 @@ function fallbackFleetSummary(plans, repoCount) {
   };
 }
 
+function countNoun(count, noun) {
+  return `${count} ${noun}${count === 1 ? "" : "s"}`;
+}
+
 function topbarFleetSummary(plans, artifacts, repoCount) {
   const summary = state.fleetSummary || fallbackFleetSummary(plans, repoCount);
   const planCount = Number(summary.plans ?? plans.length);
@@ -1007,14 +1011,14 @@ function topbarFleetSummary(plans, artifacts, repoCount) {
   const total = Number(summary.tasks_total || 0);
   const done = Number(summary.tasks_completed || 0);
   const completionPct = Number(summary.completion_pct ?? pct(done, total));
-  if (!isAdvancedMode()) return `${planCount} plans · ${summaryRepoCount} projects`;
+  if (!isAdvancedMode()) return `${countNoun(planCount, "plan")} · ${countNoun(summaryRepoCount, "project")}`;
   const etaLabel = summary.eta_remaining_label
     || `${formatEtaHours(summary.eta_remaining_hours || 0)} tagged estimate`;
   const etaTagged = Number(summary.eta_tagged || 0);
   const etaEligible = Number(summary.eta_eligible || 0);
   const etaCoverage = `${etaTagged}/${etaEligible} open tasks estimated`;
   const taskStat = total ? ` · ${done}/${total} tasks (${completionPct}%)` : "";
-  return `${planCount} plans · ${summaryRepoCount} projects · ${artifactCount} artifacts${taskStat} · ${etaLabel} · ${etaCoverage}`;
+  return `${countNoun(planCount, "plan")} · ${countNoun(summaryRepoCount, "project")} · ${countNoun(artifactCount, "artifact")}${taskStat} · ${etaLabel} · ${etaCoverage}`;
 }
 
 // Plans whose `parent_rel` matches another plan's `rel` are surfaced as

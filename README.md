@@ -94,6 +94,13 @@ work, rendered evidence, local comments, and plan-scoped steering. Markdown
 stays the source of truth; comments and claims are separate, append-only local
 state.
 
+<p align="center">
+  <img src="assets/vidux-dashboard.png" alt="The vidux dashboard showing a demo plan: goal, next step, a scorecard measure marked in progress with proof still missing, and cross-project resume queues" width="900" />
+</p>
+
+The board refuses to trust prose: a measure without an attached artifact shows
+`PROOF MISSING` until one exists.
+
 The safety boundary is strict: loopback binding by default, Host and Origin
 validation on write routes, HTML artifacts rendered in a sandboxed iframe
 behind a sanitizer and an injected CSP (no scripts, forms, nested frames,
