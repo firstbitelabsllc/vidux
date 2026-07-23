@@ -43,13 +43,15 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 3 (cursor-grok-4.5) — skillbox scrub gate
   PR #2 MERGED; promote blocked on KEEP-PRIVATE / `*-leo`. No publicize.
   2026-07-23.
-- [completed] Proactive research wave 4 (cursor-grok-4.5) — vidux doctrine cut PR
-  https://github.com/firstbitelabsllc/vidux/pull/3 (`docs/root-readme-cut-wave4`);
-  install-first README; doctrine under docs/doctrine/. Awaiting CI merge.
-  2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T19:11:08-04:00] Proactive research wave 5 — private
-  keep/kill receipts (everything kill confirm, revolver kill-from-OSS,
-  clausona peer); no publicize. Fold private evidence path here.
+- [completed] Proactive research wave 4 (cursor-grok-4.5) — vidux doctrine cut PR #3
+  MERGED; install-first README; doctrine under docs/doctrine/; cursoragent
+  allowlisted on public-ready gate (fleet bot trailer class). 2026-07-23.
+- [completed] Proactive research wave 5 (cursor-grok-4.5) — private keep/kill
+  receipts: everything kill-from-shortlist; revolver kill-from-OSS; clausona
+  peer-only; litty/fcp keep-private. Private: ai-leo
+  `evidence/wave5-keep-kill-2026-07-23.md`. 2026-07-23.
+- [pending] Proactive research wave 6 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
