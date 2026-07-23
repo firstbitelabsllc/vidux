@@ -77,5 +77,35 @@ class StatusFocusTests(unittest.TestCase):
         self.assertIn("myproject", [p["short"] for p in payload["tied"]], payload)
 
 
+    def test_missing_default_dev_root_falls_back_to_cwd(self):
+        """Stranger machine: ~/Development absent → warn + still show cwd PLAN."""
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "home"
+            repo = self._make_repo(home, "solo")
+            env = {k: v for k, v in os.environ.items() if k != "VIDUX_DEV_ROOT"}
+            env["HOME"] = str(home)
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--json"],
+                capture_output=True,
+                text=True,
+                cwd=str(repo),
+                env=env,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("warn: search root missing", result.stderr)
+        self.assertNotIn("warn: search root missing", result.stdout)
+        payload = json.loads(result.stdout)
+        shorts = [p["short"] for p in payload["tied"] + payload["other"]]
+        self.assertIn("solo", shorts, payload)
+
+    def test_explicit_missing_root_still_errors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = self._make_repo(tmp, "solo")
+            missing = Path(tmp) / "no-such-root"
+            rc, out, err = run_status(repo, "--root", str(missing), "--json")
+        self.assertEqual(rc, 1)
+        self.assertIn("search root does not exist", err)
+        self.assertEqual(out.strip(), "")
+
 if __name__ == "__main__":
     unittest.main()
