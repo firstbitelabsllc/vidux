@@ -51,9 +51,8 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   peer-only; litty/fcp keep-private. Private: ai-leo
   `evidence/wave5-keep-kill-2026-07-23.md`. 2026-07-23.
 - [completed] Proactive research wave 6 (cursor-grok-4.5) — stranger install
-  found `vidux status` hard-fail without ~/Development; fix PR
-  https://github.com/firstbitelabsllc/vidux/pull/4. Private receipt:
-  ai-leo `evidence/wave6-vidux-stranger-2026-07-23.md`. 2026-07-23.
+  found `vidux status` hard-fail without ~/Development; PR #4 MERGED.
+  Private: ai-leo `evidence/wave6-vidux-stranger-2026-07-23.md`. 2026-07-23.
 - [pending] Proactive research wave 7 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
