@@ -27,36 +27,29 @@ Vidux never touches any of that.
 **Reach for it when the work will outlive one session. Skip it for a quick fix
 that a plan would only slow down.**
 
-<p align="center">
-  <img src="assets/vidux-terminal-demo.svg" alt="A real vidux session: init scaffolds PLAN.md, status lists the plan, browse starts the local cockpit" width="780" />
-</p>
-
 ## Quick start
 
-You need Bash, Git, and Python 3.9 or newer. No service, database, account, or
-API key.
+Vidux is an agent skill first. You don't type vidux commands — you tell your
+agent what you're working on, and the skill runs the plumbing.
 
 ```bash
+# once: get the source and mount the skill
 git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux
-mkdir -p "$HOME/.local/bin"
-ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
-export PATH="$HOME/.local/bin:$PATH"   # add to your shell profile to keep it
-
-cd /path/to/your-project
-vidux init --here          # scaffolds PLAN.md; never overwrites an existing one
-vidux browse --root .      # local cockpit at http://127.0.0.1:7191, scoped to this repo
+mkdir -p "$HOME/.claude/skills"
+ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"
 ```
 
-`vidux browse` scans `~/Development` by default, so pass `--root .` (or set
-`VIDUX_DEV_ROOT`) when your project lives elsewhere — otherwise this project's
-plan is absent from the cockpit (you see only plans under the default root).
-`vidux status` reads the same scan root.
+Then, in any project, two sentences do everything:
 
-To run the cycle itself, load the agent skill (see [Agent skill and
-plugin](#agent-skill-and-plugin)) and, in Claude Code, run `/vidux "what you're
-working on"`. `vidux init --here` already scaffolded the `PLAN.md`; the first
-cycle reads it, gathers evidence, and fills it in — no code until the plan is
-ready.
+- **`/vidux "what you're working on"`** — the first cycle scaffolds `PLAN.md`,
+  gathers evidence, and fills it in. No code until the plan is ready.
+- **"open the vidux dashboard"** — the agent starts the local cockpit at
+  `http://127.0.0.1:7191`, scoped to your repo.
+
+That symlink is how Claude Code finds the skill; `claude --plugin-dir
+"$HOME/Development/vidux"` is the alternative, not an addition. Other coding
+hosts read [`SKILL.md`](SKILL.md) directly. Requirements: Bash, Git, and
+Python 3.9 or newer. No service, database, account, or API key.
 
 ## The five-step cycle
 
@@ -79,7 +72,7 @@ transports the change; chat history is never the authority.
 
 ## What the plan looks like
 
-`vidux init --here` scaffolds one file with these sections:
+The first cycle scaffolds one file with these sections:
 
 - **Purpose** and **Evidence**: the goal, and the sources that justify it.
 - **Constraints** and **Operator Brief**: the rails, and the current state.
@@ -93,24 +86,22 @@ skipped gates stay visible, a worker's "done" is not acceptance, and a task
 cannot silently vanish during a merge. An unclear root cause gets one linked
 `investigations/<slug>.md`, never another queue.
 
-## Local cockpit
+## The dashboard
 
-```bash
-vidux browse
-```
-
-A read-mostly browser view of the plans under your scan root: active and blocked
+Say "open the vidux dashboard" (or run `vidux browse` yourself) and you get a
+read-mostly browser view of the plans under your scan root: active and blocked
 work, rendered evidence, local comments, and plan-scoped steering. Markdown
 stays the source of truth; comments and claims are separate, append-only local
 state.
 
 The safety boundary is strict: loopback binding by default, Host and Origin
-validation on write routes, HTML artifacts rendered in a sandboxed,
-network-isolated iframe (no scripts, forms, nested frames, popups, or external
-loads), sensitive-value redaction, and symlink rejection on writable files. LAN
-viewers cannot write plan state. Set `VIDUX_BROWSER_HOST=0.0.0.0` only on a
-trusted LAN, and read [`docs/reference/browser.md`](docs/reference/browser.md)
-first.
+validation on write routes, HTML artifacts rendered in a sandboxed iframe
+behind a sanitizer and an injected CSP (no scripts, forms, nested frames,
+popups, or external loads), sensitive-value redaction, and symlink rejection on
+writable files. LAN viewers cannot write plan state. Any non-loopback bind
+exposes the cockpit to that network — set `VIDUX_BROWSER_HOST=0.0.0.0` only on
+a trusted LAN, and read
+[`docs/reference/browser.md`](docs/reference/browser.md) first.
 
 ## Where Vidux stops
 
@@ -122,7 +113,7 @@ project's recovery story to that host's private memory.
 - Vidux can record provider-neutral claims for concurrent work, but it never
   launches a provider or selects a model. An external append-only ledger can add
   durable publish receipts; it is a companion, not a second planning authority.
-- The cockpit is a local operational view, not a hosted collaboration service.
+- The dashboard is a local operational view, not a hosted collaboration service.
 - No benchmark harness, provider runner, or scoring implementation ships here;
   evaluation belongs to the host.
 - Vidux optimizes for durable recovery, not raw speed. The value is that a plan,
@@ -130,7 +121,14 @@ project's recovery story to that host's private memory.
 - macOS is the primary environment. Core scripts are portable, but OS scheduling
   examples need platform-specific adaptation.
 
-## CLI
+## The CLI (plumbing)
+
+The skill shells out to a small CLI. You can drive it directly — useful for
+scripts, hooks, and hosts without a skill runtime:
+
+<p align="center">
+  <img src="assets/vidux-terminal-demo.svg" alt="A real vidux CLI session: init scaffolds PLAN.md, status lists the plan, browse starts the local cockpit" width="780" />
+</p>
 
 ```text
 vidux init --here    create a PLAN.md without overwriting one
@@ -139,11 +137,20 @@ vidux browse         start the local cockpit
 vidux doctor         verify the local installation
 ```
 
-Run `vidux help <command>` for options, and `vidux doctor --json` for
-machine-readable install truth. One doctor check runs the contract self-test
-(`npm test`), which needs the dev dependencies (`npm ci`). On a fresh clone that
-has not run `npm ci`, that check reports `[WARN]` and skips the suite — the
-doctor still exits `0`, because the runtime is Bash, Git, and Python only.
+To put it on your PATH:
+
+```bash
+ln -sfn "$HOME/Development/vidux/bin/vidux" "$HOME/.local/bin/vidux"
+```
+
+`vidux browse` and `vidux status` scan `~/Development` by default, so pass
+`--root .` (or set `VIDUX_DEV_ROOT`) when your project lives elsewhere —
+otherwise this project's plan is absent from the view. Run `vidux help
+<command>` for options, and `vidux doctor --json` for machine-readable install
+truth. One doctor check runs the contract self-test (`npm test`), which needs
+the dev dependencies (`npm ci`); on a fresh clone that check reports `[WARN]`
+and skips the suite — the doctor still exits `0`, because the runtime is Bash,
+Git, and Python only.
 
 ## Configuration
 
@@ -160,21 +167,8 @@ python3 scripts/vidux-config.py check --json
 persistent path, or `external` for a path outside the repository. Vidux never
 writes a central plan inside its own installation.
 
-## Agent skill and plugin
-
-The repository ships exactly one agent skill at root [`SKILL.md`](SKILL.md).
-Claude Code can load it as a local skill or through the plugin manifest:
-
-```bash
-mkdir -p "$HOME/.claude/skills"
-ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"
-# alternative, not in addition:
-claude --plugin-dir "$HOME/Development/vidux"
-```
-
-Other coding hosts read `SKILL.md` directly. Optional Git hooks live in
-`hooks/`; copy only the ones you intend to enforce. Vidux installs no hooks or
-background jobs implicitly.
+Optional Git hooks live in `hooks/`; copy only the ones you intend to enforce.
+Vidux installs no hooks or background jobs implicitly.
 
 ## Install and release truth
 
