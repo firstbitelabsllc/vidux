@@ -78,7 +78,7 @@ EOF
       cat <<EOF
 vidux init — bootstrap a new plan.
 
-usage: vidux init <slug> --plan-store <path>
+usage: vidux init <slug> [--plan-store <path>]
        vidux init --here
 
 With --here, creates PLAN.md in the current project. With <slug>, creates

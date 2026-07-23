@@ -74,56 +74,68 @@
   <!-- Tagline -->
   <text x="480" y="125" text-anchor="middle" class="text-secondary" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="400">Plan first, code second.</text>
 
-  <!-- Flow diagram: Evidence → Plan → Execute → Verify → Checkpoint -->
-  <g transform="translate(80, 170)">
-    <!-- Node 1: Evidence -->
-    <g transform="translate(0, 0)">
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
-      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" text-transform="uppercase" letter-spacing="1">GATHER</text>
-      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">evidence</text>
+  <!-- Flow diagram: the canonical cycle — READ → ASSESS → ACT → VERIFY → CHECKPOINT -->
+  <g transform="translate(0, 170)">
+    <!-- Node 1: READ -->
+    <g transform="translate(40, 0)">
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="70" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">READ</text>
+      <text x="70" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">plan · proof</text>
     </g>
 
     <!-- Arrow 1→2 -->
-    <line x1="138" y1="28" x2="178" y2="28" class="arrow flow-line" stroke-width="1.5"/>
-    <polygon points="175,23 185,28 175,33" class="arrow" style="fill: var(--arrow);"/>
+    <line x1="186" y1="28" x2="213" y2="28" class="arrow flow-line" stroke-width="1.5"/>
+    <polygon points="212,23 222,28 212,33" class="arrow" style="fill: var(--arrow);"/>
 
-    <!-- Node 2: Plan -->
-    <g transform="translate(190, 0)">
-      <rect x="0" y="0" width="130" height="56" rx="10" class="accent-dim"/>
-      <rect x="0" y="0" width="130" height="56" rx="10" class="accent-stroke" stroke-width="1.5"/>
-      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">WRITE</text>
-      <text x="65" y="43" text-anchor="middle" class="accent" font-family="ui-monospace, monospace" font-size="13" font-weight="700">PLAN.md</text>
+    <!-- Node 2: ASSESS -->
+    <g transform="translate(225, 0)">
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="70" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">ASSESS</text>
+      <text x="70" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">what's next</text>
     </g>
 
     <!-- Arrow 2→3 -->
-    <line x1="328" y1="28" x2="368" y2="28" class="line-accent flow-line" stroke-width="1.5"/>
-    <polygon points="365,23 375,28 365,33" class="accent" style="fill: var(--accent);"/>
+    <line x1="371" y1="28" x2="398" y2="28" class="arrow flow-line" stroke-width="1.5"/>
+    <polygon points="397,23 407,28 397,33" class="arrow" style="fill: var(--arrow);"/>
 
-    <!-- Node 3: Execute -->
-    <g transform="translate(380, 0)">
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
-      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">EXECUTE</text>
-      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">one task</text>
+    <!-- Node 3: ACT -->
+    <g transform="translate(410, 0)">
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="70" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">ACT</text>
+      <text x="70" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">smallest slice</text>
     </g>
 
     <!-- Arrow 3→4 -->
-    <line x1="518" y1="28" x2="558" y2="28" class="arrow flow-line" stroke-width="1.5"/>
-    <polygon points="555,23 565,28 555,33" class="arrow" style="fill: var(--arrow);"/>
+    <line x1="556" y1="28" x2="583" y2="28" class="arrow flow-line" stroke-width="1.5"/>
+    <polygon points="582,23 592,28 582,33" class="arrow" style="fill: var(--arrow);"/>
 
-    <!-- Node 4: Verify -->
-    <g transform="translate(570, 0)">
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-bg"/>
-      <rect x="0" y="0" width="130" height="56" rx="10" class="node-border" stroke-width="1.5"/>
-      <text x="65" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">VERIFY</text>
-      <text x="65" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">checkpoint</text>
+    <!-- Node 4: VERIFY -->
+    <g transform="translate(595, 0)">
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-bg"/>
+      <rect x="0" y="0" width="140" height="56" rx="10" class="node-border" stroke-width="1.5"/>
+      <text x="70" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">VERIFY</text>
+      <text x="70" y="43" text-anchor="middle" class="text-primary" font-family="ui-monospace, monospace" font-size="13" font-weight="600">real proof</text>
+    </g>
+
+    <!-- Arrow 4→5 -->
+    <line x1="741" y1="28" x2="768" y2="28" class="line-accent flow-line" stroke-width="1.5"/>
+    <polygon points="767,23 777,28 767,33" class="accent" style="fill: var(--accent);"/>
+
+    <!-- Node 5: CHECKPOINT (the recovery packet — the reason vidux exists) -->
+    <g transform="translate(780, 0)">
+      <rect x="0" y="0" width="140" height="56" rx="10" class="accent-dim"/>
+      <rect x="0" y="0" width="140" height="56" rx="10" class="accent-stroke" stroke-width="1.5"/>
+      <text x="70" y="25" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-weight="500" letter-spacing="1">CHECKPOINT</text>
+      <text x="70" y="43" text-anchor="middle" class="accent" font-family="ui-monospace, monospace" font-size="13" font-weight="700">resume point</text>
     </g>
 
     <!-- Return arrow (bottom) -->
-    <path d="M 700 40 Q 720 40 720 60 L 720 80 Q 720 95 700 95 L 495 95 M 305 95 L 100 95 Q 80 95 80 80 L 80 62" class="line-accent flow-line pulse" stroke-width="1.2" opacity="0.5"/>
-    <polygon points="75,65 80,55 85,65" class="accent" style="fill: var(--accent);" opacity="0.5"/>
-    <text x="400" y="99" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-style="italic">results feed back into evidence</text>
+    <path d="M 920 40 Q 940 40 940 60 L 940 80 Q 940 95 920 95 L 545 95 M 375 95 L 60 95 Q 40 95 40 80 L 40 62" class="line-accent flow-line pulse" stroke-width="1.2" opacity="0.5"/>
+    <polygon points="35,65 40,55 45,65" class="accent" style="fill: var(--accent);" opacity="0.5"/>
+    <text x="460" y="99" text-anchor="middle" class="text-muted" font-family="system-ui, sans-serif" font-size="10" font-style="italic">the next run starts at READ</text>
   </g>
 
   <!-- Bottom tagline -->
