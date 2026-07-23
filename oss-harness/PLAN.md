@@ -28,10 +28,17 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   merged), release-ready agent-side; public flip human-gated. 2026-07-23.
 - [parked: human gate] voice harness — staged complete agent-side; publish
   (public name, repo create, v0.1.0 tag) per-instance gated.
-- [claimed: claude-code 2026-07-23T18:35:00-04:00] Proactive research wave 1 —
-  local-stt cluster (dossier shortlist #1, already public): stranger-test
-  (sandboxed HOME, README verbatim), fix defects via PRs, same excellence bar
-  as the claudux wave. Fold receipts back here.
+- [completed] Proactive research wave 1 (claude-code) — local-stt cluster:
+  research + stranger-test DONE (37-agent recon, 27 findings verified 27/27,
+  incl. a real `process.exit(1)` health-check crash + a missed ffmpeg spawn
+  crash). PR delivery DELIBERATELY NOT PURSUED: ownership gate returned
+  `viewerPermission: READ` / `viewerCanAdminister: false` — a third-party repo,
+  not portfolio, so a fork+PR is Leo-gated (same third-party-peer class as
+  clausona / media MCP, wave 2). Separately the drafted CI/test artifacts are
+  non-landable as-is (critic-demonstrated: ts-jest never declared → CI red on
+  first commit; C2/ffmpeg crashes unfixed). Reachable-win reclassification, not
+  a shipped fix. Private receipt: ai-leo
+  `evidence/wave1-local-stt-2026-07-23.md`. 2026-07-23.
 - [completed] Proactive research wave 2 (cursor-grok-4.5) — council + probes:
   `everything` kill-from-shortlist (private grab-bag / CNA README);
   clausona + media MCP clones = third-party peers not portfolio; litty/fcp
@@ -53,8 +60,8 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 6 (cursor-grok-4.5) — stranger install
   found `vidux status` hard-fail without ~/Development; PR #4 MERGED.
   Private: ai-leo `evidence/wave6-vidux-stranger-2026-07-23.md`. 2026-07-23.
-- [pending] Proactive research wave 7 — next reachable win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T19:37:43-04:00] Proactive research wave 7 — land vidux#5
+  (status warn → stderr for --json); then next reachable. No publicize.
 
 ## Claim discipline
 
