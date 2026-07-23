@@ -443,8 +443,23 @@ def main() -> int:
     args.root = args.root.resolve()
 
     if not args.root.is_dir():
-        print(f"error: search root does not exist: {args.root}", flush=True)
-        return 1
+        # README quick-start runs `vidux status` from an arbitrary project dir.
+        # Fleet default ~/Development is often absent on a stranger machine —
+        # fall back to cwd so the cwd PLAN.md path below still works.
+        default_missing = (
+            args.root == DEFAULT_ROOT.resolve()
+            and not os.environ.get("VIDUX_DEV_ROOT")
+        )
+        if default_missing:
+            print(
+                f"warn: search root missing ({args.root}); "
+                "showing cwd plan only (set VIDUX_DEV_ROOT or create ~/Development)",
+                flush=True,
+            )
+            args.root = Path.cwd().resolve()
+        else:
+            print(f"error: search root does not exist: {args.root}", flush=True)
+            return 1
 
     plans = [parse_plan(p, args.root) for p in find_plans(args.root)]
 

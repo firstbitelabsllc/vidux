@@ -27,6 +27,8 @@ vidux status
 vidux browse         # local cockpit (loopback by default)
 ```
 
+`vidux status` scans `VIDUX_DEV_ROOT` (default `~/Development`). If that directory is missing, it warns and still shows the `PLAN.md` in your current directory.
+
 `vidux help <command>` for options. Config lives at
 `~/.config/vidux/vidux.config.json` — see
 [`vidux.config.example.json`](vidux.config.example.json).
