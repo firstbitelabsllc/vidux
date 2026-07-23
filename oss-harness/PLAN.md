@@ -60,8 +60,11 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 6 (cursor-grok-4.5) — stranger install
   found `vidux status` hard-fail without ~/Development; PR #4 MERGED.
   Private: ai-leo `evidence/wave6-vidux-stranger-2026-07-23.md`. 2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T19:37:43-04:00] Proactive research wave 7 — land vidux#5
-  (status warn → stderr for --json); then next reachable. No publicize.
+- [completed] Proactive research wave 7 (cursor-grok-4.5) — vidux#5 MERGED:
+  status missing-dev-root warn/error → stderr so `--json` stdout stays parseable.
+  2026-07-23.
+- [pending] Proactive research wave 8 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
