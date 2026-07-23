@@ -1,99 +1,89 @@
-<p align="center">
-  <img src="assets/vidux-banner.svg" alt="Vidux — plan first, code second" width="100%" />
-</p>
-
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/firstbitelabsllc/vidux?style=flat" alt="MIT license" /></a>
-  <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="Python 3.9 or newer" />
-</p>
-
 # Vidux
 
-A coding agent loses everything when its session ends. Vidux keeps the
-recovery packet in plain repository files — a `PLAN.md` holding priorities and
-decisions, evidence stored next to the work, and a checkpoint naming the exact
-next action — so the next run resumes where the last one stopped, whether
-that's the same agent, a different tool, or you a week later.
+Plan-first control plane for AI coding work that spans sessions, agents, or days.
 
-Reach for it when the work will outlive one session. Skip it for a quick fix.
+One `PLAN.md` holds the queue, decisions, and progress. Agents read it, do one
+task, write proof, and exit. Chat is not the control plane.
+
+## Install
+
+Needs Bash, Git, and Python 3. Node is only for contributor tests and docs.
+
+```bash
+git clone https://github.com/firstbitelabsllc/vidux.git
+cd vidux
+mkdir -p "$HOME/.local/bin"
+ln -sfn "$(pwd)/bin/vidux" "$HOME/.local/bin/vidux"
+export PATH="$HOME/.local/bin:$PATH"
+vidux doctor
+```
 
 ## Quick start
 
-Vidux is an agent skill — your agent drives it; you rarely type vidux commands
-yourself.
+```bash
+cd /path/to/your/project
+vidux init --here    # creates PLAN.md only if missing
+vidux status
+vidux browse         # local cockpit (loopback by default)
+```
+
+`vidux help <command>` for options. Config lives at
+`~/.config/vidux/vidux.config.json` — see
+[`vidux.config.example.json`](vidux.config.example.json).
+
+The cockpit binds to loopback by default and scans your dev root (default
+`~/Development`, configurable) for plans; a measure with no attached artifact
+shows `PROOF MISSING` until one exists.
+
+## Agent skill
+
+Root [`SKILL.md`](SKILL.md) is the agent entry. Claude Code:
 
 ```bash
-git clone https://github.com/firstbitelabsllc/vidux.git ~/Development/vidux  # any path works
-mkdir -p "$HOME/.claude/skills"
-ln -sfn "$HOME/Development/vidux" "$HOME/.claude/skills/vidux"               # point at your clone
+ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"
+# or: claude --plugin-dir /path/to/vidux
 ```
 
-Claude Code is the tested host. Any agent that can read [SKILL.md](SKILL.md)
+Claude Code is the tested host. Any agent that can read [`SKILL.md`](SKILL.md)
 and plain files can follow the same contract; other hosts are untested.
-
-Then, in any project, two entry points:
-
-- **`/vidux "what you're working on"`** — the first cycle scaffolds `PLAN.md`,
-  gathers evidence, and fills it in. No code until the plan is ready.
-- **"open the vidux dashboard"** — starts the local cockpit at
-  `http://127.0.0.1:7191`.
-
-Requirements: Bash, Git, Python 3.9 or newer. No service, database, account,
-or API key. Details: [Installation](docs/guide/installation.md) ·
-[Quickstart](docs/guide/quickstart.md).
-
-Inside a project Vidux writes plain files only — `PLAN.md` and the evidence
-next to the work — yours to commit or gitignore. Deleting the symlink
-uninstalls the skill. Here is what a run leaves behind:
-
-```markdown
-## Tasks
-- [completed]   Extract auth middleware   [Evidence: PR #41]
-- [in_progress] Migrate sessions table    [Evidence: migrations/012]
-- [blocked]     Cut over login route      [Blocker: sessions backfill]
-
-## Progress
-- [2026-07-22] Backfill at 80%. Next: verify row counts, then unblock cutover.
-```
-
-Kill that session mid-migration and nothing is lost: the next run — any tool —
-reads `PLAN.md` and starts at "verify row counts".
-
-<p align="center">
-  <img src="assets/vidux-dashboard.png" alt="The vidux dashboard showing a demo plan: goal, next step, a scorecard measure marked in progress with proof still missing, and cross-project resume queues" width="900" />
-</p>
-
-The board refuses to trust prose: a measure without an attached artifact shows
-`PROOF MISSING` until one exists. It scans your dev root (default
-`~/Development`, configurable) for plans, and it binds to loopback only by
-default — read [the browser reference](docs/reference/browser.md) before
-binding wider.
-
-## How it works
-
-Every run is the same loop — READ → ASSESS → ACT → VERIFY → CHECKPOINT — and
-the state lives in files git already tracks, committed like any other change;
-chat history is never the authority. The depth lives in the docs:
-[the cycle](docs/concepts/cycle.md) ·
-[plan structure](docs/concepts/plan-structure.md) ·
-[CLI](docs/reference/commands.md).
-
-The skill shells out to a small CLI (`init`, `status`, `browse`, `doctor`) you
-can also run directly — [Installation](docs/guide/installation.md) covers
-putting it on PATH.
 
 ## Where Vidux stops
 
 Vidux does not schedule agents, route models, execute workers, or hold
-provider credentials — your coding host does all of that. Vidux can record
+provider credentials; your coding host does all of that. Vidux can record
 provider-neutral claims for concurrent work, but it never launches a provider
-or selects a model. The dashboard is a local view, not a hosted service. The
-value is durable recovery, not raw speed.
+or selects a model. The dashboard is a local view, not a hosted service.
 
-## Release truth and contributing
+## Docs
 
-Vidux installs from source; there is no npm package on the registry, though
-[Installation](docs/guide/installation.md) covers an optional locally-built
-tarball. The Node toolchain is only used by the test suite. Start with
-[ARCHITECTURE.md](ARCHITECTURE.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
+Root is install + agent entry. Doctrine essays live under `docs/doctrine/` (not a second product).
+
+| Doc | Path |
+| --- | --- |
+| Architecture | [`docs/doctrine/ARCHITECTURE.md`](docs/doctrine/ARCHITECTURE.md) |
+| Doctrine | [`docs/doctrine/DOCTRINE.md`](docs/doctrine/DOCTRINE.md) |
+| Loop | [`docs/doctrine/LOOP.md`](docs/doctrine/LOOP.md) |
+| Enforcement hooks | [`docs/doctrine/ENFORCEMENT.md`](docs/doctrine/ENFORCEMENT.md) |
+| Core-cut handoff | [`docs/CORE-CUT.md`](docs/CORE-CUT.md) |
+| Evidence format | [`guides/evidence-format.md`](guides/evidence-format.md) |
+| Site / guides | [`docs/`](docs/) |
+
+Community: [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [SUPPORT](SUPPORT.md) · [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
+
+Repo `PLAN.md` (if present) is **this repo’s** internal queue — not required to use Vidux in your project.
+
+## Release truth
+
+Version `1.0.0` is the local source contract. Vidux installs from source;
+there is no npm package on the registry and no GitHub Release yet, so use the
+symlink above until one exists. The Node toolchain is only used by contributor
+tests.
+
+## Contributing
+
+```bash
+npm ci
+npm run verify
+```
+
 MIT licensed.
