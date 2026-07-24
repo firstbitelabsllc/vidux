@@ -391,7 +391,13 @@ GLM shims.
   Leo publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
   row; next niche from private dossier only with create/publicize gate;
   tag only if tip drifts with product code.
-- [claimed: glm-max 2026-07-24T09:37:44-04:00] Proactive research wave 53 — next reachable win (claim first);
+- [completed 2026-07-24T09:37:45-04:00] Proactive research wave 53 (glm-max) — WATCHING.
+  No open PRs/issues; Dependabot open=0; code-scanning open=0; skillbox
+  private. Claudux tip CI-only ahead of `v2.0.6` (#143/#144). Resume: Leo
+  publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
+  row; next niche from private dossier only with create/publicize gate;
+  tag only if tip drifts with product code.
+- [pending] Proactive research wave 54 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
