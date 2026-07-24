@@ -76,10 +76,18 @@ Repo `PLAN.md` (if present) is **this repo’s** internal queue — not required
 
 ## Release truth
 
-Version `1.0.0` is the local source contract. Vidux installs from source;
-there is no npm package on the registry and no GitHub Release yet, so use the
-symlink above until one exists. The Node toolchain is only used by contributor
-tests.
+Version `1.0.1` is the current source contract (`VERSION` + matching git tag).
+Vidux installs from source — there is no npm registry package. Prefer the
+tagged tip:
+
+```bash
+git clone https://github.com/firstbitelabsllc/vidux.git
+cd vidux && git checkout v1.0.1
+```
+
+Or track `main` for the latest. Release notes:
+[v1.0.1](https://github.com/firstbitelabsllc/vidux/releases/tag/v1.0.1).
+The Node toolchain is only used by contributor tests.
 
 ## Contributing
 

@@ -282,7 +282,10 @@ GLM shims.
 - [completed 2026-07-24T03:42:56-04:00] Proactive research wave 29 (glm-max) —
   vidux#9 MERGED → tagged `v1.0.1` + GitHub Release; stranger clone smoke →
   `vidux 1.0.1`. Voice-debug still human-gated.
-- [pending] Proactive research wave 30 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T03:52:51-04:00] Proactive research
+  wave 30 — fix stale README Release truth (still claims no GitHub Release /
+  1.0.0-only after v1.0.1). Fold receipt here.
+- [pending] Proactive research wave 31 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
