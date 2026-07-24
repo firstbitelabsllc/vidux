@@ -34,7 +34,15 @@ Source-grounded defaults from the launcher and server:
 - Steering journal: `VIDUX_BROWSER_STEERING_FILE` defaults to `~/.vidux-browser/steering.jsonl`
 - Work-claims journal: `VIDUX_CLAIMS_FILE` defaults to `~/.agent-ledger/claims.jsonl`
 
-In background mode the launcher writes a PID file and log under `${TMPDIR:-/tmp}` and waits for `GET /api/health` before declaring success. If something is already listening on the target port, the launcher reuses it only when the health payload matches the requested `repo_root`, `dev_root`, path-safe steering and coordination store identities, `port`, and current server/mailbox/coordination module mtimes.
+In background mode the launcher writes a PID file and log under
+`${XDG_STATE_HOME:-~/.local/state}/vidux/` (`browser.pid` / `browser.log`;
+overridable via `VIDUX_BROWSER_PIDFILE` / `VIDUX_BROWSER_LOG`) and waits for
+`GET /api/health` before declaring success. Older builds used
+`${TMPDIR:-/tmp}/vidux-browser.{pid,log}` — `vidux doctor` warns if that
+legacy shared path still exists. If something is already listening on the
+target port, the launcher reuses it only when the health payload matches the
+requested `repo_root`, `dev_root`, path-safe steering and coordination store
+identities, `port`, and current server/mailbox/coordination module mtimes.
 
 The launcher accepts `--port`, `--host`, `--root`/`--dev-root`, `--open-host`,
 `--comments-path`, `--steering-path`, and `--claims-path`; unknown flags exit 2.

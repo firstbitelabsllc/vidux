@@ -1,6 +1,6 @@
 {
   "name": "vidux",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plan-first control plane for long-running AI coding loops.",
   "private": false,
   "bin": {
