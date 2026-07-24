@@ -334,8 +334,12 @@ GLM shims.
   Leo publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
   row; next niche from private dossier only with create/publicize gate. No
   publicize this wave.
-- [claimed: glm-max 2026-07-24T07:08:16-04:00] Proactive research wave 43 — next reachable win (claim first);
-  prefer amplify or WATCHING over another micro-release unless tip drifts;
+- [completed 2026-07-24T07:08:57-04:00] Proactive research wave 43 (glm-max) —
+  vidux#11 MERGED: SECURITY.md XDG browser pidfile + honest 1.0.x support
+  table (no micro-release; tip drifts docs-only from `v1.0.2`). Voice-debug
+  still human-gated; skillbox private.
+- [pending] Proactive research wave 44 — next reachable win (claim first);
+  prefer amplify or WATCHING; tag vidux only if tip drifts with code;
   voice-debug publish remains human-gated.
 
 ## Claim discipline
