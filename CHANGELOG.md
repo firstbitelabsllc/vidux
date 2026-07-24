@@ -7,6 +7,12 @@ tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
 ## [Unreleased]
 
+### Fixed
+
+- **SECURITY.md** documents shared-temp / multi-user threat class, XDG
+  `browser.{pid,log}`, and an honest 1.0.x support table (drops stale
+  “unreleased 3.0”) ([#11](https://github.com/firstbitelabsllc/vidux/pull/11)).
+
 ## [1.0.2] — 2026-07-24
 
 ### Fixed
