@@ -379,7 +379,12 @@ GLM shims.
   missing-workflow-permissions #2–#8). Stale #1 (`publish.yml` deleted)
   dismissed won't fix. CI green. No product micro-release. Voice-debug
   still human-gated; skillbox private.
-- [claimed: glm-max 2026-07-24T09:07:54-04:00] Proactive research wave 51 — next reachable win (claim first);
+- [completed 2026-07-24T09:11:01-04:00] Proactive research wave 51 (glm-max) —
+  claudux#144 MERGED: CodeQL workflow (actions + javascript-typescript);
+  open code-scanning alerts → 0 (stale Jul-19 analyses cleared after tip
+  re-scan). No product micro-release. Voice-debug still human-gated;
+  skillbox private.
+- [pending] Proactive research wave 52 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
