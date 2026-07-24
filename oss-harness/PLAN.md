@@ -130,12 +130,12 @@ GLM shims.
   PATH-SHADOW soft-warn for npm/Homebrew name collision; PR #5 MERGED; suite
   ALL GREEN (17). No publicize. Private:
   ai-leo `evidence/wave18-skillbox-path-shadow-2026-07-23.md`. 2026-07-23.
-- [claimed: glm-max 2026-07-23T23:08:00-04:00] Proactive research wave 19 —
-  seat-mix enforcement: GLM-max bounded amplify probe (Delegate) for next
-  shippable defect on already-public vidux/claudux (or stage skillbox). Parent
-  (cursor-grok steward) accepts. No publicize. Fold receipt here.
-- [pending] Proactive research wave 20 — prefer Sol if GLM just shipped, else
-  GLM; voice-debug publish remains human-gated.
+- [completed] Proactive research wave 19 (glm-max via Delegate; parent
+  cursor-grok) — empty Claude/Codex `--version` → warn; claudux PR #126 MERGED;
+  suite green. Seat-mix: first GLM wave after Grok streak. Private:
+  ai-leo `evidence/wave19-glm-empty-version-2026-07-23.md`. 2026-07-23.
+- [pending] Proactive research wave 20 — prefer Sol (~30% seat) next, else GLM;
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
