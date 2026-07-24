@@ -323,7 +323,7 @@ GLM shims.
 - [completed 2026-07-24T06:24:25-04:00] Proactive research wave 40 (sol /
   cursor-parent) — claudux#140 MERGED → tagged `v2.0.5` + GitHub Release;
   stranger install smoke → `claudux 2.0.5`. Voice-debug still human-gated.
-- [pending] Proactive research wave 41 — next reachable win (claim first);
+- [claimed: glm-max 2026-07-24T06:38:45-04:00] Proactive research wave 41 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
