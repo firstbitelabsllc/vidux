@@ -274,7 +274,10 @@ GLM shims.
 - [completed 2026-07-24T03:09:09-04:00] Proactive research wave 27 (glm-max) —
   claudux#132 MERGED → tagged `v2.0.1` + GitHub Release; stranger install smoke
   → `claudux 2.0.1`. Voice-debug still human-gated.
-- [pending] Proactive research wave 28 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T03:23:07-04:00] Proactive research
+  wave 28 — portfolio stranger re-proof (claudux v2.0.1 + vidux) + drain check;
+  skillbox stays private (no publicize). Fold receipt / WATCHING if drained.
+- [pending] Proactive research wave 29 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
