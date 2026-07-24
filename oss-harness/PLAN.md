@@ -254,8 +254,11 @@ GLM shims.
 - [completed] Proactive research wave 22 (sol / cursor parent) — claudux
   public-ready identity gate PR #129 MERGED (employer/domain patterns + HEAD
   metadata; CI + npm run verify). No history wipe. Suite green. 2026-07-24.
-- [pending] Proactive research wave 23 — prefer GLM next; voice-debug publish
-  remains human-gated.
+- [claimed: glm-max 2026-07-24T02:07:54-04:00] Proactive research wave 23 —
+  residual docs oversell kill (smart-cleanup / accuracy guarantees / false
+  privacy) after README honesty #127. Fold receipt here.
+- [pending] Proactive research wave 24 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
