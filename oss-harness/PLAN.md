@@ -327,7 +327,7 @@ GLM shims.
   claudux#141 MERGED (SECURITY XDG/TMPDIR) → #142 tagged `v2.0.6` + GitHub
   Release; stranger install smoke → `claudux 2.0.6`. Voice-debug still
   human-gated.
-- [pending] Proactive research wave 42 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T06:52:47-04:00] Proactive research wave 42 — next reachable win (claim first);
   prefer amplify or WATCHING over another micro-release unless tip drifts;
   voice-debug publish remains human-gated.
 
