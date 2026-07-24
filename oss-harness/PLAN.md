@@ -271,7 +271,10 @@ GLM shims.
   cursor-parent) — claudux#131 MERGED: README + docs home + installation show
   `CLAUDUX_REF=v2.0.0` pin beside main install + release link. Voice-debug
   still human-gated.
-- [pending] Proactive research wave 27 — next reachable win (claim first);
+- [claimed: glm-max 2026-07-24T03:08:07-04:00] Proactive research wave 27 —
+  claudux 2.0.1 patch: CHANGELOG + version bump so install-pin docs (#131) are
+  on a tagged release; GitHub Release + stranger smoke. Fold receipt here.
+- [pending] Proactive research wave 28 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
