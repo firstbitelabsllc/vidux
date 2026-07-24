@@ -320,7 +320,10 @@ GLM shims.
 - [completed 2026-07-24T06:09:30-04:00] Proactive research wave 39 (glm-max) —
   claudux#139 MERGED: ARCHITECTURE documents XDG locks/stderr + TMPDIR
   `claudux_mktemp`. Voice-debug still human-gated.
-- [pending] Proactive research wave 40 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T06:23:46-04:00] Proactive research
+  wave 40 — claudux 2.0.5: tag ARCHITECTURE isolation docs (#139) for
+  strangers. Fold receipt here.
+- [pending] Proactive research wave 41 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
