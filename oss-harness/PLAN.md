@@ -297,7 +297,10 @@ GLM shims.
 - [completed 2026-07-24T04:40:47-04:00] Proactive research wave 33 (glm-max) —
   claudux#134 MERGED → tagged `v2.0.2` + GitHub Release; stranger install
   smoke → `claudux 2.0.2`. Voice-debug still human-gated.
-- [pending] Proactive research wave 34 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T04:53:21-04:00] Proactive research
+  wave 34 — claudux Codex stderr log HOME/XDG-scoped (shared TMPDIR residual
+  after #133). Fold receipt here.
+- [pending] Proactive research wave 35 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
