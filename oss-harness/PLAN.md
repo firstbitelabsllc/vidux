@@ -109,9 +109,10 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   private clone expected; npm/Homebrew name collision found; PR #4 MERGED
   (PATH-first + recovery note). Suite ALL GREEN. No publicize. Private:
   ai-leo `evidence/wave17-skillbox-stranger-2026-07-23.md`. 2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T22:53:02-04:00] Proactive research wave 18 —
-  skillbox doctor soft-warn when another `skillbox` binary is on PATH
-  (npm/Homebrew name collision). No publicize. Fold receipt here.
+- [completed] Proactive research wave 18 (cursor-grok-4.5) — skillbox doctor
+  PATH-SHADOW soft-warn for npm/Homebrew name collision; PR #5 MERGED; suite
+  ALL GREEN (17). No publicize. Private:
+  ai-leo `evidence/wave18-skillbox-path-shadow-2026-07-23.md`. 2026-07-23.
 - [pending] Proactive research wave 19 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
