@@ -374,8 +374,13 @@ GLM shims.
   Resume: Leo publicize skillbox / voice-debug / litty; wave-21 seat
   closes claimed row; next niche from private dossier only with
   create/publicize gate; tag vidux when tip drifts with code.
-- [claimed: sol / cursor-parent 2026-07-24T08:52:44-04:00] Proactive research wave 50 — next reachable win (claim first);
-  prefer amplify or WATCHING; tag vidux only if tip drifts with code;
+- [completed 2026-07-24T08:54:00-04:00] Proactive research wave 50 (sol / cursor-parent) —
+  claudux#143 MERGED: CI workflow `permissions: contents: read` (code-scanning
+  missing-workflow-permissions #2–#8). Stale #1 (`publish.yml` deleted)
+  dismissed wont_fix. CI green. No product micro-release. Voice-debug
+  still human-gated; skillbox private.
+- [pending] Proactive research wave 51 — next reachable win (claim first);
+  prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
 ## Claim discipline
