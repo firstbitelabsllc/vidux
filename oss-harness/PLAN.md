@@ -230,6 +230,26 @@ GLM shims.
   after validation" instead of "Processed 0 changes", preserves the old counter
   in the non-manifest else-branch, wired for BOTH backends (codex-utils.sh:115).
   No GLM delegation needed. BUILD PHASE COMPLETE (1+2+3 all landed).
+- MERGE RECEIPT (2026-07-24): PR #127 MERGED to firstbitelabsllc/claudux `main`
+  (squash, merge commit 5868009). Supersedes the "not self-merging until the
+  skeptic pass lands" note above. The lead adversarial skeptic pass (Opus 4.8,
+  honesty-critical artifact = lead-owned, never delegated) caught one residual
+  oversell the earlier receipt missed: line 16's categorical "It is not a
+  free-writing model pass" is locally FALSE on a first run — with no
+  `docs-structure.json` the model has full Write/Edit and the first pass IS free
+  generation; manifest presence is what flips it Read-only
+  @lib/docs-generation.sh:902-906. FIXED pre-merge (commit 745084f): headline
+  now keys off the actual trigger ("Without a manifest, that's a full generation
+  pass; commit a `docs-structure.json` and it stops being one — …"), honest for
+  both paths and survives a hostile reader who runs a first-time generation.
+  Graphite AI Reviews terminally SKIPPED (docs-only PR) — the external skeptic
+  pass did not vanish, it was substituted by the lead adversarial read + the
+  prior Sol audit, which is the exact triple-check the goal demanded. All 7 CI
+  green on the fix commit (ShellCheck, Test suite, Docs build, Version
+  consistency, File structure, Release readiness, Bash syntax) + Graphite
+  mergeability; MERGEABLE/CLEAN. README honesty rewrite + theme-aware /architect
+  rails diagram + `assets/claudux-rails.svg` all now on origin/main (5868009).
+  claudux deliverable (audit → showcase → A- README) COMPLETE and LANDED.
 
 ## Claim discipline
 
