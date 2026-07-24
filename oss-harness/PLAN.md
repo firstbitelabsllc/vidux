@@ -341,7 +341,14 @@ GLM shims.
 - [completed 2026-07-24T07:23:03-04:00] Proactive research wave 44 (sol / cursor-parent) —
   vidux#12 MERGED: CHANGELOG Unreleased logs SECURITY #11; no tag (docs-only
   tip drift from `v1.0.2`). Voice-debug still human-gated; skillbox private.
-- [claimed: glm-max 2026-07-24T07:37:38-04:00] Proactive research wave 45 — next reachable win (claim first);
+- [completed 2026-07-24T07:38:01-04:00] Proactive research wave 45 (glm-max) — WATCHING.
+  No open PRs/issues on claudux/vidux; claudux tip == `v2.0.6`; vidux
+  docs-only tip drift from `v1.0.2` (#11/#12) with Unreleased logged; XDG
+  pidfile paths aligned in SECURITY/docs/doctor. Skillbox private. Resume:
+  Leo publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
+  row; next niche from private dossier only with create/publicize gate; tag
+  vidux when tip drifts with code. No publicize this wave.
+- [pending] Proactive research wave 46 — next reachable win (claim first);
   prefer amplify or WATCHING; tag vidux only if tip drifts with code;
   voice-debug publish remains human-gated.
 
