@@ -294,8 +294,9 @@ GLM shims.
   cursor-parent) — claudux#133 MERGED: project lock under
   `${XDG_STATE_HOME:-~/.local/state}/claudux/locks/` (not shared TMPDIR).
   Hardening + CI green. Voice-debug still human-gated; skillbox private.
-- [claimed: glm-max 2026-07-24T04:38:39-04:00] Proactive research wave 33 —
-  claudux 2.0.2: tag XDG project-lock fix (#133) for strangers. Fold receipt.
+- [completed 2026-07-24T04:40:47-04:00] Proactive research wave 33 (glm-max) —
+  claudux#134 MERGED → tagged `v2.0.2` + GitHub Release; stranger install
+  smoke → `claudux 2.0.2`. Voice-debug still human-gated.
 - [pending] Proactive research wave 34 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
