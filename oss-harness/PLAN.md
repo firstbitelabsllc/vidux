@@ -178,10 +178,41 @@ GLM shims.
   = no fs-failure atomicity test on the sequential writeFileSync loop
   @lib/docs-manifest.sh:1260-1269. Asset lens: SVG + README alt text = KEEP,
   environment-honest (criterion 8), zero oversell flags — every depicted line
-  maps to a real lib/ emitter, NO fabricated content-diff. NEXT (build phase):
-  counter-defect fix PR + real manifest-path terminal capture + A+ README (honest
-  lexicon only) + /architect pipeline diagram. Mechanism + test-honesty lenses +
-  GO/NO-GO synthesis still running.
+  maps to a real lib/ emitter, NO fabricated content-diff.
+  GATE LANDED (2026-07-24) — decision GO_WITH_CAVEATS. Mechanism lens CONFIRMED
+  the exact trigger mechanics (showcase-critical): TIER 1 section-patch bounded
+  mode is triggered SOLELY by docs-structure.json existing (flips model tools to
+  Read-only @lib/docs-generation.sh:902-906), active even first run; TIER 2 the
+  impact-allowlist REJECTION (line 1178) additionally needs a prior checkpoint —
+  so an honest capture of the rejection = run once → modify a source file → run
+  again. Honest headline LOCKED (richer than the one-sentence): "claudux keeps
+  your docs structure in a repo-owned manifest, restricts the model to proposing
+  section-scoped patches, and applies them behind deterministic guards — path
+  boundaries, all-or-nothing validation, and sha256 hashes that refuse silent
+  edits to protected sections." MUST-NOT-SAY (8): never "deterministic doc-diff"
+  as a capability; never imply a content/prose diff (only `git diff docs/`
+  @lib/git-utils.sh:75); never determinism=prose-accuracy; allowlist NOT
+  every-run (null unless prior checkpoint @lib/docs-manifest.sh:1141); NOT
+  "validates all doc links"; NOT "broken links fail build"; NOT "smart cleanup
+  removes stale docs"; NOT "atomic/rollback". GROUND-TRUTH README FINDING: the
+  SHIPPED README line 59 ("Every update validates internal links and fails
+  loudly on broken ones") is itself an oversell the audit catches — verified
+  fail-OPEN/informational by default @lib/docs-generation.sh:1116 ("validation
+  is informational"), fatal only under --strict @:1117-1119, and scope is
+  VitePress nav/sidebar config links only @lib/validate-links.sh:89 (not body
+  links). That is the #1 honesty fix. Test-honesty workflow lens hit the
+  StructuredOutput retry cap (no verdict) but is fully covered by Sol §4 (tests
+  REAL, atomicity gap noted) — no coverage gap. Current README is otherwise
+  already mostly honest (line 16 "not a free-writing model pass"; line 55 "they
+  do not replace review") — the "deterministic doc-diff" oversell Leo feared is
+  NOT in the shipped README. BUILD PHASE ACTIVE: (1) README honesty PR — fix
+  line 59 link claim, tighten line 66 for incremental-only allowlist, soften
+  line 51 caption to "reconstructed from a real claudux run", lift the honest
+  headline; (2) counter-defect fix PR @lib/docs-generation.sh:1046 (GLM/Sol
+  build seat, M1 delegate-first); (3) /architect diagram of manifest→allowlist→
+  bounded-patch→hash-guard→boundary→link-check (Leo-offered conceptual showcase,
+  explicitly labeled concept); asset SVG = KEEP. All claudux changes ship via PR
+  (per #119-#126), never direct-to-main; leojkwan@gmail.com identity.
 
 ## Claim discipline
 
