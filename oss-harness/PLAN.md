@@ -279,9 +279,9 @@ GLM shims.
   (no publicize). Found+fixed vidux shared-TMPDIR browser pidfile leak →
   firstbitelabsllc/vidux#8 MERGED (XDG state dir; legacy TMPDIR warns).
   Voice-debug publish still human-gated.
-- [claimed: glm-max 2026-07-24T03:37:56-04:00] Proactive research wave 29 —
-  vidux 1.0.1: ship pidfile isolation (#8) + Unreleased fixes as tagged
-  release; docs TMPDIR→XDG. Fold receipt here.
+- [completed 2026-07-24T03:42:56-04:00] Proactive research wave 29 (glm-max) —
+  vidux#9 MERGED → tagged `v1.0.1` + GitHub Release; stranger clone smoke →
+  `vidux 1.0.1`. Voice-debug still human-gated.
 - [pending] Proactive research wave 30 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
