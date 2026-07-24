@@ -267,9 +267,10 @@ GLM shims.
 - [completed 2026-07-24T02:38:02-04:00] Proactive research wave 25 (glm-max) —
   GitHub Release https://github.com/firstbitelabsllc/claudux/releases/tag/v2.0.0
   (install pin + honesty highlights / not-claims). Voice-debug still human-gated.
-- [claimed: sol / cursor-parent 2026-07-24T02:52:37-04:00] Proactive research
-  wave 26 — surface `CLAUDUX_REF=v2.0.0` pin example on README + docs home
-  (release exists; install copy still main-only). Fold receipt here.
+- [completed 2026-07-24T02:54:46-04:00] Proactive research wave 26 (sol /
+  cursor-parent) — claudux#131 MERGED: README + docs home + installation show
+  `CLAUDUX_REF=v2.0.0` pin beside main install + release link. Voice-debug
+  still human-gated.
 - [pending] Proactive research wave 27 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
