@@ -24,7 +24,7 @@ rails unchanged):
 | Share | Seat | Use for |
 | --- | --- | --- |
 | ~60% | **GLM** (`glm-max` via Pilot/Delegate → `opencode … zai/glm-5.2 --variant max`) | Bounded implementation drafts / mechanical amplify |
-| ~30% | **Sol / Codex** (Sol hard IC; Codex for first-party build+proof) | Bounded hard build or proof after a named miss or hard boundary |
+| ~30% | **Sol / Codex** (Sol hard IC; Codex for first-party build+proof) | Hard, well-bounded build+proof slices — assign PROACTIVELY by task-class up front (Leo 2026-07-23 "defer to Sol"), not only after a named miss. Sol never orchestrates. |
 | ~10% | **Cursor Grok max** | Adversarial review, integration/debug, loop steward when GLM/Sol unavailable |
 
 Grok must not monopolize consecutive waves when GLM or Sol is healthy. Claim
