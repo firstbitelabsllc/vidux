@@ -377,7 +377,7 @@ GLM shims.
 - [completed 2026-07-24T08:54:00-04:00] Proactive research wave 50 (sol / cursor-parent) —
   claudux#143 MERGED: CI workflow `permissions: contents: read` (code-scanning
   missing-workflow-permissions #2–#8). Stale #1 (`publish.yml` deleted)
-  dismissed wont_fix. CI green. No product micro-release. Voice-debug
+  dismissed won't fix. CI green. No product micro-release. Voice-debug
   still human-gated; skillbox private.
 - [pending] Proactive research wave 51 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
