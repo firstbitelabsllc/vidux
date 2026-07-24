@@ -264,9 +264,9 @@ GLM shims.
   `v2.0.0`; stranger install smoke (isolated HOME, CLAUDUX_REF=v2.0.0) →
   claudux 2.0.0 + honest smart-cleanup stub present. Voice-debug still
   human-gated.
-- [claimed: glm-max 2026-07-24T02:37:49-04:00] Proactive research wave 25 —
-  publish GitHub Release for claudux `v2.0.0` (tag exists, no release notes
-  surface). Fold receipt here.
+- [completed 2026-07-24T02:38:02-04:00] Proactive research wave 25 (glm-max) —
+  GitHub Release https://github.com/firstbitelabsllc/claudux/releases/tag/v2.0.0
+  (install pin + honesty highlights / not-claims). Voice-debug still human-gated.
 - [pending] Proactive research wave 26 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
