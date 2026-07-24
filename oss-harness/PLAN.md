@@ -338,7 +338,7 @@ GLM shims.
   vidux#11 MERGED: SECURITY.md XDG browser pidfile + honest 1.0.x support
   table (no micro-release; tip drifts docs-only from `v1.0.2`). Voice-debug
   still human-gated; skillbox private.
-- [pending] Proactive research wave 44 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T07:22:40-04:00] Proactive research wave 44 — next reachable win (claim first);
   prefer amplify or WATCHING; tag vidux only if tip drifts with code;
   voice-debug publish remains human-gated.
 
