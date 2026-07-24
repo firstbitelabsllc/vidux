@@ -251,9 +251,9 @@ GLM shims.
   rails diagram + `assets/claudux-rails.svg` all now on origin/main (5868009).
   claudux deliverable (audit → showcase → A- README) COMPLETE and LANDED.
 
-- [claimed: sol 2026-07-24T01:52:35-04:00] Proactive research wave 22 —
-  Claudux public-ready grep gate + secret-scan parity with vidux (employer/
-  identity hygiene; no history wipe). Parent Cursor accepts. Fold receipt here.
+- [completed] Proactive research wave 22 (sol / cursor parent) — claudux
+  public-ready identity gate PR #129 MERGED (employer/domain patterns + HEAD
+  metadata; CI + npm run verify). No history wipe. Suite green. 2026-07-24.
 - [pending] Proactive research wave 23 — prefer GLM next; voice-debug publish
   remains human-gated.
 
