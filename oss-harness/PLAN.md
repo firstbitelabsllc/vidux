@@ -92,10 +92,13 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   stranger e2e, claimed 19:45 local, no public receipt yet); voice-debug
   publish + skillbox visibility flip human-gated. Resume when wave 9 folds
   or a new candidate row appears. No publicize.
-- [claimed: cursor-grok-4.5 2026-07-23T22:22:36-04:00] Proactive research wave 16 — supersede
-  abandoned wave 9 (stale ~2.5h, no receipt): claudux sandboxed-HOME stranger
-  install + README-verbatim smoke at origin/main. Do not rewrite wave 9 row.
-  Fold receipt here. No publicize beyond already-public repo PRs if defects.
+- [completed] Proactive research wave 16 (cursor-grok-4.5) — superseded stale
+  wave 9: claudux stranger install/check/help + suite green (2.0.0); no defects.
+  Full `update` model e2e deferred. Private:
+  ai-leo `evidence/wave16-claudux-stranger-2026-07-23.md`. Wave 9 row left
+  untouched. 2026-07-23.
+- [pending] Proactive research wave 17 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
