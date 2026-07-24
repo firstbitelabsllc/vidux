@@ -84,8 +84,9 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   private offline CI+smoke green (`ci-offline: PASS`, 8/8). Publish remains
   human-gated. Private: ai-leo `evidence/wave13-voice-debug-offline-2026-07-23.md`.
   2026-07-23.
-- [pending] Proactive research wave 14 — next reachable win (claim first);
-  voice-debug publish remains human-gated.
+- [claimed: cursor-grok-4.5 2026-07-23T20:37:35-04:00] Proactive research wave 14 — claudux
+   health at origin/main (suite only; e2e stranger left to
+  wave 9). Fold receipt. No publicize.
 
 ## Claim discipline
 
