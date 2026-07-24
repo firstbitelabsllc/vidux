@@ -290,9 +290,10 @@ GLM shims.
 - [completed 2026-07-24T04:12:22-04:00] Proactive research wave 31 (glm-max) —
   vidux#10 MERGED → tagged `v1.0.2` + GitHub Release; stranger clone smoke →
   `vidux 1.0.2` with honest Release truth. Voice-debug still human-gated.
-- [claimed: sol / cursor-parent 2026-07-24T04:22:46-04:00] Proactive research
-  wave 32 — claudux project lock HOME/XDG-scoped (shared TMPDIR collision
-  class, same as vidux#8). Fold receipt here.
+- [completed 2026-07-24T04:24:18-04:00] Proactive research wave 32 (sol /
+  cursor-parent) — claudux#133 MERGED: project lock under
+  `${XDG_STATE_HOME:-~/.local/state}/claudux/locks/` (not shared TMPDIR).
+  Hardening + CI green. Voice-debug still human-gated; skillbox private.
 - [pending] Proactive research wave 33 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
