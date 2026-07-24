@@ -384,7 +384,7 @@ GLM shims.
   open code-scanning alerts → 0 (stale Jul-19 analyses cleared after tip
   re-scan). No product micro-release. Voice-debug still human-gated;
   skillbox private.
-- [pending] Proactive research wave 52 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T09:22:39-04:00] Proactive research wave 52 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
