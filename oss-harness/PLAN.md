@@ -258,7 +258,10 @@ GLM shims.
   oversell honesty → claudux#130 (smart-cleanup stub, accuracy/zero-config,
   technical privacy). Content public-ready gate green; metadata gate still
   fails on historical test@test.com (pre-existing).
-- [pending] Proactive research wave 24 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T02:23:06-04:00] Proactive research
+  wave 24 — merge claudux#130 + fix public-ready metadata gate so historical
+  test@test.com does not block verify without history wipe. Fold receipt here.
+- [pending] Proactive research wave 25 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
