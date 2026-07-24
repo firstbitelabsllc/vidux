@@ -9,7 +9,7 @@
 #   2. gh installed + logged in (optional integration; warning when absent)
 #   3. ~/.config/vidux/*.token files (if any) are chmod 600
 #   4. development/install truth (source, cached freshness, CLI + skill links)
-#   5. No stale ${TMPDIR:-/tmp}/vidux-browser.pid residue (warning only)
+#   5. No stale ${XDG_STATE_HOME:-$HOME/.local/state}/vidux/browser.pid residue (warning only)
 #   6. 'scripts/vidux-config.py check --json' passes
 #   7. `npm test` passes in a source checkout (warning in a packaged install)
 #
@@ -41,7 +41,7 @@ Runs the following checks in order, printing [PASS] / [WARN] / [FAIL]:
   3. ~/.config/vidux/*.token files have chmod 600 (if any exist)
   4. development/install truth: source identity, cached upstream freshness,
      PATH target, and optional skill-mount parity
-  5. No stale browser pidfile residue at \${TMPDIR:-/tmp}/vidux-browser.pid
+  5. No stale browser pidfile residue at \${XDG_STATE_HOME:-\$HOME/.local/state}/vidux/browser.pid
   6. 'scripts/vidux-config.py check --json' validates the selected config
   7. 'npm test' passes in source checkouts; packaged installs report a warning
 
@@ -578,33 +578,39 @@ check_development_dir() {
 # ----------------------------------------------------------------------------
 check_stale_browser_pidfile() {
   local name="no stale browser pidfile"
-  # macOS TMPDIR has a trailing slash; strip it before joining the basename
-  # so the resulting path is clean (e.g. /var/.../T/vidux-browser.pid).
+  # Prefer HOME/XDG state (per-user). Legacy shared-TMPDIR path is warning-only
+  # so a sandboxed stranger HOME never PASSes on another account's live cockpit.
+  local state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/vidux"
+  local pidfile="${VIDUX_BROWSER_PIDFILE:-$state_dir/browser.pid}"
   local tmp="${TMPDIR:-/tmp}"
   tmp="${tmp%/}"
-  local pidfile="${tmp}/vidux-browser.pid"
-  if [[ ! -f "$pidfile" ]]; then
-    _pass "$name (no pidfile at $pidfile)"
+  local legacy_pidfile="${tmp}/vidux-browser.pid"
+
+  if [[ -f "$pidfile" ]]; then
+    local pid
+    pid="$(tr -d '[:space:]' < "$pidfile" 2>/dev/null || true)"
+    if [[ -z "$pid" ]]; then
+      _warn "$name" "stale residue: pidfile $pidfile is empty (remove it when safe)"
+      return
+    fi
+    if ! [[ "$pid" =~ ^[0-9]+$ ]]; then
+      _warn "$name" "stale residue: pidfile $pidfile contains non-numeric content (remove it when safe)"
+      return
+    fi
+    if kill -0 "$pid" 2>/dev/null; then
+      _pass "$name (pid $pid alive at $pidfile)"
+      return
+    fi
+    _warn "$name" "stale residue: pidfile $pidfile points to dead pid $pid (remove it when safe)"
     return
   fi
-  local pid
-  pid="$(tr -d '[:space:]' < "$pidfile" 2>/dev/null || true)"
-  if [[ -z "$pid" ]]; then
-    _warn "$name" "stale residue: pidfile $pidfile is empty (remove it when safe)"
+
+  if [[ -f "$legacy_pidfile" ]]; then
+    _warn "$name" "legacy shared TMPDIR pidfile at $legacy_pidfile (newer vidux uses $pidfile; remove legacy when safe)"
     return
   fi
-  if ! [[ "$pid" =~ ^[0-9]+$ ]]; then
-    _warn "$name" "stale residue: pidfile $pidfile contains non-numeric content (remove it when safe)"
-    return
-  fi
-  # `kill -0` returns 0 if the process exists and the caller may signal it.
-  # On macOS / Linux it also returns 0 for processes we cannot signal but
-  # which exist, so a true 0 is "alive enough".
-  if kill -0 "$pid" 2>/dev/null; then
-    _pass "$name (pid $pid alive)"
-    return
-  fi
-  _warn "$name" "stale residue: pidfile $pidfile points to dead pid $pid (remove it when safe)"
+
+  _pass "$name (no pidfile at $pidfile)"
 }
 
 # ----------------------------------------------------------------------------

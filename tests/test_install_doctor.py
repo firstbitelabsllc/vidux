@@ -416,7 +416,9 @@ class InstallDoctorTests(unittest.TestCase):
             base = Path(tmp)
             root = self._make_install(base, source=False)
             env, _ = self._environment(base, root)
-            (Path(env["TMPDIR"]) / "vidux-browser.pid").write_text("99999999\n", encoding="utf-8")
+            state_dir = Path(env["HOME"]) / ".local" / "state" / "vidux"
+            state_dir.mkdir(parents=True)
+            (state_dir / "browser.pid").write_text("99999999\n", encoding="utf-8")
 
             result, payload = self._run(root, env)
 
