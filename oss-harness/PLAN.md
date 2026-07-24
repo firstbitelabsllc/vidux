@@ -301,8 +301,9 @@ GLM shims.
   cursor-parent) — claudux#135 MERGED: Codex stderr log under
   `${XDG_STATE_HOME:-~/.local/state}/claudux/codex-stderr.log`. Suite green.
   Voice-debug still human-gated; skillbox private.
-- [claimed: glm-max 2026-07-24T05:08:39-04:00] Proactive research wave 35 —
-  claudux 2.0.3: tag Codex-stderr XDG fix (#135) for strangers. Fold receipt.
+- [completed 2026-07-24T05:10:06-04:00] Proactive research wave 35 (glm-max) —
+  claudux#136 MERGED → tagged `v2.0.3` + GitHub Release; stranger install
+  smoke → `claudux 2.0.3`. Voice-debug still human-gated.
 - [pending] Proactive research wave 36 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
