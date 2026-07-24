@@ -251,10 +251,11 @@ GLM shims.
   rails diagram + `assets/claudux-rails.svg` all now on origin/main (5868009).
   claudux deliverable (audit → showcase → A- README) COMPLETE and LANDED.
 
-- [pending] Proactive research wave 22 — next reachable win (claim first; prefer
-  Sol ~30% then GLM). Wave 21 Claudux A+ receipt text says COMPLETE/LANDED
-  (#127/#128 on main) but status flip still with claude-code — do not rewrite
-  that row. Voice-debug + skillbox publicize remain human-gated.
+- [claimed: sol 2026-07-24T01:52:35-04:00] Proactive research wave 22 —
+  Claudux public-ready grep gate + secret-scan parity with vidux (employer/
+  identity hygiene; no history wipe). Parent Cursor accepts. Fold receipt here.
+- [pending] Proactive research wave 23 — prefer GLM next; voice-debug publish
+  remains human-gated.
 
 ## Claim discipline
 
