@@ -27,13 +27,14 @@ class PuristIntegrityTests(unittest.TestCase):
             (ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
         version_lines = (ROOT / "VERSION").read_text(encoding="utf-8").splitlines()
+        expected = version_lines[0]
 
-        self.assertEqual(version_lines[0], "1.0.0")
+        self.assertRegex(expected, r"^1\.\d+\.\d+$")
         self.assertIn("no npm package is published", version_lines[1])
-        self.assertEqual(package["version"], "1.0.0")
-        self.assertEqual(lock["version"], "1.0.0")
-        self.assertEqual(lock["packages"][""]["version"], "1.0.0")
-        self.assertEqual(plugin["version"], "1.0.0")
+        self.assertEqual(package["version"], expected)
+        self.assertEqual(lock["version"], expected)
+        self.assertEqual(lock["packages"][""]["version"], expected)
+        self.assertEqual(plugin["version"], expected)
 
     def test_package_allowlist_has_no_removed_browser_subsystem(self) -> None:
         package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
