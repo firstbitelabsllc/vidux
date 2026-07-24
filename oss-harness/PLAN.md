@@ -16,6 +16,23 @@ pathspec commits. Quality bar for already-public amplify: stranger-test
 New `gh repo create` / publicize / visibility flips stay per-instance
 Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 
+### Seat mix (do not forget)
+
+Target share of **agent-reachable wave work** (parent still accepts; hard
+rails unchanged):
+
+| Share | Seat | Use for |
+| --- | --- | --- |
+| ~60% | **GLM** (`glm-max` via Pilot/Delegate → `opencode … zai/glm-5.2 --variant max`) | Bounded implementation drafts / mechanical amplify |
+| ~30% | **Sol / Codex** (Sol hard IC; Codex for first-party build+proof) | Bounded hard build or proof after a named miss or hard boundary |
+| ~10% | **Cursor Grok max** | Adversarial review, integration/debug, loop steward when GLM/Sol unavailable |
+
+Grok must not monopolize consecutive waves when GLM or Sol is healthy. Claim
+rows with the seat that will do the work (`claimed: glm-max …`,
+`claimed: sol …`, `claimed: cursor-grok-4.5 …`). If GLM/Sol is down, record
+the miss and continue on the next healthy seat — do not invent Claude-compatible
+GLM shims.
+
 ## Rows
 
 - [completed] vidux README overhaul — 30-persona panel, verdict trims landed
