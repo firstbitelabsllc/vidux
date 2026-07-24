@@ -307,8 +307,9 @@ GLM shims.
 - [completed 2026-07-24T05:26:34-04:00] Proactive research wave 36 (sol /
   cursor-parent) — claudux#137 MERGED: `claudux_mktemp` honors TMPDIR (no
   hardcoded `/tmp/claudux-*`). Suite green. Voice-debug still human-gated.
-- [claimed: glm-max 2026-07-24T05:39:01-04:00] Proactive research wave 37 —
-  claudux 2.0.4: tag TMPDIR mktemp fix (#137) for strangers. Fold receipt.
+- [completed 2026-07-24T05:40:53-04:00] Proactive research wave 37 (glm-max) —
+  claudux#138 MERGED → tagged `v2.0.4` + GitHub Release; stranger install
+  smoke → `claudux 2.0.4`. Voice-debug still human-gated.
 - [pending] Proactive research wave 38 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
