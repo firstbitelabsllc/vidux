@@ -287,7 +287,10 @@ GLM shims.
   points at GitHub Release (removed stale “no GitHub Release yet”). Landed
   with claim commit d1a0c9a8. Voice-debug still human-gated; skillbox/litty
   private.
-- [pending] Proactive research wave 31 — next reachable win (claim first);
+- [claimed: glm-max 2026-07-24T04:07:35-04:00] Proactive research wave 31 —
+  vidux 1.0.2 patch so tagged tip includes README Release-truth fix (post-1.0.1
+  drift). Fold receipt here.
+- [pending] Proactive research wave 32 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
