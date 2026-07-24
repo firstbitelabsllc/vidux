@@ -153,6 +153,35 @@ GLM shims.
   critiques tests. Ground-truth note folded: NO history wipe — claudux is 49
   clean commits, live contributors API = leojkwan only, zero snapchat/TESTPERSONAL;
   vidux exposure already remediated.
+  AUDIT LANDED (Sol Max + asset lens, 2026-07-24) — determinism claim is REAL,
+  GO on honest-lexicon framing. Sol re-verified the frozen lexicon vs source:
+  T1/T2/T4/T5 CONFIRMED (bounded all-or-nothing section patches
+  @lib/docs-manifest.sh:1204-1268; guard-snapshot hashes @:1416-1450;
+  source-boundary fail-closed @lib/docs-generation.sh:267-334; suites prove
+  CONSTRAINTS @tests/test-docs-manifest.sh:611-683), all 5 OVERSELL lines
+  CONFIRMED. Two REVISE refinements folded: T3 — the "diff" = committed changed
+  filenames + dirty docs/manifest filenames → impact allowlist, NEVER a prose
+  diff (@lib/docs-generation.sh:337-393 → resolve_impacted_docs_from_changed_files
+  @:795-815 → reject "outside incremental impact allowlist"
+  @lib/docs-manifest.sh:1140-1179); O2 — link check ALSO validates duplicate
+  explicit heading IDs, non-fatal unless --strict (@lib/validate-links.sh:30-89).
+  THE ONE HONEST SENTENCE (top-of-README): "In manifest-backed incremental
+  updates, Claudux maps changed filenames to allowed documentation sections and
+  rejects model-authored patches outside that deterministic write boundary."
+  Deterministic = the write BOUNDARY; NOT deterministic = the model-authored
+  body_markdown (@lib/docs-manifest.sh:1192-1268). Counter defect CONFIRMED &
+  root-caused: counters print parsed model-tool events, but manifest mode grants
+  the model only Read — real doc writes happen later in
+  apply_manifest_section_patches outside the parsed log → "Processed 0 changes";
+  fix belongs after patch apply @lib/docs-generation.sh:1046. Tests REAL not
+  mock-green (source production code, assert real rejection/acceptance); one gap
+  = no fs-failure atomicity test on the sequential writeFileSync loop
+  @lib/docs-manifest.sh:1260-1269. Asset lens: SVG + README alt text = KEEP,
+  environment-honest (criterion 8), zero oversell flags — every depicted line
+  maps to a real lib/ emitter, NO fabricated content-diff. NEXT (build phase):
+  counter-defect fix PR + real manifest-path terminal capture + A+ README (honest
+  lexicon only) + /architect pipeline diagram. Mechanism + test-honesty lenses +
+  GO/NO-GO synthesis still running.
 
 ## Claim discipline
 
