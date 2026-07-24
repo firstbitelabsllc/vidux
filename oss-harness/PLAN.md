@@ -66,11 +66,19 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 8 (cursor-grok-4.5) — skillbox scrub
   documented in README; PR https://github.com/leojkwan/skillbox/pull/3.
   No publicize. 2026-07-23.
-- [claimed: claude-code 2026-07-23T19:45:00-04:00] Proactive research wave 9 —
-  claudux fresh end-to-end stranger-test at current origin/main HEAD
-  (Leo-owned, AMPLIFY-tier; feature PRs #119–125 merged but no full
-  stranger-run since). Sandboxed HOME, README verbatim. Land any real defect
-  (bar-not-gates: Leo owns claudux). Fold receipt here.
+- [completed] Proactive research wave 9 (claude-code) — claudux fresh e2e
+  stranger-test at origin/main `866f853`, sandboxed HOME. Exercised the `update`
+  backend path (the slice wave 16 deferred): install/check/help/serve/version all
+  clean. Strongest candidate (update masks backend failure as exit 0) DISPROVEN —
+  clean no-pipe run gave `TRUE_EXIT=127` correct propagation; the earlier rc=0
+  was a `$?`-after-a-pipe read error. One sub-threshold cosmetic note (empty
+  `--version` prints a green `✅ found:` line in check_claude/check_codex)
+  recorded but NOT shipped — trigger only reproducible with a broken test-shim,
+  self-corrects via the loud exit-127 troubleshooting path. Verdict: NO shippable
+  defect; corroborates wave 16. Agent-reachable non-gated OSS surface
+  (vidux/claudux/skillbox agent-side) has CONVERGED; remaining high-value work is
+  Leo-gated. Private: ai-leo `evidence/wave9-claudux-stranger-2026-07-23.md`.
+  2026-07-23.
 - [completed] Proactive research wave 10 (cursor-grok-4.5) — hermetic tests
   for status missing-dev-root fallback + stderr/--json; PR #6 MERGED.
   2026-07-23.
