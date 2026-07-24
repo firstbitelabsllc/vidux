@@ -74,9 +74,10 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
 - [completed] Proactive research wave 10 (cursor-grok-4.5) — hermetic tests
   for status missing-dev-root fallback + stderr/--json; PR #6 MERGED.
   2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T20:07:50-04:00] Proactive research wave 11 — hermetic
-  CORE-CUT acceptance (root doctrine gone; docs/doctrine present; SKILL/README
-  links). No publicize. Fold PR here.
+- [completed] Proactive research wave 11 (cursor-grok-4.5) — CORE-CUT hermetic
+  acceptance tests; PR #7 MERGED. 2026-07-23.
+- [pending] Proactive research wave 12 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
