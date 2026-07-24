@@ -213,6 +213,16 @@ GLM shims.
   bounded-patch→hash-guard→boundary→link-check (Leo-offered conceptual showcase,
   explicitly labeled concept); asset SVG = KEEP. All claudux changes ship via PR
   (per #119-#126), never direct-to-main; leojkwan@gmail.com identity.
+  BUILD (1)+(3) SHIPPED (2026-07-24) — draft PR #127 (firstbitelabsllc/claudux,
+  +159/-4, README.md + assets/claudux-rails.svg). Headline locked to the
+  write-boundary framing; line-59 link claim corrected to fail-open + nav/sidebar
+  scope + --strict; caption softened to "Reconstructed from a real claudux run";
+  incremental-allowlist nuance folded on line 70; new theme-aware /architect
+  rails diagram (WebKit pixel-proof both themes, taste lint 0/0/0, criterion-8
+  environment-honest — every depicted line maps to a real lib/ emitter, no
+  fabricated content-diff). Graphite review fired. REMAINING: (2) counter-defect
+  fix @lib/docs-generation.sh:1046 — delegating to GLM (glm-max, read-only→diff;
+  lead applies + tests + PRs) per M1 delegate-first + 60% GLM weight.
 
 ## Claim discipline
 
