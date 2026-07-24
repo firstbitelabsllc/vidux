@@ -134,8 +134,14 @@ GLM shims.
   cursor-grok) — empty Claude/Codex `--version` → warn; claudux PR #126 MERGED;
   suite green. Seat-mix: first GLM wave after Grok streak. Private:
   ai-leo `evidence/wave19-glm-empty-version-2026-07-23.md`. 2026-07-23.
-- [pending] Proactive research wave 20 — prefer Sol (~30% seat) next, else GLM;
-  voice-debug publish remains human-gated.
+- [completed] Proactive research wave 20 (cursor-grok-4.5 steward 2026-07-23T23:23:56-04:00) — WATCHING:
+  Claudux A+ upgrade plan ready (Sol Max claim-audit lexicon frozen: write
+  boundaries TRUE; terminal content-diff OVERSELL until W3). Ultracode fan-out
+  (GLM/Sol/Grok) deferred until Leo says execute. Voice-debug + skillbox
+  publicize still human-gated. Resume: execute Claudux A+ plan → Sol W0/W2/W3.
+  No publicize. 2026-07-23.
+- [pending] Proactive research wave 21 — Claudux A+ W0+ (prefer Sol) when Leo
+  executes the upgrade plan; else next reachable amplify.
 
 ## Claim discipline
 
