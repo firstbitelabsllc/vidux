@@ -310,7 +310,14 @@ GLM shims.
 - [completed 2026-07-24T05:40:53-04:00] Proactive research wave 37 (glm-max) —
   claudux#138 MERGED → tagged `v2.0.4` + GitHub Release; stranger install
   smoke → `claudux 2.0.4`. Voice-debug still human-gated.
-- [pending] Proactive research wave 38 — next reachable win (claim first);
+- [completed 2026-07-24T05:55:33-04:00] Proactive research wave 38 (sol /
+  cursor-parent) — WATCHING. Stranger re-proof green: claudux `v2.0.4` install
+  + XDG lock/stderr/mktemp present; vidux `v1.0.2` doctor pidfile PASS under
+  isolated HOME/TMPDIR. Claudux tip == tag (no drift). Skillbox suite 21/21
+  but repo still private. Resume: Leo publicize skillbox / voice-debug /
+  litty; or wave-21 seat closes its claimed row; next niche from private
+  dossier only with create/publicize gate. No publicize this wave.
+- [pending] Proactive research wave 39 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
