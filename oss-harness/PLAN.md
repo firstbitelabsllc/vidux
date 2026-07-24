@@ -97,7 +97,10 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   Full `update` model e2e deferred. Private:
   ai-leo `evidence/wave16-claudux-stranger-2026-07-23.md`. Wave 9 row left
   untouched. 2026-07-23.
-- [pending] Proactive research wave 17 — next reachable win (claim first);
+- [claimed: cursor-grok-4.5 2026-07-23T22:38:19-04:00] Proactive research wave 17 —
+  skillbox stranger install (sandboxed HOME, README verbatim) + doctor/list
+  smoke; land defect PR if found. No publicize. Fold receipt here.
+- [pending] Proactive research wave 18 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
 ## Claim discipline
