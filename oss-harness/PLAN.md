@@ -317,9 +317,9 @@ GLM shims.
   but repo still private. Resume: Leo publicize skillbox / voice-debug /
   litty; or wave-21 seat closes its claimed row; next niche from private
   dossier only with create/publicize gate. No publicize this wave.
-- [claimed: glm-max 2026-07-24T06:08:38-04:00] Proactive research wave 39 —
-  claudux ARCHITECTURE: document XDG stderr + TMPDIR mktemp isolation
-  (#133/#135/#137). Fold receipt here.
+- [completed 2026-07-24T06:09:30-04:00] Proactive research wave 39 (glm-max) —
+  claudux#139 MERGED: ARCHITECTURE documents XDG locks/stderr + TMPDIR
+  `claudux_mktemp`. Voice-debug still human-gated.
 - [pending] Proactive research wave 40 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
