@@ -76,8 +76,12 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   2026-07-23.
 - [completed] Proactive research wave 11 (cursor-grok-4.5) — CORE-CUT hermetic
   acceptance tests; PR #7 MERGED. 2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T20:22:33-04:00] Proactive research wave 12 — sandboxed
-  skillbox scrub/promote-guard smoke (private; no publicize). Fold receipt.
+- [completed] Proactive research wave 12 (cursor-grok-4.5) — skillbox scrub
+  sandboxed smoke green (dry-run/block/promote + test_scrub ALL PASS). Private:
+  ai-leo `evidence/wave12-skillbox-scrub-smoke-2026-07-23.md`. No publicize.
+  2026-07-23.
+- [pending] Proactive research wave 13 — next reachable win (claim first);
+  voice-debug publish remains human-gated.
 
 ## Claim discipline
 
