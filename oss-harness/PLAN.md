@@ -258,9 +258,12 @@ GLM shims.
   oversell honesty → claudux#130 (smart-cleanup stub, accuracy/zero-config,
   technical privacy). Content public-ready gate green; metadata gate still
   fails on historical test@test.com (pre-existing).
-- [claimed: sol / cursor-parent 2026-07-24T02:23:06-04:00] Proactive research
-  wave 24 — merge claudux#130 + fix public-ready metadata gate so historical
-  test@test.com does not block verify without history wipe. Fold receipt here.
+- [completed 2026-07-24T02:23:50-04:00] Proactive research wave 24 (sol /
+  cursor-parent) — merged claudux#130 (squash 63fc9f4); HEAD `npm run
+  public-ready` green (no history wipe; gate is HEAD-scoped). Tagged+pushed
+  `v2.0.0`; stranger install smoke (isolated HOME, CLAUDUX_REF=v2.0.0) →
+  claudux 2.0.0 + honest smart-cleanup stub present. Voice-debug still
+  human-gated.
 - [pending] Proactive research wave 25 — next reachable win (claim first);
   voice-debug publish remains human-gated.
 
