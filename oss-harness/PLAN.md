@@ -84,9 +84,14 @@ Leo-gated unless a row explicitly authorizes (voice + skillbox remain gated).
   private offline CI+smoke green (`ci-offline: PASS`, 8/8). Publish remains
   human-gated. Private: ai-leo `evidence/wave13-voice-debug-offline-2026-07-23.md`.
   2026-07-23.
-- [claimed: cursor-grok-4.5 2026-07-23T20:37:35-04:00] Proactive research wave 14 — claudux
-   health at origin/main (suite only; e2e stranger left to
-  wave 9). Fold receipt. No publicize.
+- [completed] Proactive research wave 14 (cursor-grok-4.5) — claudux
+  `tests/run-all.sh` all suites passed @028b54e. E2E stranger left to wave 9.
+  Private: ai-leo `evidence/wave14-claudux-suite-2026-07-23.md`. 2026-07-23.
+- [completed] Proactive research wave 15 (cursor-grok-4.5 2026-07-23T20:38:15-04:00) — WATCHING:
+  agent-reachable amplify drained. Residual: wave 9 (claude-code claudux
+  stranger e2e, claimed 19:45 local, no public receipt yet); voice-debug
+  publish + skillbox visibility flip human-gated. Resume when wave 9 folds
+  or a new candidate row appears. No publicize.
 
 ## Claim discipline
 
