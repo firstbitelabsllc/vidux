@@ -384,7 +384,14 @@ GLM shims.
   open code-scanning alerts → 0 (stale Jul-19 analyses cleared after tip
   re-scan). No product micro-release. Voice-debug still human-gated;
   skillbox private.
-- [claimed: sol / cursor-parent 2026-07-24T09:22:39-04:00] Proactive research wave 52 — next reachable win (claim first);
+- [completed 2026-07-24T09:23:19-04:00] Proactive research wave 52 (sol / cursor-parent) —
+  WATCHING. Stranger re-proof: claudux `v2.0.6` install green; code-scanning
+  open=0; tip has CI-only drift (#143/#144) past tag (no product tag).
+  Vidux doctor pidfile PASS (`version=1.0.2`). Skillbox private. Resume:
+  Leo publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
+  row; next niche from private dossier only with create/publicize gate;
+  tag only if tip drifts with product code.
+- [pending] Proactive research wave 53 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
