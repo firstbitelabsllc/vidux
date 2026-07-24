@@ -341,7 +341,7 @@ GLM shims.
 - [completed 2026-07-24T07:23:03-04:00] Proactive research wave 44 (sol / cursor-parent) —
   vidux#12 MERGED: CHANGELOG Unreleased logs SECURITY #11; no tag (docs-only
   tip drift from `v1.0.2`). Voice-debug still human-gated; skillbox private.
-- [pending] Proactive research wave 45 — next reachable win (claim first);
+- [claimed: glm-max 2026-07-24T07:37:38-04:00] Proactive research wave 45 — next reachable win (claim first);
   prefer amplify or WATCHING; tag vidux only if tip drifts with code;
   voice-debug publish remains human-gated.
 
