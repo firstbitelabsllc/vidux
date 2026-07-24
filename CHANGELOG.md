@@ -7,6 +7,13 @@ tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
 ## [Unreleased]
 
+## [1.0.2] — 2026-07-24
+
+### Fixed
+
+- **README Release truth** no longer claims “no GitHub Release yet” / `1.0.0`-only;
+  documents `1.0.2` source contract + pin to the tagged tip.
+
 ## [1.0.1] — 2026-07-24
 
 ### Fixed
