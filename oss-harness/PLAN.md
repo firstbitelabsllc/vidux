@@ -140,8 +140,19 @@ GLM shims.
   (GLM/Sol/Grok) deferred until Leo says execute. Voice-debug + skillbox
   publicize still human-gated. Resume: execute Claudux A+ plan → Sol W0/W2/W3.
   No publicize. 2026-07-23.
-- [pending] Proactive research wave 21 — Claudux A+ W0+ (prefer Sol) when Leo
-  executes the upgrade plan; else next reachable amplify.
+- [claimed: claude-code 2026-07-23T23:36:30-0400] Proactive research wave 21 —
+  Claudux A+ EXECUTE (Leo said GO). Sol Max triple-check of the "deterministic
+  doc-diff" claim (verify the frozen TRUE/OVERSELL lexicon against source) +
+  ultracode Claude-side fan-out: (a) test-tautology audit of the determinism
+  suites, (b) real `claudux update` terminal capture as the honest showcase
+  asset, (c) accuracy audit of `assets/claudux-terminal-demo.svg` + README alt
+  text vs the OVERSELL lexicon. Showcase + A+ README GATED behind the audit
+  confirming the claim; honest-lexicon framing only, never the OVERSELL lines.
+  Lead orchestrates + accepts + proves; Sol audits; GLM builds the counter-defect
+  demo fix (`lib/claude-utils.sh` "Processed 0 changes" vs real writes); Grok
+  critiques tests. Ground-truth note folded: NO history wipe — claudux is 49
+  clean commits, live contributors API = leojkwan only, zero snapchat/TESTPERSONAL;
+  vidux exposure already remediated.
 
 ## Claim discipline
 
