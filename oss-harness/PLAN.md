@@ -420,7 +420,7 @@ GLM shims.
   publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
   row; next niche from private dossier only with create/publicize gate;
   tag only if tip drifts with product code.
-- [pending] Proactive research wave 58 — next reachable win (claim first);
+- [claimed: sol / cursor-parent 2026-07-24T10:52:39-04:00] Proactive research wave 58 — next reachable win (claim first);
   prefer amplify or WATCHING; tag only if tip drifts with product code;
   voice-debug publish remains human-gated.
 
