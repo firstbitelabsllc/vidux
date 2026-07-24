@@ -7,8 +7,14 @@ tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
 ## [Unreleased]
 
+## [1.0.1] — 2026-07-24
+
 ### Fixed
 
+- **Browser pidfile/log are per-user XDG state**, not shared `${TMPDIR}`.
+  Sandboxed `vidux doctor` no longer PASSes on another account's live cockpit
+  pid. Path: `${XDG_STATE_HOME:-~/.local/state}/vidux/browser.{pid,log}`;
+  legacy `${TMPDIR}/vidux-browser.pid` warns only ([#8](https://github.com/firstbitelabsllc/vidux/pull/8)).
 - **`vidux-worktree-gc`: reused branch names can no longer mark unmerged work
   removable.** PR attribution matched by branch name alone, so a branch whose
   earlier PR had merged classified a worktree full of new, genuinely unmerged
