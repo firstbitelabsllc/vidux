@@ -77,7 +77,7 @@ Repo `PLAN.md` (if present) is **this repo’s** internal queue — not required
 ## Release truth
 
 Version `1.0.2` is the current source contract (`VERSION` + matching git tag).
-Vidux installs from source — there is no npm registry package. Prefer the
+Vidux installs from source — there is no npm package on the registry. Prefer the
 tagged tip:
 
 ```bash
