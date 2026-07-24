@@ -355,7 +355,13 @@ GLM shims.
   Leo publicize skillbox / voice-debug / litty; wave-21 seat closes claimed
   row; next niche from private dossier only with create/publicize gate; tag
   vidux when tip drifts with code.
-- [claimed: glm-max 2026-07-24T08:07:55-04:00] Proactive research wave 47 — next reachable win (claim first);
+- [completed 2026-07-24T08:08:06-04:00] Proactive research wave 47 (glm-max) — WATCHING.
+  Oversell/stale-claim scan clean on claudux+vidux tip docs; no open
+  PRs/issues; claudux tip == `v2.0.6`; vidux docs-only ahead of `v1.0.2`.
+  Skillbox private. Resume: Leo publicize skillbox / voice-debug / litty;
+  wave-21 seat closes claimed row; next niche from private dossier only
+  with create/publicize gate; tag vidux when tip drifts with code.
+- [pending] Proactive research wave 48 — next reachable win (claim first);
   prefer amplify or WATCHING; tag vidux only if tip drifts with code;
   voice-debug publish remains human-gated.
 
