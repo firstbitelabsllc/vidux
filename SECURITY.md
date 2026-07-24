@@ -41,6 +41,17 @@ The primary security surface is:
 - **Git operations** — scripts that commit, push, and create PRs
 - **Shell scripts** — `scripts/` directory executed by agents
 - **The local browser UI** — `browser/server.py` and `browser/static/*.js`
+- **Shared temp / multi-user hosts** — a shared `TMPDIR` (or world-writable
+  `/tmp`) can leave browser pid/log residue visible across users or jobs.
+  Isolation bugs here are in scope.
+
+## Security design decisions
+
+- **XDG-scoped browser state.** Live pid/log files live under
+  `${XDG_STATE_HOME:-~/.local/state}/vidux/browser.{pid,log}` (not shared
+  temp). Legacy `${TMPDIR}/vidux-browser.pid` is warn-only.
+- **Loopback-first browser bind.** Default `127.0.0.1` plus Host allowlist;
+  LAN bind is explicit opt-in (see Scope above).
 
 ## What We Watch For
 
@@ -53,9 +64,9 @@ The primary security surface is:
 
 ## Supported versions
 
-Only the latest supported version line receives security fixes.
+| Version | Supported |
+| ------- | --------- |
+| 1.0.x / current `main` | Yes |
+| < 1.0 | No |
 
-| Version          | Status              |
-| ---------------- | ------------------- |
-| Current `main` / unreleased `3.0` source | supported |
-| `2.x` and older commits                  | unsupported |
+Only the latest `main` (and any tag at or above 1.0) receives security fixes.
